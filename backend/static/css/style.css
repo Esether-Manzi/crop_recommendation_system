@@ -1,7 +1,35 @@
-body{
-    background:#f8f9fa;
+/* ==========================================================
+   GLOBAL STYLES
+   These styles apply across the entire application.
+========================================================== */
+
+/* Make the page occupy the full viewport height */
+html,
+body {
+    height: 100%;
 }
 
-footer{
-    margin-top: 100px;
+/* Use Flexbox so the footer stays at the bottom */
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main content grows to fill available space */
+main {
+    flex: 1;
+}
+
+/* Footer styling */
+footer {
+    margin-top: auto;
+}
+
+/* Optional: make cards lift slightly on hover */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
 }

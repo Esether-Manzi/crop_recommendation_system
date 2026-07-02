@@ -3,17 +3,15 @@ Views for the Dashboard application.
 """
 
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 
-def home(request):
+@login_required
+def dashboard_home(request):
     """
-    Display the public landing page.
+    Display the dashboard for authenticated users.
 
-    Later, this page will introduce the crop
-    recommendation system to visitors.
+    The @login_required decorator ensures that only
+    logged-in users can access this page.
     """
-
-    return render(
-        request,
-        "home/index.html",
-    )
+    return render(request, "dashboard/home.html")

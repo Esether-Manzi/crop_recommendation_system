@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends "base/base.html" %}
 
 {% block title %}
 Home
@@ -6,26 +6,50 @@ Home
 
 {% block content %}
 
-<div class="text-center">
+<!-- =====================================================
+     HERO SECTION
+====================================================== -->
 
-<h1 class="display-4">
+<div class="container py-5">
 
-🌱 Smart Crop Recommendation System
+    <div class="text-center">
 
-</h1>
+        <h1 class="display-4 fw-bold text-success">
 
-<p class="lead">
+            🌱 Crop Recommendation System
 
-Helping Ugandan farmers make data-driven decisions.
+        </h1>
 
-</p>
+        <p class="lead mt-4">
 
-<a href="#"
-class="btn btn-success btn-lg">
+            Intelligent crop recommendation using
+            Machine Learning and Soil Analysis.
 
-Get Started
+        </p>
 
-</a>
+        {% if user.is_authenticated %}
+
+            <a
+                href="{% url 'dashboard:home' %}"
+                class="btn btn-success btn-lg mt-3">
+
+                Go to Dashboard
+
+            </a>
+
+        {% else %}
+
+            <a
+                href="{% url 'accounts:register' %}"
+                class="btn btn-success btn-lg mt-3">
+
+                Get Started
+
+            </a>
+
+        {% endif %}
+
+    </div>
 
 </div>
 

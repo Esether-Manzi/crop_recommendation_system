@@ -1,63 +1,176 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+{% load static %}
 
-<div class="container">
+<!-- ==========================================================
+     MAIN NAVIGATION BAR
+     This navbar appears on every page of the system.
+=========================================================== -->
 
-<a class="navbar-brand" href="/">
+<nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
 
-🌱 CropAI
+    <div class="container">
 
-</a>
+        <!-- ==================================================
+             SYSTEM LOGO / NAME
+        =================================================== -->
 
-<button
-class="navbar-toggler"
-type="button"
-data-bs-toggle="collapse"
-data-bs-target="#navbar">
+        <a class="navbar-brand fw-bold" href="{% url 'dashboard:home' %}">
+            🌱 CropAI
+        </a>
 
-<span class="navbar-toggler-icon"></span>
+        <!-- Mobile Toggle -->
 
-</button>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar">
 
-<div
-class="collapse navbar-collapse"
-id="navbar">
+            <span class="navbar-toggler-icon"></span>
 
-<ul class="navbar-nav ms-auto">
+        </button>
 
-<li class="nav-item">
+        <!-- ==========================================
+             NAVBAR CONTENT
+        =========================================== -->
 
-<a class="nav-link" href="/">Home</a>
+        <div class="collapse navbar-collapse" id="mainNavbar">
 
-</li>
+            <!-- Left Navigation -->
 
-<li class="nav-item">
+            <ul class="navbar-nav me-auto">
 
-<a class="nav-link" href="#">Dashboard</a>
+                <li class="nav-item">
 
-</li>
+                    <a class="nav-link" href="{% url 'dashboard:home' %}">
+                        Home
+                    </a>
 
-<li class="nav-item">
+                </li>
 
-<a class="nav-link" href="#">Farms</a>
+                {% if user.is_authenticated %}
 
-</li>
+                <li class="nav-item">
 
-<li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard:home' %}">
+                        Dashboard
+                    </a>
 
-<a class="nav-link" href="#">Recommendations</a>
+                </li>
 
-</li>
+                <li class="nav-item">
 
-<li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Farms
+                    </a>
 
-<a class="nav-link" href="#">Login</a>
+                </li>
 
-</li>
+                <li class="nav-item">
 
-</ul>
+                    <a class="nav-link" href="#">
+                        Recommendations
+                    </a>
 
-</div>
+                </li>
 
-</div>
+                <li class="nav-item">
+
+                    <a class="nav-link" href="#">
+                        Feedback
+                    </a>
+
+                </li>
+
+                {% endif %}
+
+            </ul>
+
+            <!-- ====================================
+                 RIGHT SIDE OF NAVBAR
+            ===================================== -->
+
+            <ul class="navbar-nav">
+
+                {% if user.is_authenticated %}
+
+                <li class="nav-item dropdown">
+
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown">
+
+                        {{ user.username }}
+
+                        ({{ user.get_role_display }})
+
+                    </a>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        <li>
+
+                            <a
+                                class="dropdown-item"
+                                href="{% url 'dashboard:home' %}">
+
+                                Dashboard
+
+                            </a>
+
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+
+                            <a
+                                class="dropdown-item text-danger"
+                                href="{% url 'accounts:logout' %}">
+
+                                Logout
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                {% else %}
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{% url 'accounts:login' %}">
+
+                        Login
+
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="{% url 'accounts:register' %}">
+
+                        Register
+
+                    </a>
+
+                </li>
+
+                {% endif %}
+
+            </ul>
+
+        </div>
+
+    </div>
 
 </nav>

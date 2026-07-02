@@ -5,13 +5,10 @@ This module handles user authentication,
 registration, login, and logout.
 """
 
-# Django authentication functions
-from django.contrib.auth import login, logout
-
-# Shortcut for rendering templates
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
 
-# Import the custom registration form
 from .forms import UserRegistrationForm
 
 
@@ -58,16 +55,23 @@ def register_view(request):
 
 def login_view(request):
     """
-    Display the login page.
-
-    Later we shall authenticate users using
-    Django's authentication system.
+    Authenticate a user and display the login page.
     """
 
-    return render(
-        request,
-        "accounts/login.html",
-    )
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Welcome back!")
+            return redirect("dashboard:home")
+
+        messages.error(request, "Invalid username or password.")
+
+    return render(request, "accounts/login.html")
 
 
 def logout_view(request):

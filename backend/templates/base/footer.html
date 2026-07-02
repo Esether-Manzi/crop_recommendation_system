@@ -1,20 +1,77 @@
-<footer
-class="bg-dark text-white text-center py-4 mt-5">
+<!-- ========================================================= -->
+<!-- Footer -->
+<!-- Shared footer used across the whole system -->
+<!-- ========================================================= -->
 
-<div class="container">
+<footer class="bg-dark text-white mt-5 py-4">
+    <div class="container">
 
-<p>
+        <div class="row">
 
-Crop Recommendation & Rotation System
+            <!-- Project information -->
+            <div class="col-md-6">
+                <h5>Crop Recommendation System</h5>
 
-</p>
+                <p class="mb-0">
+                    AI-powered crop recommendation and intelligent crop rotation
+                    support for Ugandan farmers.
+                </p>
+            </div>
 
-<p>
+            <!-- Quick links -->
+            <div class="col-md-3">
+                <h6>Quick Links</h6>
 
-Developed using Django • Bootstrap • MySQL
+                <ul class="list-unstyled">
 
-</p>
+                    <li>
+                        <a href="{% url 'dashboard:home' %}" class="text-white text-decoration-none">
+                            Home
+                        </a>
+                    </li>
 
-</div>
+                    {% if user.is_authenticated %}
 
+                    <li>
+                        <a href="{% url 'dashboard:home' %}" class="text-white text-decoration-none">
+                            Dashboard
+                        </a>
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-md-3">
+
+                <h6>Developer</h6>
+
+                <p class="mb-0">
+                    Final Year Project<br>
+                    UTAMU University
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+
+            <small>
+
+                © {% now "Y" %}
+
+                Crop Recommendation System
+
+                | Built with Django + Bootstrap
+
+            </small>
+
+        </div>
+
+    </div>
 </footer>

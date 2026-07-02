@@ -36,15 +36,18 @@
 
 <body class="d-flex flex-column min-vh-100">
 
+    <!-- Navigation -->
     {% include 'base/navbar.html' %}
 
-    <main class="container py-5 flex-grow-1">
+    <!-- Main Content -->
+    <main class="container my-5 flex-grow-1">
 
         {% block content %}
         {% endblock %}
 
     </main>
 
+    <!-- Footer -->
     {% include 'base/footer.html' %}
 
 <script

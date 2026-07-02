@@ -5,13 +5,47 @@ Login
 {% endblock %}
 
 {% block content %}
-
 <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7">
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-body p-4 p-md-5">
+                    <div class="text-center mb-4">
+                        <h2 class="fw-bold">Sign in</h2>
+                        <p class="text-muted mb-0">Welcome back to the Crop Recommendation System.</p>
+                    </div>
 
-    <h2>Login Page</h2>
+                    {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        Your username or password was incorrect. Please try again.
+                    </div>
+                    {% endif %}
 
-    <p>This page is under development.</p>
+                    <form method="post" novalidate>
+                        {% csrf_token %}
 
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="id_username" placeholder="Enter your username" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" id="id_password" placeholder="Enter your password" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100 py-2">Login</button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p class="mb-0 text-muted">
+                            Don’t have an account?
+                            <a href="{% url 'accounts:register' %}" class="text-success fw-semibold">Create one</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
 {% endblock %}

@@ -1,0 +1,125 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+
+    <!-- ================================================
+         PAGE TITLE
+    ================================================= -->
+
+    <h2 class="mb-4">
+
+        Welcome,
+        {{ user.first_name|default:user.username }}
+
+    </h2>
+
+    <p>
+
+        Role:
+        <strong>{{ user.get_role_display }}</strong>
+
+    </p>
+
+    <hr>
+
+    <!-- ================================================
+         DASHBOARD CARDS
+    ================================================= -->
+
+    <div class="row g-4">
+
+        <!-- Farm -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h4>🌾 My Farms</h4>
+
+                    <p>
+
+                        Manage your registered farms.
+
+                    </p>
+
+                    <a href="#" class="btn btn-success">
+
+                        Open
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Recommendation -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h4>🤖 Recommendations</h4>
+
+                    <p>
+
+                        Get AI crop recommendations.
+
+                    </p>
+
+                    <a href="#" class="btn btn-success">
+
+                        Open
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Feedback -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h4>📈 Feedback</h4>
+
+                    <p>
+
+                        Submit your harvest results.
+
+                    </p>
+
+                    <a href="#" class="btn btn-success">
+
+                        Open
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
