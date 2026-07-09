@@ -32,6 +32,7 @@ urlpatterns = [
     # Authentication Module
     path("accounts/", include("accounts.urls")),
 
+    path("recommendations/", include("recommendations.urls")),
 ]
 
 if settings.DEBUG:

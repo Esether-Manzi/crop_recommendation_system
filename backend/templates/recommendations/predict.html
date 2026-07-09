@@ -1,0 +1,222 @@
+{% extends "base/base.html" %}
+
+{% block title %}Crop Recommendation{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-10">
+
+            <div class="card border-0 shadow-lg rounded-4">
+
+                <div class="card-header bg-success text-white py-4 rounded-top-4">
+
+                    <h2 class="mb-1">
+                        🌱 Crop Recommendation System
+                    </h2>
+
+                    <p class="mb-0">
+                        Enter your soil and environmental measurements to receive an AI-powered crop recommendation.
+                    </p>
+
+                </div>
+
+                <div class="card-body p-5">
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        <div class="row g-4">
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Nitrogen (N)</label>
+                                {{ form.nitrogen }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Phosphorus (P)</label>
+                                {{ form.phosphorus }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Potassium (K)</label>
+                                {{ form.potassium }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Temperature (°C)</label>
+                                {{ form.temperature }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Humidity (%)</label>
+                                {{ form.humidity }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Soil pH</label>
+                                {{ form.ph }}
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Rainfall (mm)</label>
+                                {{ form.rainfall }}
+                            </div>
+
+                        </div>
+
+                        <div class="mt-5">
+
+                            <button class="btn btn-success btn-lg px-5">
+
+                                🤖 Predict Crop
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                    {% if prediction %}
+
+                    <div class="mt-5">
+
+                        <!-- Prediction Card -->
+
+                        <div class="card border-success shadow-sm mb-4">
+
+                            <div class="card-body text-center p-5">
+
+                                <div style="font-size:60px;">
+                                    🌾
+                                </div>
+
+                                <h5 class="text-muted mt-3">
+                                    AI Recommendation
+                                </h5>
+
+                                <h1 class="display-4 fw-bold text-success my-3">
+                                    {{ prediction.predicted_crop|title }}
+                                </h1>
+
+                                <p class="lead text-muted">
+                                    Based on the soil nutrients and environmental conditions provided,
+                                    this is the most suitable crop predicted by the machine learning model.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Suitability Analysis -->
+
+                        {% if suitability.success %}
+
+                        <div class="card shadow-sm">
+
+                            <div class="card-header bg-light">
+
+                                <h4 class="mb-0">
+                                    ✅ Suitability Analysis
+                                </h4>
+
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="mb-4">
+
+                                    <strong>Overall Suitability:</strong>
+
+                                    {{ suitability.score }}/{{ suitability.total }}
+
+                                    ({{ suitability.percentage }}%)
+
+                                </div>
+
+                                <table class="table table-bordered table-hover align-middle">
+
+                                    <thead class="table-success">
+
+                                        <tr>
+
+                                            <th>Parameter</th>
+
+                                            <th>Current Value</th>
+
+                                            <th>Ideal Range</th>
+
+                                            <th>Status</th>
+
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+                                        {% for parameter, item in suitability.analysis.items %}
+
+                                        <tr>
+
+                                            <td>{{ parameter }}</td>
+
+                                            <td>{{ item.current }}</td>
+
+                                            <td>{{ item.ideal }}</td>
+
+                                            <td>
+
+                                                {% if item.status == "Suitable" %}
+
+                                                    <span class="badge bg-success">
+                                                        ✓ Suitable
+                                                    </span>
+
+                                                {% elif item.status == "Too Low" %}
+
+                                                    <span class="badge bg-warning text-dark">
+                                                        ↓ Too Low
+                                                    </span>
+
+                                                {% else %}
+
+                                                    <span class="badge bg-danger">
+                                                        ↑ Too High
+                                                    </span>
+
+                                                {% endif %}
+
+                                            </td>
+
+                                        </tr>
+
+                                        {% endfor %}
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
