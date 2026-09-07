@@ -1,0 +1,92 @@
+
+{% load static %}
+
+{% if user.is_authenticated %}
+<!-- ==========================================================
+     MOBILE BOTTOM NAVIGATION
+     Primary navigation for phones/tablets (below lg, 992px).
+     Mirrors the always-visible icon-bar pattern of mobile money
+     apps (MTN MoMo, Airtel Money) so it stays familiar without
+     requiring users to discover a hamburger menu.
+=========================================================== -->
+
+<nav class="bottom-nav d-lg-none">
+
+    <a href="{% url 'dashboard:home' %}"
+       class="bottom-nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+
+    <a href="{% url 'farms:list' %}"
+       class="bottom-nav-link {% if request.resolver_match.app_name == 'farms' %}active{% endif %}">
+        <i class="fa-solid fa-tractor"></i>
+        <span>Farms</span>
+    </a>
+
+    <a href="{% url 'recommendations:predict_crop' %}" class="bottom-nav-fab">
+        <i class="fa-solid fa-seedling"></i>
+    </a>
+
+    <a href="{% url 'advisory:list' %}"
+       class="bottom-nav-link {% if request.resolver_match.app_name == 'advisory' %}active{% endif %}">
+        <i class="fa-solid fa-book"></i>
+        <span>Advisory</span>
+    </a>
+
+    <button type="button" class="bottom-nav-link" data-bs-toggle="offcanvas" data-bs-target="#moreSheet">
+        <i class="fa-solid fa-ellipsis"></i>
+        <span>More</span>
+    </button>
+
+</nav>
+
+<!-- ==========================================================
+     "MORE" SHEET
+     Everything else that's a full page but not frequent enough
+     to earn one of the 5 bottom-bar slots.
+=========================================================== -->
+
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="moreSheet">
+
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title fw-bold text-success">More</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body">
+
+        <a href="{% url 'rotation:planner' %}" class="more-sheet-link">
+            <i class="fa-solid fa-timeline"></i>
+            Rotation Planner
+        </a>
+
+        <a href="{% url 'advisory:tracker' %}" class="more-sheet-link">
+            <i class="fa-solid fa-clock"></i>
+            Season Tracker
+        </a>
+
+        <a href="{% url 'feedback:submit' %}" class="more-sheet-link">
+            <i class="fa-solid fa-clipboard-list"></i>
+            Log Harvest Feedback
+        </a>
+
+        <a href="{% url 'ai:chat' %}" class="more-sheet-link">
+            <i class="fa-solid fa-robot"></i>
+            AI Chat Assistant
+        </a>
+
+        <hr>
+
+        <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="more-sheet-link text-danger w-100 text-start border-0 bg-transparent">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </button>
+        </form>
+
+    </div>
+
+</div>
+{% endif %}

@@ -53,7 +53,7 @@
 
         <!-- Soil Nutrient History Chart -->
         {% if soil_records|length > 1 %}
-        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+        <div class="card card-bold rounded-4 p-4 mb-4">
             <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-chart-line me-2"></i>Soil Nutrient Trends</h4>
             <div style="height: 300px;">
                 <canvas id="soilTrendChart"></canvas>
@@ -62,7 +62,7 @@
         {% endif %}
 
         <!-- Soil Record History Table -->
-        <div class="card border-0 shadow-sm rounded-4 p-4">
+        <div class="card card-bold rounded-4 p-4">
             <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-clock-rotate-left me-2"></i>Soil Logs</h4>
             
             {% if soil_records %}
@@ -112,7 +112,7 @@
 
     <!-- Soil Logging Sidebar -->
     <div class="col-lg-4">
-        <div class="card border-0 shadow-lg rounded-4 p-4 sticky-top" style="top: 2rem; z-index: 100;">
+        <div class="card card-bold rounded-4 p-4 sticky-top" style="top: 2rem; z-index: 100;">
             <h3 class="fw-bold text-success mb-2"><i class="fa-solid fa-flask-vial me-2"></i>Log Soil Test</h3>
             <p class="text-muted fs-7 mb-4">
                 Record new chemical and weather parameters for this farm to refresh AI crop models.
@@ -158,7 +158,7 @@
                 </div>
 
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold">
+                    <button type="submit" class="btn btn-accent btn-lg rounded-pill fw-bold">
                         <i class="fa-solid fa-circle-check me-2"></i>Save Soil Log
                     </button>
                 </div>

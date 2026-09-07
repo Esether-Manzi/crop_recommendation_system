@@ -9,7 +9,7 @@
     <div class="row g-4">
         <!-- Crop Select Sidebar -->
         <div class="col-lg-3">
-            <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 2rem;">
+            <div class="card card-bold rounded-4 p-4 sticky-top" style="top: 2rem;">
                 <h5 class="fw-bold text-success mb-3"><i class="fa-solid fa-leaf me-2"></i>Select Crop</h5>
                 <div class="list-group list-group-flush">
                     {% for crop in crops %}
@@ -26,7 +26,7 @@
         <!-- Advisory Sheet Details -->
         <div class="col-lg-9">
             {% if selected_crop and advisories %}
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+            <div class="card card-bold rounded-4 p-4 bg-white mb-4">
                 <div class="d-flex align-items-center mb-3">
                     <div class="bg-success text-white rounded-circle p-3 me-3" style="width: 50px; height:50px; display:inline-flex; align-items:center; justify-content:center; font-size:24px;">
                         <i class="fa-solid fa-wheat-awn"></i>
@@ -39,7 +39,7 @@
             </div>
 
             <!-- Tab Navigation for Stages -->
-            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+            <div class="card card-bold rounded-4 p-4 bg-white">
                 <ul class="nav nav-pills nav-fill mb-4 bg-light p-2 rounded-pill gap-1" id="advisoryTabs" role="tablist">
                     {% for adv in advisories %}
                     <li class="nav-item" role="presentation">
@@ -65,7 +65,7 @@
             </div>
             {% else %}
             <!-- Blank State -->
-            <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white" style="min-height: 400px; display:flex; flex-column; justify-content:center; align-items:center;">
+            <div class="card card-bold rounded-4 p-5 text-center bg-white" style="min-height: 400px; display:flex; flex-column; justify-content:center; align-items:center;">
                 <div class="text-success mb-4" style="font-size: 60px;">
                     <i class="fa-solid fa-book-open"></i>
                 </div>

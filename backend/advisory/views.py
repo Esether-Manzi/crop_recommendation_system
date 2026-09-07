@@ -80,6 +80,17 @@ def season_tracker(request):
         # Assume 14 weeks is full crop maturity
         progress = min(100, int((elapsed_weeks / 14) * 100))
 
+        # Same week thresholds, collapsed to 4 broad milestones for the
+        # visual growth-stage tracker (Planting -> Growing -> Maturing -> Harvest)
+        if elapsed_weeks <= 2:
+            milestone_index = 0
+        elif elapsed_weeks <= 5:
+            milestone_index = 1
+        elif elapsed_weeks <= 9:
+            milestone_index = 2
+        else:
+            milestone_index = 3
+
         active_trackers_data.append({
             "tracker": tracker,
             "weeks": elapsed_weeks,
@@ -87,6 +98,7 @@ def season_tracker(request):
             "stages": stages,
             "advisories": advisories,
             "progress": progress,
+            "milestone_index": milestone_index,
         })
 
     completed_trackers = trackers.filter(status="Completed")

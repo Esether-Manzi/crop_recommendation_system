@@ -40,7 +40,7 @@
     {% if selected_farm %}
         {% with latest_soil=selected_farm.soil_records.first %}
         {% if not latest_soil %}
-            <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+            <div class="card card-bold rounded-4 p-5 text-center bg-white">
                 <div class="text-warning mb-4" style="font-size: 60px;">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
@@ -59,7 +59,7 @@
                 <!-- Simulation Controls & Info -->
                 <div class="col-lg-4">
                     <!-- Current Soil Profile Summary -->
-                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                    <div class="card card-bold rounded-4 p-4 mb-4">
                         <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-flask me-2"></i>Baseline Soil State</h4>
                         <p class="text-muted fs-7">This is the starting point for the multi-season simulation, based on the record dated {{ latest_soil.recorded_at|date:"Y-m-d" }}.</p>
                         <div class="bg-light p-3 rounded-4">
@@ -91,7 +91,7 @@
                     </div>
 
                     <!-- Generate Plan Card -->
-                    <div class="card border-0 shadow-sm rounded-4 p-4">
+                    <div class="card card-bold rounded-4 p-4">
                         <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-gears me-2"></i>Simulation Settings</h4>
                         <p class="text-muted fs-7">Set up parameters for the sequential rules-based crop prediction engine.</p>
                         
@@ -116,7 +116,7 @@
                             </div>
 
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold py-3 shadow">
+                                <button type="submit" class="btn btn-accent btn-lg rounded-pill fw-bold py-3">
                                     <i class="fa-solid fa-play me-2"></i>Simulate 4 Seasons
                                 </button>
                             </div>
@@ -127,7 +127,7 @@
                 <!-- Simulation Results Timeline -->
                 <div class="col-lg-8">
                     {% if latest_plan %}
-                    <div class="card border-0 shadow-sm rounded-4 p-4">
+                    <div class="card card-bold rounded-4 p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h4 class="fw-bold text-success mb-0"><i class="fa-solid fa-timeline me-2"></i>Simulated 4-Season Timeline</h4>
                             <span class="fs-8 text-muted">Generated: {{ latest_plan.created_at|date:"Y-m-d H:i" }}</span>
@@ -211,7 +211,7 @@
                     </div>
                     {% else %}
                     <!-- Initial state placeholder -->
-                    <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white h-100 d-flex flex-column justify-content-center align-items-center" style="min-height: 400px;">
+                    <div class="card card-bold rounded-4 p-5 text-center bg-white h-100 d-flex flex-column justify-content-center align-items-center" style="min-height: 400px;">
                         <div class="text-success mb-4" style="font-size: 60px;">
                             <i class="fa-solid fa-shuffle animate-spin"></i>
                         </div>
@@ -227,7 +227,7 @@
         {% endwith %}
     {% else %}
         <!-- Select Farm Prompt -->
-        <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+        <div class="card card-bold rounded-4 p-5 text-center bg-white">
             <div class="text-success mb-4" style="font-size: 60px;">
                 <i class="fa-solid fa-tractor"></i>
             </div>

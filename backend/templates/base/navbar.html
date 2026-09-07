@@ -3,7 +3,10 @@
 
 <!-- ==========================================================
      MAIN NAVIGATION BAR
-     This navbar appears on every page of the system.
+     Desktop/tablet (lg and up, 992px+): full inline links below.
+     Mobile (below lg): only the brand and account menu show here —
+     primary navigation lives in the bottom tab bar instead
+     (base/bottom_nav.html), so there is no hamburger to discover.
 =========================================================== -->
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-success shadow-sm">
@@ -18,27 +21,11 @@
             <i class="fa-solid fa-seedling me-1"></i>CropAI
         </a>
 
-        <!-- Mobile Toggle -->
-
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#mainNavbar">
-
-            <span class="navbar-toggler-icon"></span>
-
-        </button>
-
         <!-- ==========================================
-             NAVBAR CONTENT
+             DESKTOP NAV LINKS (hidden below lg)
         =========================================== -->
 
-        <div class="collapse navbar-collapse" id="mainNavbar">
-
-            <!-- Left Navigation -->
-
-            <ul class="navbar-nav me-auto">
+        <ul class="navbar-nav me-auto d-none d-lg-flex">
 
                 <li class="nav-item">
 
@@ -134,93 +121,91 @@
 
                 {% endif %}
 
-            </ul>
+        </ul>
 
-            <!-- ====================================
-                 RIGHT SIDE OF NAVBAR
-            ===================================== -->
+        <!-- ====================================
+             ACCOUNT MENU
+             Always visible, on both mobile and desktop.
+        ===================================== -->
 
-            <ul class="navbar-nav">
+        <ul class="navbar-nav">
 
-                {% if user.is_authenticated %}
+            {% if user.is_authenticated %}
 
-                <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
 
-                    <a
-                        class="nav-link dropdown-toggle"
-                        href="#"
-                        role="button"
-                        data-bs-toggle="dropdown">
+                <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown">
 
-                        {{ user.username }}
+                    {{ user.username }}
 
-                        ({{ user.get_role_display }})
+                    <span class="d-none d-lg-inline">({{ user.get_role_display }})</span>
 
-                    </a>
+                </a>
 
-                    <ul class="dropdown-menu dropdown-menu-end">
+                <ul class="dropdown-menu dropdown-menu-end">
 
-                        <li>
+                    <li>
 
-                            <a
-                                class="dropdown-item"
-                                href="{% url 'dashboard:home' %}">
+                        <a
+                            class="dropdown-item"
+                            href="{% url 'dashboard:home' %}">
 
-                                Dashboard
+                            Dashboard
 
-                            </a>
+                        </a>
 
-                        </li>
+                    </li>
 
-                        <li><hr class="dropdown-divider"></li>
+                    <li><hr class="dropdown-divider"></li>
 
-                        <li>
+                    <li>
 
-                            <a
-                                class="dropdown-item text-danger"
-                                href="{% url 'accounts:logout' %}">
-
+                        <form method="post" action="{% url 'accounts:logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="dropdown-item text-danger">
                                 Logout
+                            </button>
+                        </form>
 
-                            </a>
+                    </li>
 
-                        </li>
+                </ul>
 
-                    </ul>
+            </li>
 
-                </li>
+            {% else %}
 
-                {% else %}
+            <li class="nav-item">
 
-                <li class="nav-item">
+                <a
+                    class="nav-link"
+                    href="{% url 'accounts:login' %}">
 
-                    <a
-                        class="nav-link"
-                        href="{% url 'accounts:login' %}">
+                    Login
 
-                        Login
+                </a>
 
-                    </a>
+            </li>
 
-                </li>
+            <li class="nav-item">
 
-                <li class="nav-item">
+                <a
+                    class="nav-link"
+                    href="{% url 'accounts:register' %}">
 
-                    <a
-                        class="nav-link"
-                        href="{% url 'accounts:register' %}">
+                    Register
 
-                        Register
+                </a>
 
-                    </a>
+            </li>
 
-                </li>
+            {% endif %}
 
-                {% endif %}
-
-            </ul>
-
-        </div>
+        </ul>
 
     </div>
 

@@ -15,7 +15,7 @@
         <div class="row row-cols-1 row-cols-md-2 g-4">
             {% for farm in farms %}
             <div class="col">
-                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
+                <div class="card card-bold h-100 rounded-4 overflow-hidden position-relative">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <span class="badge bg-light text-success border border-success-subtle px-3 py-2 rounded-pill fs-7">
@@ -52,7 +52,7 @@
             {% endfor %}
         </div>
         {% else %}
-        <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+        <div class="card card-bold rounded-4 p-5 text-center bg-white">
             <div class="text-success mb-4" style="font-size: 60px;">
                 <i class="fa-solid fa-tractor"></i>
             </div>
@@ -66,7 +66,7 @@
 
     <!-- Register New Farm -->
     <div class="col-lg-4">
-        <div class="card border-0 shadow-lg rounded-4 p-4 sticky-top" style="top: 2rem; z-index: 100;">
+        <div class="card card-bold rounded-4 p-4 sticky-top" style="top: 2rem; z-index: 100;">
             <h3 class="fw-bold text-success mb-3"><i class="fa-solid fa-plus-circle me-2"></i>Add New Farm</h3>
             <p class="text-muted fs-7 mb-4">
                 Register a new field or cultivation block to track its history, run soil analysis, and rotation guides.
@@ -128,7 +128,7 @@
                 </div>
 
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold">
+                    <button type="submit" class="btn btn-accent btn-lg rounded-pill fw-bold">
                         <i class="fa-solid fa-floppy-disk me-2"></i>Save Farm
                     </button>
                 </div>
