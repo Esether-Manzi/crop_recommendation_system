@@ -1,9 +1,9 @@
-from datetime import date
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from farms.models import Farm
 from .models import CropAdvisory, SeasonTracker
+from .services import compute_season_progress
 
 @login_required
 def advisory_list(request):
@@ -60,45 +60,17 @@ def season_tracker(request):
 
     active_trackers_data = []
     for tracker in trackers.filter(status="Active"):
-        today = date.today()
-        elapsed_days = (today - tracker.start_date).days
-        elapsed_weeks = max(1, (elapsed_days // 7) + 1)
-
-        # Map growth week to actionable advisory stages
-        if elapsed_weeks <= 2:
-            stages = ["Preparation", "Planting"]
-        elif elapsed_weeks <= 5:
-            stages = ["Weeding", "Fertilizer"]
-        elif elapsed_weeks <= 9:
-            stages = ["Pests", "Diseases"]
-        else:
-            stages = ["Harvest", "Storage"]
+        progress_data = compute_season_progress(tracker)
 
         # Fetch current stage advisories
-        advisories = CropAdvisory.objects.filter(crop_name=tracker.crop_name.lower(), stage__in=stages)
-
-        # Assume 14 weeks is full crop maturity
-        progress = min(100, int((elapsed_weeks / 14) * 100))
-
-        # Same week thresholds, collapsed to 4 broad milestones for the
-        # visual growth-stage tracker (Planting -> Growing -> Maturing -> Harvest)
-        if elapsed_weeks <= 2:
-            milestone_index = 0
-        elif elapsed_weeks <= 5:
-            milestone_index = 1
-        elif elapsed_weeks <= 9:
-            milestone_index = 2
-        else:
-            milestone_index = 3
+        advisories = CropAdvisory.objects.filter(
+            crop_name=tracker.crop_name.lower(), stage__in=progress_data["stages"]
+        )
 
         active_trackers_data.append({
             "tracker": tracker,
-            "weeks": elapsed_weeks,
-            "days": elapsed_days,
-            "stages": stages,
             "advisories": advisories,
-            "progress": progress,
-            "milestone_index": milestone_index,
+            **progress_data,
         })
 
     completed_trackers = trackers.filter(status="Completed")

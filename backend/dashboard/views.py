@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from farms.models import Farm
 from advisory.models import SeasonTracker
+from advisory.services import compute_season_progress
 from recommendations.models import Prediction
 from feedback.models import HarvestFeedback
 
@@ -10,7 +11,10 @@ def dashboard_home(request):
         return render(request, "home/index.html")
 
     farms = Farm.objects.filter(user=request.user)
-    active_trackers = SeasonTracker.objects.filter(farm__user=request.user, status="Active")
+    active_trackers = [
+        {"tracker": tracker, **compute_season_progress(tracker)}
+        for tracker in SeasonTracker.objects.filter(farm__user=request.user, status="Active")
+    ]
     recent_predictions = Prediction.objects.filter(user=request.user)[:5]
     recent_feedbacks = HarvestFeedback.objects.filter(farm__user=request.user)[:5]
 
