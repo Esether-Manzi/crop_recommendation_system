@@ -132,9 +132,9 @@
                          class="w-100 h-100 d-none"
                          style="object-fit:cover;opacity:0;transition:opacity .4s ease;"
                          onload="this.style.opacity='0.55';this.classList.remove('d-none');">
-                    <!-- Emoji fallback (shown until image loads) -->
+                    <!-- Icon fallback (shown until image loads) -->
                     <div id="hero-crop-emoji" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-                         style="font-size:90px;opacity:.18;">🌱</div>
+                         style="font-size:90px;opacity:.18;"><i class="fa-solid fa-seedling"></i></div>
                     <!-- Gradient overlay for text readability -->
                     <div class="position-absolute top-0 start-0 w-100 h-100"
                          style="background:linear-gradient(to top, rgba(10,60,20,.85) 0%, rgba(10,60,20,.3) 60%, transparent 100%);"></div>
@@ -144,7 +144,7 @@
                             <div>
                                 <span class="badge rounded-pill px-3 py-1 fw-semibold fs-8 mb-2 d-inline-block"
                                       style="background:rgba(255,255,255,.2);backdrop-filter:blur(6px);">
-                                    🏆 Best Match for Your Soil
+                                    <i class="fa-solid fa-trophy me-1"></i>Best Match for Your Soil
                                 </span>
                                 <h1 class="display-5 fw-bold mb-1">{{ top.crop|title }}</h1>
                                 <p class="mb-0 opacity-90" style="font-size:.95rem;">
@@ -354,7 +354,7 @@
                                          src="" alt="{{ item.crop|title }}"
                                          style="object-fit:cover;"
                                          onload="this.classList.remove('d-none');this.nextElementSibling.classList.add('d-none');">
-                                    <span class="crop-thumb-emoji" style="font-size:22px;">🌿</span>
+                                    <span class="crop-thumb-emoji" style="font-size:22px;"><i class="fa-solid fa-seedling"></i></span>
                                 </span>
                                 {{ item.crop|title }}
                                 {% if item.suitability.success %}
@@ -494,7 +494,7 @@
             {% else %}
             <!-- ─── EMPTY STATE ───────────────────────────────── -->
             <div class="card border-0 shadow-sm rounded-4 p-5 text-center h-100 d-flex flex-column justify-content-center align-items-center" style="min-height:420px;">
-                <div style="font-size:72px;line-height:1;" class="mb-3">🌱</div>
+                <div style="font-size:72px;line-height:1;" class="mb-3"><i class="fa-solid fa-seedling"></i></div>
                 <h4 class="fw-bold mb-2">Ready when you are</h4>
                 <p class="text-muted mb-0" style="max-width:340px;">
                     Select your farm or enter your soil test values on the left, then tap <strong>Find Best Crop</strong>.
@@ -510,7 +510,7 @@
 <script>
 /* ── Crop image map ───────────────────────────────────────────────────────
    Maps lowercase crop name -> static filename.
-   Crops without a file yet fall back to a category emoji.
+   Crops without a file yet fall back to a Font Awesome icon.
    Add filenames here as new images are generated.
 ──────────────────────────────────────────────────────────────────────── */
 const STATIC_ROOT = "{% static 'images/crops/' %}";
@@ -531,27 +531,24 @@ const CROP_IMAGES = {
   "coffee":      "coffee.png",
 };
 
-/* Emoji fallbacks by crop name for those not yet photographed */
-const CROP_EMOJI = {
-  "apple":"🍎",  "grapes":"🍇",  "orange":"🍊",  "muskmelon":"🍈",
-  "watermelon":"🍉",  "papaya":"🍈",  "pomegranate":"🍎",
-  "coconut":"🥥",  "plantain":"🍌",  "sugarcane":"🌿",
-  "cotton":"🌾",  "jute":"🌾",  "sunflowerseed":"🌻",  "sesameseed":"🌾",
-  "vanilla":"🌿",  "cocoa":"🍫",  "onion":"🧅",
-  "millet":"🌾",  "chickpea":"🫘",  "lentil":"🫘",
-  "kidneybeans":"🫘",  "mungbean":"🫘",  "mothbeans":"🫘",
-  "blackgram":"🫘",
+/* Icon fallbacks by crop name for those not yet photographed */
+const CROP_ICONS = {
+  "apple":"fa-apple-whole",  "pomegranate":"fa-apple-whole",
+  "orange":"fa-lemon",
+  "millet":"fa-wheat-awn",  "sesameseed":"fa-wheat-awn",
+  "cocoa":"fa-mug-hot",
 };
+const DEFAULT_CROP_ICON = "fa-seedling";
 
-function getCropEmoji(cropLower) {
-  return CROP_EMOJI[cropLower] || "🌱";
+function getCropIcon(cropLower) {
+  return CROP_ICONS[cropLower] || DEFAULT_CROP_ICON;
 }
 
 function loadCropImage(cropLower, imgEl, emojiEl) {
   const filename = CROP_IMAGES[cropLower];
   if (!filename) {
-    // No photo yet — show appropriate emoji
-    if (emojiEl) emojiEl.textContent = getCropEmoji(cropLower);
+    // No photo yet — show appropriate icon
+    if (emojiEl) emojiEl.innerHTML = '<i class="fa-solid ' + getCropIcon(cropLower) + '"></i>';
     return;
   }
   imgEl.src = STATIC_ROOT + filename;
@@ -567,7 +564,7 @@ document.addEventListener("DOMContentLoaded", function () {
       heroImg.src = STATIC_ROOT + CROP_IMAGES[crop];
       heroImg.classList.remove("d-none");
     } else {
-      if (heroEmoji) heroEmoji.textContent = getCropEmoji(crop);
+      if (heroEmoji) heroEmoji.innerHTML = '<i class="fa-solid ' + getCropIcon(crop) + '"></i>';
     }
   }
 

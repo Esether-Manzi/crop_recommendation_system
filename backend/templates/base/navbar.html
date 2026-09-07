@@ -15,7 +15,7 @@
         =================================================== -->
 
         <a class="navbar-brand fw-bold" href="{% url 'dashboard:home' %}">
-            🌱 CropAI
+            <i class="fa-solid fa-seedling me-1"></i>CropAI
         </a>
 
         <!-- Mobile Toggle -->
@@ -52,15 +52,7 @@
 
                 <li class="nav-item">
 
-                    <a class="nav-link" href="{% url 'dashboard:home' %}">
-                        Dashboard
-                    </a>
-
-                </li>
-
-                <li class="nav-item">
-
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{% url 'farms:list' %}">
                         Farms
                     </a>
 
@@ -68,7 +60,7 @@
 
                 <li class="nav-item">
 
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{% url 'recommendations:predict_crop' %}">
                         Recommendations
                     </a>
 
@@ -76,8 +68,66 @@
 
                 <li class="nav-item">
 
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="{% url 'rotation:planner' %}">
+                        Rotation Planner
+                    </a>
+
+                </li>
+
+                <li class="nav-item dropdown">
+
+                    <a
+                        class="nav-link dropdown-toggle"
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown">
+
+                        Advisory
+
+                    </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+
+                            <a
+                                class="dropdown-item"
+                                href="{% url 'advisory:list' %}">
+
+                                Knowledge Base
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a
+                                class="dropdown-item"
+                                href="{% url 'advisory:tracker' %}">
+
+                                Season Tracker
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="{% url 'feedback:submit' %}">
                         Feedback
+                    </a>
+
+                </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" href="{% url 'ai:chat' %}">
+                        AI Chat
                     </a>
 
                 </li>
