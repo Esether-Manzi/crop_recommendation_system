@@ -1,222 +1,661 @@
 {% extends "base/base.html" %}
+{% load static %}
 
-{% block title %}Crop Recommendation{% endblock %}
+{% block title %}Crop Recommendation - Crop Advisor{% endblock %}
 
 {% block content %}
+<div class="container py-4" style="max-width: 860px;">
 
-<div class="container py-5">
+    <!-- Header -->
+    <div class="mb-4">
+        <h2 class="fw-bold text-success mb-1">
+            <i class="fa-solid fa-seedling me-2"></i>What Should I Plant?
+        </h2>
+        <p class="text-muted mb-0">Enter your soil details and we will recommend the best crop for your land.</p>
+    </div>
 
-    <div class="row justify-content-center">
-
-        <div class="col-lg-10">
-
-            <div class="card border-0 shadow-lg rounded-4">
-
-                <div class="card-header bg-success text-white py-4 rounded-top-4">
-
-                    <h2 class="mb-1">
-                        🌱 Crop Recommendation System
-                    </h2>
-
-                    <p class="mb-0">
-                        Enter your soil and environmental measurements to receive an AI-powered crop recommendation.
-                    </p>
-
+    <!-- Farm Selector -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-3">
+            <form method="get" id="farmSelectForm" class="row align-items-center g-2">
+                <div class="col-sm-auto">
+                    <label class="form-label fw-semibold mb-1 text-muted fs-7">
+                        <i class="fa-solid fa-tractor me-1"></i>Select your farm
+                    </label>
                 </div>
+                <div class="col">
+                    <select name="farm_id" class="form-select rounded-pill" onchange="this.form.submit()">
+                        <option value="">-- Type values manually --</option>
+                        {% for farm in farms %}
+                        <option value="{{ farm.id }}" {% if selected_farm.id == farm.id %}selected{% endif %}>
+                            {{ farm.farm_name }} — {{ farm.district }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% if selected_farm %}
+                <div class="col-auto">
+                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-2 fs-8">
+                        <i class="fa-solid fa-circle-check me-1"></i>Soil data loaded
+                    </span>
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
 
-                <div class="card-body p-5">
+    <div class="row g-4">
 
-                    <form method="post">
+        <!-- ═══════════════════════════════════════ -->
+        <!-- LEFT: Input Form                        -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100">
+                <h5 class="fw-bold text-success mb-1">
+                    <i class="fa-solid fa-flask-vial me-2"></i>Your Soil Values
+                </h5>
+                <p class="text-muted fs-8 mb-3">These come from a soil test or your farm record.</p>
 
-                        {% csrf_token %}
+                <form method="post" action="?{% if selected_farm %}farm_id={{ selected_farm.id }}{% endif %}">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                    <div class="alert alert-danger py-2" role="alert">Please correct the highlighted input values.</div>
+                    {% endif %}
+                    {% if selected_farm %}
+                    <input type="hidden" name="farm_id" value="{{ selected_farm.id }}">
+                    {% endif %}
 
-                        <div class="row g-4">
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Nitrogen (N)</label>
-                                {{ form.nitrogen }}
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Phosphorus (P)</label>
-                                {{ form.phosphorus }}
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Potassium (K)</label>
-                                {{ form.potassium }}
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Temperature (°C)</label>
-                                {{ form.temperature }}
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Humidity (%)</label>
-                                {{ form.humidity }}
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Soil pH</label>
-                                {{ form.ph }}
-                            </div>
-
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold">Rainfall (mm)</label>
-                                {{ form.rainfall }}
-                            </div>
-
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold fs-7">
+                            Nitrogen (N) <span class="text-muted fw-normal">mg/kg</span>
+                        </label>
+                        {{ form.nitrogen }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold fs-7">
+                            Phosphorus (P) <span class="text-muted fw-normal">mg/kg</span>
+                        </label>
+                        {{ form.phosphorus }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold fs-7">
+                            Potassium (K) <span class="text-muted fw-normal">mg/kg</span>
+                        </label>
+                        {{ form.potassium }}
+                    </div>
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label class="form-label fw-semibold fs-7">Soil pH</label>
+                            {{ form.ph }}
                         </div>
-
-                        <div class="mt-5">
-
-                            <button class="btn btn-success btn-lg px-5">
-
-                                🤖 Predict Crop
-
-                            </button>
-
+                        <div class="col-6">
+                            <label class="form-label fw-semibold fs-7">Temperature (°C)</label>
+                            {{ form.temperature }}
                         </div>
-
-                    </form>
-
-                    {% if prediction %}
-
-                    <div class="mt-5">
-
-                        <!-- Prediction Card -->
-
-                        <div class="card border-success shadow-sm mb-4">
-
-                            <div class="card-body text-center p-5">
-
-                                <div style="font-size:60px;">
-                                    🌾
-                                </div>
-
-                                <h5 class="text-muted mt-3">
-                                    AI Recommendation
-                                </h5>
-
-                                <h1 class="display-4 fw-bold text-success my-3">
-                                    {{ prediction.predicted_crop|title }}
-                                </h1>
-
-                                <p class="lead text-muted">
-                                    Based on the soil nutrients and environmental conditions provided,
-                                    this is the most suitable crop predicted by the machine learning model.
-                                </p>
-
-                            </div>
-
+                    </div>
+                    <div class="row g-2 mb-4">
+                        <div class="col-6">
+                            <label class="form-label fw-semibold fs-7">Humidity (%)</label>
+                            {{ form.humidity }}
                         </div>
-
-                        <!-- Suitability Analysis -->
-
-                        {% if suitability.success %}
-
-                        <div class="card shadow-sm">
-
-                            <div class="card-header bg-light">
-
-                                <h4 class="mb-0">
-                                    ✅ Suitability Analysis
-                                </h4>
-
-                            </div>
-
-                            <div class="card-body">
-
-                                <div class="mb-4">
-
-                                    <strong>Overall Suitability:</strong>
-
-                                    {{ suitability.score }}/{{ suitability.total }}
-
-                                    ({{ suitability.percentage }}%)
-
-                                </div>
-
-                                <table class="table table-bordered table-hover align-middle">
-
-                                    <thead class="table-success">
-
-                                        <tr>
-
-                                            <th>Parameter</th>
-
-                                            <th>Current Value</th>
-
-                                            <th>Ideal Range</th>
-
-                                            <th>Status</th>
-
-                                        </tr>
-
-                                    </thead>
-
-                                    <tbody>
-
-                                        {% for parameter, item in suitability.analysis.items %}
-
-                                        <tr>
-
-                                            <td>{{ parameter }}</td>
-
-                                            <td>{{ item.current }}</td>
-
-                                            <td>{{ item.ideal }}</td>
-
-                                            <td>
-
-                                                {% if item.status == "Suitable" %}
-
-                                                    <span class="badge bg-success">
-                                                        ✓ Suitable
-                                                    </span>
-
-                                                {% elif item.status == "Too Low" %}
-
-                                                    <span class="badge bg-warning text-dark">
-                                                        ↓ Too Low
-                                                    </span>
-
-                                                {% else %}
-
-                                                    <span class="badge bg-danger">
-                                                        ↑ Too High
-                                                    </span>
-
-                                                {% endif %}
-
-                                            </td>
-
-                                        </tr>
-
-                                        {% endfor %}
-
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-
+                        <div class="col-6">
+                            <label class="form-label fw-semibold fs-7">Rainfall (mm)</label>
+                            {{ form.rainfall }}
                         </div>
-
-                        {% endif %}
-
                     </div>
 
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold py-3 shadow-sm">
+                            <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Find Best Crop
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════ -->
+        <!-- RIGHT: Results                          -->
+        <!-- ═══════════════════════════════════════ -->
+        <div class="col-lg-7">
+
+            {% if prediction and recommendations %}
+            {% with top=recommendations.0 %}
+
+            <!-- ─── TOP CROP HERO CARD ─────────────────────────── -->
+            <div class="card border-0 shadow-lg rounded-4 mb-3 overflow-hidden">
+                <div class="position-relative" style="height:220px;background:linear-gradient(135deg,#166534,#15803d 60%,#22c55e);">
+                    <!-- Crop photo -->
+                    <img id="hero-crop-img"
+                         src=""
+                         data-crop="{{ top.crop|lower }}"
+                         alt="{{ top.crop|title }} plant"
+                         class="w-100 h-100 d-none"
+                         style="object-fit:cover;opacity:0;transition:opacity .4s ease;"
+                         onload="this.style.opacity='0.55';this.classList.remove('d-none');">
+                    <!-- Emoji fallback (shown until image loads) -->
+                    <div id="hero-crop-emoji" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+                         style="font-size:90px;opacity:.18;">🌱</div>
+                    <!-- Gradient overlay for text readability -->
+                    <div class="position-absolute top-0 start-0 w-100 h-100"
+                         style="background:linear-gradient(to top, rgba(10,60,20,.85) 0%, rgba(10,60,20,.3) 60%, transparent 100%);"></div>
+                    <!-- Text content overlay -->
+                    <div class="position-absolute bottom-0 start-0 w-100 p-4 text-white">
+                        <div class="d-flex justify-content-between align-items-end">
+                            <div>
+                                <span class="badge rounded-pill px-3 py-1 fw-semibold fs-8 mb-2 d-inline-block"
+                                      style="background:rgba(255,255,255,.2);backdrop-filter:blur(6px);">
+                                    🏆 Best Match for Your Soil
+                                </span>
+                                <h1 class="display-5 fw-bold mb-1">{{ top.crop|title }}</h1>
+                                <p class="mb-0 opacity-90" style="font-size:.95rem;">
+                                    {% if top.suitability.success %}
+                                        {{ top.suitability.score }}/{{ top.suitability.total }} soil parameters ideal for this crop
+                                    {% else %}
+                                        {{ top.reasons.0 }}
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="text-end flex-shrink-0 ms-3">
+                                <div class="fw-bold" style="font-size:2rem;line-height:1;">{{ top.confidence }}%</div>
+                                <div class="opacity-75 fs-8">AI confidence</div>
+                                {% if top.suitability.success %}
+                                <div class="d-flex gap-1 justify-content-end mt-2">
+                                    {% for param, val in top.suitability.analysis.items %}
+                                    <span title="{{ param }}: {{ val.status }}"
+                                          class="d-inline-block rounded-circle border border-white"
+                                          style="width:11px;height:11px;background:{% if val.status == 'Suitable' %}#4ade80{% else %}rgba(255,255,255,.3){% endif %};"></span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ─── SUITABILITY RANGE CARD (TOP CROP) ──────────── -->
+            {% if top.suitability.success %}
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+
+                    <!-- Card header + fertilizer toggle -->
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+                        <h6 class="fw-bold mb-0">
+                            <i class="fa-solid fa-sliders text-success me-2"></i>Your Soil vs. Ideal Ranges
+                            <small class="text-muted fw-normal ms-1 fs-8">for {{ top.crop|title }}</small>
+                        </h6>
+                        {% if top.suitability_fertilized.success %}
+                        <div class="form-check form-switch d-flex align-items-center gap-2 m-0">
+                            <input class="form-check-input fertilizer-toggle" type="checkbox" role="switch"
+                                   id="fertToggle-top" data-idx="top"
+                                   style="width:2.5em;height:1.3em;">
+                            <label class="form-check-label fw-semibold fs-8 text-success" for="fertToggle-top">
+                                <i class="fa-solid fa-flask me-1"></i>With Fertilizer
+                            </label>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Fertilizer info bar -->
+                    {% if top.suitability_fertilized.success %}
+                    <div class="alert alert-success border-0 py-2 px-3 rounded-3 mb-3 fs-8 d-none" id="fertBar-top">
+                        <i class="fa-solid fa-circle-info me-1"></i>
+                        <strong>One fertilizer application adds:</strong>
+                        N +{{ top.fertilizer_boost.Nitrogen }} &nbsp;·&nbsp;
+                        P +{{ top.fertilizer_boost.Phosphorus }} &nbsp;·&nbsp;
+                        K +{{ top.fertilizer_boost.Potassium }} mg/kg
+                    </div>
+                    {% endif %}
+
+                    <!-- Parameter rows -->
+                    <div id="suitRows-top">
+                        {% for param, val in top.suitability.analysis.items %}
+                        <div class="suit-param-row mb-3"
+                             data-param="{{ param }}"
+                             data-base-val="{{ val.current }}"
+                             data-base-status="{{ val.status }}"
+                             {% if top.suitability_fertilized.success %}
+                             {% for fp, fv in top.suitability_fertilized.analysis.items %}{% if fp == param %}
+                             data-fert-val="{{ fv.current }}"
+                             data-fert-status="{{ fv.status }}"
+                             {% endif %}{% endfor %}
+                             {% endif %}>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-semibold fs-7">{{ param }}</span>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="text-muted fs-8">Ideal: {{ val.ideal }}</span>
+                                    <span class="suit-badge badge rounded-pill px-2 py-1 fs-8
+                                        {% if val.status == 'Suitable' %}bg-success
+                                        {% elif val.status == 'Too Low' %}bg-warning text-dark
+                                        {% else %}bg-danger{% endif %}">
+                                        {% if val.status == 'Suitable' %}<i class="fa-solid fa-check me-1"></i>Good
+                                        {% elif val.status == 'Too Low' %}<i class="fa-solid fa-arrow-up me-1"></i>Too Low
+                                        {% else %}<i class="fa-solid fa-arrow-down me-1"></i>Too High{% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- Visual bar: your value position within range -->
+                            {% with range_html=val.ideal %}
+                            <div class="position-relative" style="height:8px;background:#e9ecef;border-radius:4px;">
+                                <div class="position-absolute top-0 rounded"
+                                     style="height:8px;
+                                            left:0;
+                                            width:{% if val.status == 'Suitable' %}60{% elif val.status == 'Too Low' %}15{% else %}95{% endif %}%;
+                                            background:{% if val.status == 'Suitable' %}#22c55e{% elif val.status == 'Too Low' %}#facc15{% else %}#ef4444{% endif %};
+                                            transition: width .5s ease;">
+                                </div>
+                            </div>
+                            {% endwith %}
+                            <div class="d-flex justify-content-between fs-8 text-muted mt-1">
+                                <span>Your value: <strong class="suit-current-val text-dark">{{ val.current }}</strong></span>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Fertilizer improvement summary -->
+                    {% if top.suitability_fertilized.success %}
+                    <div id="fertSummary-top" class="d-none rounded-3 p-3 mt-2 text-center"
+                         style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #bbf7d0;">
+                        <div class="row g-0 text-center">
+                            <div class="col">
+                                <div class="fs-8 text-muted">Without fertilizer</div>
+                                <div class="fw-bold fs-4 text-warning">{{ top.suitability.score }}/{{ top.suitability.total }}</div>
+                            </div>
+                            <div class="col-auto d-flex align-items-center px-2 text-success">
+                                <i class="fa-solid fa-arrow-right fa-lg"></i>
+                            </div>
+                            <div class="col">
+                                <div class="fs-8 text-muted">With fertilizer</div>
+                                <div class="fw-bold fs-4 text-success">{{ top.suitability_fertilized.score }}/{{ top.suitability_fertilized.total }}</div>
+                            </div>
+                        </div>
+                        {% if top.suitability_fertilized.score > top.suitability.score %}
+                        <p class="mb-0 mt-2 fs-8 text-success fw-semibold">
+                            <i class="fa-solid fa-circle-check me-1"></i>
+                            Fertilizer improves compatibility for this crop.
+                        </p>
+                        {% else %}
+                        <p class="mb-0 mt-2 fs-8 text-muted">
+                            This crop is a good fit with or without fertilizer.
+                        </p>
+                        {% endif %}
+                    </div>
                     {% endif %}
 
                 </div>
+            </div>
+            {% endif %}
 
+            <!-- ─── XAI: Why this crop? ────────────────────────── -->
+            {% if top.explanation %}
+            <div class="card border-0 shadow-sm rounded-4 mb-3">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-1">
+                        <i class="fa-solid fa-magnifying-glass-chart text-primary me-2"></i>Why {{ top.crop|title }}?
+                    </h6>
+                    <p class="text-muted fs-8 mb-3">Which soil values influenced the AI's decision the most.</p>
+                    {% for feat in top.explanation %}
+                    <div class="mb-2">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fs-8 fw-semibold">
+                                {{ feat.display_name }}
+                                <span class="text-muted fw-normal">({{ feat.value }}{% if feat.unit %} {{ feat.unit }}{% endif %})</span>
+                            </span>
+                            <span class="fs-8 fw-bold {% if feat.direction == 'positive' %}text-success{% else %}text-danger{% endif %}">
+                                {% if feat.direction == 'positive' %}▲{% else %}▼{% endif %} {{ feat.pct_of_total }}%
+                            </span>
+                        </div>
+                        <div class="progress" style="height:9px;border-radius:5px;background:#f0f0f0;">
+                            <div class="progress-bar {% if feat.direction == 'positive' %}bg-success{% else %}bg-danger{% endif %}"
+                                 style="width:{{ feat.pct_of_total }}%;border-radius:5px;transition:width .6s ease;">
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <p class="text-muted fs-8 mb-0 mt-3 pt-2 border-top">
+                        <i class="fa-solid fa-circle-info me-1"></i>
+                        Green = this value strongly supports planting {{ top.crop|title }}.
+                        Red = this value is less ideal but the crop is still a good candidate overall.
+                    </p>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- ─── "SEE OTHER OPTIONS" BUTTON ────────────────── -->
+            {% if recommendations|length > 1 %}
+            <div class="text-center mb-3">
+                <button class="btn btn-outline-secondary rounded-pill px-4 py-2 fw-semibold"
+                        id="toggleOtherOptions"
+                        type="button"
+                        onclick="toggleOtherOptions()">
+                    <i class="fa-solid fa-chevron-down me-2"></i>See other crop options ({{ recommendations|length|add:"-1" }} more)
+                </button>
             </div>
 
-        </div>
+            <!-- ─── OTHER 4 CROPS (collapsed by default) ────────── -->
+            <div id="otherOptionsSection" style="display:none;">
+                <h6 class="fw-semibold text-muted mb-3 text-center">
+                    <i class="fa-solid fa-list-ol me-1"></i>Other crops the AI considered
+                </h6>
+                {% for item in recommendations %}
+                {% if not forloop.first %}
+                <div class="card border-0 shadow-sm rounded-4 mb-3 overflow-hidden">
 
-    </div>
+                    <!-- Compact crop header -->
+                    <div class="card-body p-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="fw-bold mb-0 d-flex align-items-center gap-2">
+                                <!-- Crop thumbnail -->
+                                <span class="crop-thumb-wrap position-relative flex-shrink-0"
+                                      style="width:42px;height:42px;border-radius:10px;overflow:hidden;background:#f0fdf4;display:inline-flex;align-items:center;justify-content:center;">
+                                    <img class="crop-thumb-img w-100 h-100 d-none"
+                                         data-crop="{{ item.crop|lower }}"
+                                         src="" alt="{{ item.crop|title }}"
+                                         style="object-fit:cover;"
+                                         onload="this.classList.remove('d-none');this.nextElementSibling.classList.add('d-none');">
+                                    <span class="crop-thumb-emoji" style="font-size:22px;">🌿</span>
+                                </span>
+                                {{ item.crop|title }}
+                                {% if item.suitability.success %}
+                                <small class="text-muted fw-normal fs-8">({{ item.suitability.category }})</small>
+                                {% endif %}
+                            </h6>
+                            <div class="d-flex gap-2 align-items-center">
+                                <span class="badge {% if item.suitability.percentage >= 80 %}bg-success{% elif item.suitability.percentage >= 50 %}bg-warning text-dark{% else %}bg-secondary{% endif %} rounded-pill px-2 py-1 fs-8">
+                                    {{ item.suitability.percentage|default:"—" }}% fit
+                                </span>
+                                <span class="badge bg-primary-subtle text-primary rounded-pill px-2 py-1 fs-8">
+                                    {{ item.confidence }}% AI
+                                </span>
+                            </div>
+                        </div>
 
+                        <p class="text-muted fs-8 mb-2">{{ item.reasons.0 }}</p>
+
+                        <!-- Inline mini suitability table -->
+                        {% if item.suitability.success %}
+                        <div class="collapse" id="detail-{{ forloop.counter }}">
+                            <div class="border-top pt-3 mt-2">
+                                <!-- Fertilizer toggle for this option -->
+                                {% if item.suitability_fertilized.success %}
+                                <div class="d-flex justify-content-end mb-2">
+                                    <div class="form-check form-switch d-flex align-items-center gap-2 m-0">
+                                        <input class="form-check-input fertilizer-toggle" type="checkbox" role="switch"
+                                               id="fertToggle-{{ forloop.counter }}" data-idx="{{ forloop.counter }}"
+                                               style="width:2.2em;height:1.2em;">
+                                        <label class="form-check-label fs-8 text-success" for="fertToggle-{{ forloop.counter }}">
+                                            <i class="fa-solid fa-flask me-1"></i>With Fertilizer
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="alert alert-success border-0 py-2 px-3 rounded-3 mb-2 fs-8 d-none" id="fertBar-{{ forloop.counter }}">
+                                    <i class="fa-solid fa-circle-info me-1"></i>
+                                    N +{{ item.fertilizer_boost.Nitrogen }} · P +{{ item.fertilizer_boost.Phosphorus }} · K +{{ item.fertilizer_boost.Potassium }} mg/kg added
+                                </div>
+                                {% endif %}
+
+                                <table class="suit-table-base-{{ forloop.counter }} table table-sm table-bordered rounded-3 overflow-hidden text-center align-middle fs-8 mb-0">
+                                    <thead class="table-success">
+                                        <tr>
+                                            <th class="text-start ps-2">Parameter</th>
+                                            <th>Your value</th>
+                                            <th>Ideal range</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for param, val in item.suitability.analysis.items %}
+                                        <tr>
+                                            <td class="text-start ps-2 fw-semibold">{{ param }}</td>
+                                            <td>{{ val.current }}</td>
+                                            <td class="text-muted">{{ val.ideal }}</td>
+                                            <td>
+                                                {% if val.status == "Suitable" %}<span class="badge bg-success rounded-pill px-2 fs-8"><i class="fa-solid fa-check"></i></span>
+                                                {% elif val.status == "Too Low" %}<span class="badge bg-warning text-dark rounded-pill px-2 fs-8">Low</span>
+                                                {% else %}<span class="badge bg-danger rounded-pill px-2 fs-8">High</span>{% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+
+                                {% if item.suitability_fertilized.success %}
+                                <table class="suit-table-fert-{{ forloop.counter }} table table-sm table-bordered rounded-3 overflow-hidden text-center align-middle fs-8 mb-0 d-none">
+                                    <thead style="background:#d1e7dd;">
+                                        <tr>
+                                            <th class="text-start ps-2">Parameter</th>
+                                            <th>With fertilizer</th>
+                                            <th>Ideal range</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for param, val in item.suitability_fertilized.analysis.items %}
+                                        <tr>
+                                            <td class="text-start ps-2 fw-semibold">{{ param }}</td>
+                                            <td>{{ val.current }}</td>
+                                            <td class="text-muted">{{ val.ideal }}</td>
+                                            <td>
+                                                {% if val.status == "Suitable" %}<span class="badge bg-success rounded-pill px-2 fs-8"><i class="fa-solid fa-check"></i></span>
+                                                {% elif val.status == "Too Low" %}<span class="badge bg-warning text-dark rounded-pill px-2 fs-8">Low</span>
+                                                {% else %}<span class="badge bg-danger rounded-pill px-2 fs-8">High</span>{% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% endif %}
+
+                                <!-- XAI mini bars -->
+                                {% if item.explanation %}
+                                <div class="mt-3 pt-2 border-top">
+                                    <p class="fs-8 fw-semibold text-muted mb-2">
+                                        <i class="fa-solid fa-magnifying-glass-chart me-1 text-primary"></i>Why the AI considered this crop:
+                                    </p>
+                                    {% for feat in item.explanation|slice:":3" %}
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <span class="fs-8 text-muted" style="width:110px;flex-shrink:0;">{{ feat.display_name }}</span>
+                                        <div class="progress flex-grow-1" style="height:7px;border-radius:4px;">
+                                            <div class="progress-bar {% if feat.direction == 'positive' %}bg-success{% else %}bg-danger{% endif %}"
+                                                 style="width:{{ feat.pct_of_total }}%;border-radius:4px;">
+                                            </div>
+                                        </div>
+                                        <span class="fs-8 {% if feat.direction == 'positive' %}text-success{% else %}text-danger{% endif %}" style="width:38px;text-align:right;">
+                                            {{ feat.pct_of_total }}%
+                                        </span>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <button class="btn btn-link btn-sm text-muted text-decoration-none p-0 mt-1 fs-8"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#detail-{{ forloop.counter }}">
+                            <i class="fa-solid fa-chevron-down me-1"></i>View details
+                        </button>
+                        {% else %}
+                        <p class="text-muted fs-8 mb-0">
+                            <i class="fa-solid fa-circle-info me-1"></i>Detailed range data not available for this crop.
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% endwith %}
+
+            {% else %}
+            <!-- ─── EMPTY STATE ───────────────────────────────── -->
+            <div class="card border-0 shadow-sm rounded-4 p-5 text-center h-100 d-flex flex-column justify-content-center align-items-center" style="min-height:420px;">
+                <div style="font-size:72px;line-height:1;" class="mb-3">🌱</div>
+                <h4 class="fw-bold mb-2">Ready when you are</h4>
+                <p class="text-muted mb-0" style="max-width:340px;">
+                    Select your farm or enter your soil test values on the left, then tap <strong>Find Best Crop</strong>.
+                </p>
+            </div>
+            {% endif %}
+
+        </div><!-- /col-lg-7 -->
+    </div><!-- /row -->
 </div>
+
+<!-- ── JavaScript ──────────────────────────────────────────────────────── -->
+<script>
+/* ── Crop image map ───────────────────────────────────────────────────────
+   Maps lowercase crop name -> static filename.
+   Crops without a file yet fall back to a category emoji.
+   Add filenames here as new images are generated.
+──────────────────────────────────────────────────────────────────────── */
+const STATIC_ROOT = "{% static 'images/crops/' %}";
+
+const CROP_IMAGES = {
+  "maize":       "maize.png",
+  "banana":      "banana.png",
+  "cassava":     "cassava.png",
+  "rice":        "rice.png",
+  "pigeonpeas":  "pigeonpeas.png",
+  "sorghum":     "sorghum.png",
+  "mango":       "mango.png",
+  "sweetpotato": "sweetpotato.png",
+  "tobacco":     "tobacco.png",
+  "soyabean":    "soyabean.png",
+  "tea":         "tea.png",
+  "groundnut":   "groundnut.png",
+  "coffee":      "coffee.png",
+};
+
+/* Emoji fallbacks by crop name for those not yet photographed */
+const CROP_EMOJI = {
+  "apple":"🍎",  "grapes":"🍇",  "orange":"🍊",  "muskmelon":"🍈",
+  "watermelon":"🍉",  "papaya":"🍈",  "pomegranate":"🍎",
+  "coconut":"🥥",  "plantain":"🍌",  "sugarcane":"🌿",
+  "cotton":"🌾",  "jute":"🌾",  "sunflowerseed":"🌻",  "sesameseed":"🌾",
+  "vanilla":"🌿",  "cocoa":"🍫",  "onion":"🧅",
+  "millet":"🌾",  "chickpea":"🫘",  "lentil":"🫘",
+  "kidneybeans":"🫘",  "mungbean":"🫘",  "mothbeans":"🫘",
+  "blackgram":"🫘",
+};
+
+function getCropEmoji(cropLower) {
+  return CROP_EMOJI[cropLower] || "🌱";
+}
+
+function loadCropImage(cropLower, imgEl, emojiEl) {
+  const filename = CROP_IMAGES[cropLower];
+  if (!filename) {
+    // No photo yet — show appropriate emoji
+    if (emojiEl) emojiEl.textContent = getCropEmoji(cropLower);
+    return;
+  }
+  imgEl.src = STATIC_ROOT + filename;
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Hero card
+  const heroImg   = document.getElementById("hero-crop-img");
+  const heroEmoji = document.getElementById("hero-crop-emoji");
+  if (heroImg) {
+    const crop = heroImg.dataset.crop;
+    if (CROP_IMAGES[crop]) {
+      heroImg.src = STATIC_ROOT + CROP_IMAGES[crop];
+      heroImg.classList.remove("d-none");
+    } else {
+      if (heroEmoji) heroEmoji.textContent = getCropEmoji(crop);
+    }
+  }
+
+  // Thumbnails in other-options list
+  document.querySelectorAll(".crop-thumb-img").forEach(function(img) {
+    const crop    = img.dataset.crop;
+    const emoji   = img.parentElement.querySelector(".crop-thumb-emoji");
+    loadCropImage(crop, img, emoji);
+  });
+});
+</script>
+<script>
+/* Expand/collapse the "other options" section */
+function toggleOtherOptions() {
+    const sec = document.getElementById('otherOptionsSection');
+    const btn = document.getElementById('toggleOtherOptions');
+    const open = sec.style.display !== 'none';
+    sec.style.display = open ? 'none' : 'block';
+    const count = {{ recommendations|length|add:"-1" }};
+    btn.innerHTML = open
+        ? '<i class="fa-solid fa-chevron-down me-2"></i>See other crop options (' + count + ' more)'
+        : '<i class="fa-solid fa-chevron-up me-2"></i>Hide other options';
+}
+
+/* Fertilizer toggle — works for top card (idx="top") and list cards (idx=number) */
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.fertilizer-toggle').forEach(function (toggle) {
+        toggle.addEventListener('change', function () {
+            const idx = this.dataset.idx;
+            const on  = this.checked;
+
+            if (idx === 'top') {
+                // Top card uses data-attributes on each row
+                toggleTopCardFertilizer(on);
+                const bar     = document.getElementById('fertBar-top');
+                const summary = document.getElementById('fertSummary-top');
+                bar     && bar.classList.toggle('d-none', !on);
+                summary && summary.classList.toggle('d-none', !on);
+            } else {
+                // List cards swap tables
+                const baseTable = document.querySelector('.suit-table-base-' + idx);
+                const fertTable = document.querySelector('.suit-table-fert-' + idx);
+                const fertBar   = document.getElementById('fertBar-' + idx);
+                baseTable && baseTable.classList.toggle('d-none', on);
+                fertTable && fertTable.classList.toggle('d-none', !on);
+                fertBar   && fertBar.classList.toggle('d-none', !on);
+            }
+        });
+    });
+
+    function toggleTopCardFertilizer(on) {
+        document.querySelectorAll('#suitRows-top .suit-param-row').forEach(function (row) {
+            const param  = row.dataset.param;
+            const val    = on ? row.dataset.fertVal    : row.dataset.baseVal;
+            const status = on ? row.dataset.fertStatus : row.dataset.baseStatus;
+
+            // Update displayed value
+            const valEl = row.querySelector('.suit-current-val');
+            if (valEl) valEl.textContent = val;
+
+            // Update badge
+            const badge = row.querySelector('.suit-badge');
+            if (badge) {
+                if (status === 'Suitable') {
+                    badge.className = 'suit-badge badge rounded-pill px-2 py-1 fs-8 bg-success';
+                    badge.innerHTML = '<i class="fa-solid fa-check me-1"></i>Good';
+                } else if (status === 'Too Low') {
+                    badge.className = 'suit-badge badge rounded-pill px-2 py-1 fs-8 bg-warning text-dark';
+                    badge.innerHTML = '<i class="fa-solid fa-arrow-up me-1"></i>Too Low';
+                } else {
+                    badge.className = 'suit-badge badge rounded-pill px-2 py-1 fs-8 bg-danger';
+                    badge.innerHTML = '<i class="fa-solid fa-arrow-down me-1"></i>Too High';
+                }
+            }
+
+            // Update progress bar colour
+            const bar = row.querySelector('.position-relative > .position-absolute');
+            if (bar) {
+                bar.style.background = status === 'Suitable' ? '#22c55e'
+                                     : status === 'Too Low'  ? '#facc15'
+                                     :                         '#ef4444';
+                bar.style.width = status === 'Suitable' ? '60%'
+                                : status === 'Too Low'  ? '15%'
+                                :                         '95%';
+            }
+        });
+    }
+});
+</script>
+
 {% endblock %}

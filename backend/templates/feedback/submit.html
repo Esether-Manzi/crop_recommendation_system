@@ -1,0 +1,95 @@
+{% extends "base/base.html" %}
+
+{% block title %}Log Harvest Feedback - Crop Advisor{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="card-header bg-success text-white py-4 rounded-top-4">
+                <h2 class="mb-1">🌱 Log Harvest Feedback</h2>
+                <p class="mb-0 fs-7">Submit your harvest outcomes to help the system adapt and update your farm's soil nutrient parameters.</p>
+            </div>
+            
+            <div class="card-body p-5">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted fs-7">Select Farm</label>
+                            <select name="farm_id" class="form-select rounded-pill" required>
+                                <option value="">-- Choose Farm Field --</option>
+                                {% for farm in farms %}
+                                <option value="{{ farm.id }}">{{ farm.farm_name }} ({{ farm.district }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted fs-7">Harvested Crop</label>
+                            <input type="text" name="crop_name" class="form-control rounded-pill" placeholder="e.g., maize, beans, cassava" required>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted fs-7">Yield Assessment</label>
+                            <select name="yield_rating" class="form-select rounded-pill" required>
+                                <option value="">-- Rate Yield --</option>
+                                <option value="Good">Good Yield (Expected or higher)</option>
+                                <option value="Average">Average Yield</option>
+                                <option value="Poor">Poor Yield</option>
+                                <option value="Failed">Crop Failure / Minimal Yield</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted fs-7">Farmer Satisfaction (1-5)</label>
+                            <select name="satisfaction_score" class="form-select rounded-pill" required>
+                                <option value="">-- Select Score --</option>
+                                <option value="5">5 - Highly Satisfied</option>
+                                <option value="4">4 - Satisfied</option>
+                                <option value="3">3 - Neutral / Average</option>
+                                <option value="2">2 - Unsatisfied</option>
+                                <option value="1">1 - Extremely Unsatisfied</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-muted fs-7">Residue Management</label>
+                        <select name="residue_management" class="form-select rounded-pill" required>
+                            <option value="">-- Choose Action --</option>
+                            <option value="Incorporated">Incorporated back into the soil (Green manure / Mulch)</option>
+                            <option value="Removed">Removed / Burned / Fed to livestock</option>
+                        </select>
+                        <div class="form-text fs-8 text-muted mt-1">
+                            * Incorporating residues returns up to 30% of extracted Phosphorus and Potassium back to the topsoil layer.
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-muted fs-7">Additional Comments</label>
+                        <textarea name="comments" rows="3" class="form-control rounded-4" placeholder="Mention pests encountered, weather issues, fertilizer types used, etc."></textarea>
+                    </div>
+
+                    <!-- Adaptation Info Banner -->
+                    <div class="p-3 bg-light rounded-4 mb-4 border d-flex align-items-start gap-3">
+                        <div class="text-success fs-4">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                        </div>
+                        <div class="fs-8 text-muted">
+                            <strong>Feedback Adaptation Algorithm Active:</strong> Upon saving, the system retrieves your farm's latest soil logs and adjusts the chemical values (N, P, K, and pH) based on standard FAO crop depletion indexes. High yield ratings represent maximum extraction, while crop failures indicate minor decay.
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold py-3">
+                            <i class="fa-solid fa-check-double me-2"></i>Save Report & Recalculate Soil
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

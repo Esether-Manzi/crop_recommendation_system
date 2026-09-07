@@ -1,0 +1,241 @@
+{% extends "base/base.html" %}
+
+{% block title %}Sequential Rotation Planner - Crop Advisor{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-success fw-bold"><i class="fa-solid fa-rotate me-2"></i>Sequential Crop Rotation Planner</h2>
+    </div>
+
+    <!-- Farm Selector -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-4">
+            <form method="get" id="farmSelectForm" class="row align-items-center g-3">
+                <div class="col-md-5">
+                    <label class="form-label fw-bold text-success mb-1">
+                        <i class="fa-solid fa-tractor me-1"></i>Select Active Farm
+                    </label>
+                    <select name="farm_id" class="form-select rounded-pill" onchange="this.form.submit()">
+                        <option value="">-- Choose Farm --</option>
+                        {% for farm in farms %}
+                        <option value="{{ farm.id }}" {% if selected_farm.id == farm.id %}selected{% endif %}>
+                            {{ farm.farm_name }} ({{ farm.district }}, {{ farm.soil_type }} soil)
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-7 text-md-end pt-3">
+                    {% if selected_farm %}
+                    <span class="badge bg-success-subtle text-success border border-success px-3 py-2 rounded-pill fs-7">
+                        Active Farm: <strong>{{ selected_farm.farm_name }}</strong>
+                    </span>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if selected_farm %}
+        {% with latest_soil=selected_farm.soil_records.first %}
+        {% if not latest_soil %}
+            <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+                <div class="text-warning mb-4" style="font-size: 60px;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h4 class="fw-bold">No Soil Records Available</h4>
+                <p class="text-muted mx-auto mb-4" style="max-width: 450px;">
+                    Sequential recommendations simulate future soil states by starting with your current soil profile. Please add a soil record for this farm first.
+                </p>
+                <div class="d-grid gap-2 col-md-4 mx-auto">
+                    <a href="{% url 'farms:detail' selected_farm.id %}" class="btn btn-success rounded-pill fw-bold">
+                        <i class="fa-solid fa-flask me-2"></i>Log Soil Test Now
+                    </a>
+                </div>
+            </div>
+        {% else %}
+            <div class="row g-4">
+                <!-- Simulation Controls & Info -->
+                <div class="col-lg-4">
+                    <!-- Current Soil Profile Summary -->
+                    <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                        <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-flask me-2"></i>Baseline Soil State</h4>
+                        <p class="text-muted fs-7">This is the starting point for the multi-season simulation, based on the record dated {{ latest_soil.recorded_at|date:"Y-m-d" }}.</p>
+                        <div class="bg-light p-3 rounded-4">
+                            <table class="table table-sm table-borderless mb-0 fs-7 align-middle">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Nitrogen (N)</strong></td>
+                                        <td class="text-end fw-bold text-primary">{{ latest_soil.nitrogen }} mg/kg</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Phosphorus (P)</strong></td>
+                                        <td class="text-end fw-bold text-success">{{ latest_soil.phosphorus }} mg/kg</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Potassium (K)</strong></td>
+                                        <td class="text-end fw-bold text-danger">{{ latest_soil.potassium }} mg/kg</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Soil pH</strong></td>
+                                        <td class="text-end fw-bold">{{ latest_soil.ph }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Rainfall</strong></td>
+                                        <td class="text-end fw-bold text-muted">{{ latest_soil.rainfall }} mm</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Generate Plan Card -->
+                    <div class="card border-0 shadow-sm rounded-4 p-4">
+                        <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-gears me-2"></i>Simulation Settings</h4>
+                        <p class="text-muted fs-7">Set up parameters for the sequential rules-based crop prediction engine.</p>
+                        
+                        <form method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="farm_id" value="{{ selected_farm.id }}">
+                            
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold text-muted fs-7">Simulate Fertilizer Schedule?</label>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="fertilizer" id="fertYes" value="yes" checked>
+                                    <label class="form-check-label fs-7" for="fertYes">
+                                        Yes (Simulates NPK replenishment at each season start)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="fertilizer" id="fertNo" value="no">
+                                    <label class="form-check-label fs-7" for="fertNo">
+                                        No (Simulates continuous soil nutrient extraction)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold py-3 shadow">
+                                    <i class="fa-solid fa-play me-2"></i>Simulate 4 Seasons
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Simulation Results Timeline -->
+                <div class="col-lg-8">
+                    {% if latest_plan %}
+                    <div class="card border-0 shadow-sm rounded-4 p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="fw-bold text-success mb-0"><i class="fa-solid fa-timeline me-2"></i>Simulated 4-Season Timeline</h4>
+                            <span class="fs-8 text-muted">Generated: {{ latest_plan.created_at|date:"Y-m-d H:i" }}</span>
+                        </div>
+
+                        <!-- Rotation Timeline Vertical Layout -->
+                        <div class="position-relative ps-4 border-start border-success border-3 ms-3">
+                            {% for step in latest_plan.steps.all %}
+                            <div class="mb-5 position-relative">
+                                <!-- Marker Dot -->
+                                <div class="position-absolute bg-success rounded-circle border border-white border-3" style="width:20px; height:20px; left:-35px; top:5px;"></div>
+                                
+                                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill fw-bold">
+                                            🍂 Season {{ step.season_number }}
+                                        </span>
+                                        <span class="badge bg-light text-muted border px-2 py-1 rounded-pill fs-8">
+                                            Family: {{ step.crop_family }}
+                                        </span>
+                                    </div>
+                                    
+                                    <h3 class="fw-bold text-dark mb-1">{{ step.crop_recommended|title }}</h3>
+                                    
+                                    {% if step.fertilizer_applied %}
+                                        <p class="text-success fs-8 fw-semibold mb-3">
+                                            <i class="fa-solid fa-flask-vial me-1"></i>Replenishing fertilizer simulated (N: +40, P: +20, K: +15)
+                                        </p>
+                                    {% else %}
+                                        <p class="text-danger fs-8 fw-semibold mb-3">
+                                            <i class="fa-solid fa-circle-minus me-1"></i>No fertilizer simulated (Nutrients depletion only)
+                                        </p>
+                                    {% endif %}
+
+                                    <!-- Nutrient Transitions -->
+                                    <div class="row g-2 text-center text-dark">
+                                        <!-- Nitrogen -->
+                                        <div class="col-6 col-md-3">
+                                            <div class="p-2 bg-light rounded-3">
+                                                <small class="text-muted d-block fs-8">Nitrogen (N)</small>
+                                                <span class="fw-bold text-primary">{{ step.nitrogen_before }} → {{ step.nitrogen_after }}</span>
+                                            </div>
+                                        </div>
+                                        <!-- Phosphorus -->
+                                        <div class="col-6 col-md-3">
+                                            <div class="p-2 bg-light rounded-3">
+                                                <small class="text-muted d-block fs-8">Phosphorus (P)</small>
+                                                <span class="fw-bold text-success">{{ step.phosphorus_before }} → {{ step.phosphorus_after }}</span>
+                                            </div>
+                                        </div>
+                                        <!-- Potassium -->
+                                        <div class="col-6 col-md-3">
+                                            <div class="p-2 bg-light rounded-3">
+                                                <small class="text-muted d-block fs-8">Potassium (K)</small>
+                                                <span class="fw-bold text-danger">{{ step.potassium_before }} → {{ step.potassium_after }}</span>
+                                            </div>
+                                        </div>
+                                        <!-- pH -->
+                                        <div class="col-6 col-md-3">
+                                            <div class="p-2 bg-light rounded-3">
+                                                <small class="text-muted d-block fs-8">Soil pH</small>
+                                                <span class="fw-bold">{{ step.ph_before }} → {{ step.ph_after }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Dynamic text reason -->
+                                    <div class="mt-3 fs-8 text-muted border-top pt-2">
+                                        {% if step.crop_family == 'Legume' %}
+                                            <i class="fa-solid fa-info-circle text-success me-1"></i>This leguminous crop provides Nitrogen Fixation (adding up to 80 kg/ha of N back to the soil), preparing it for the next heavy feeder.
+                                        {% elif step.crop_recommended == 'Cassava' %}
+                                            <i class="fa-solid fa-info-circle text-warning me-1"></i>Cassava is a root/tuber crop that consumes moderate Nitrogen but extracts high Potassium.
+                                        {% else %}
+                                            <i class="fa-solid fa-info-circle text-muted me-1"></i>Standard crop sequence. The algorithm automatically selected this crop to avoid repeating families and maintain soil quality.
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <!-- Initial state placeholder -->
+                    <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white h-100 d-flex flex-column justify-content-center align-items-center" style="min-height: 400px;">
+                        <div class="text-success mb-4" style="font-size: 60px;">
+                            <i class="fa-solid fa-shuffle animate-spin"></i>
+                        </div>
+                        <h4 class="fw-bold">No Active Plan Simulated</h4>
+                        <p class="text-muted mx-auto" style="max-width: 400px;">
+                            Configure fertilizer parameters on the left and click "Simulate 4 Seasons" to compute the multi-season crop sequence based on chemical models.
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+        {% endwith %}
+    {% else %}
+        <!-- Select Farm Prompt -->
+        <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+            <div class="text-success mb-4" style="font-size: 60px;">
+                <i class="fa-solid fa-tractor"></i>
+            </div>
+            <h4 class="fw-bold">Select a Farm Field to Plan Rotation</h4>
+            <p class="text-muted mx-auto" style="max-width: 450px;">
+                To generate multi-season sequential recommendations, select a farm from the dropdown above to pull its baseline soil nutrients.
+            </p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

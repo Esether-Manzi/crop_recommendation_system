@@ -9,6 +9,8 @@ venv/
 # Django
 db.sqlite3
 media/
+backend/logs/
+*.log
 
 # Environment Variables
 .env

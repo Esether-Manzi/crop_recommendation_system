@@ -1,35 +1,158 @@
-/* ==========================================================
-   GLOBAL STYLES
-   These styles apply across the entire application.
-========================================================== */
+/* Import Google Fonts - Outfit for modern typography */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
-/* Make the page occupy the full viewport height */
-html,
-body {
-    height: 100%;
+/* Color Variables and Base Setup */
+:root {
+    --primary-color: #1e5631;
+    --primary-hover: #143b21;
+    --bg-cream: #f4f6f4;
+    --card-shadow: 0 10px 30px rgba(30, 86, 49, 0.04);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Use Flexbox so the footer stays at the bottom */
+html, body {
+    height: 100%;
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-cream);
+    color: #2b3a30;
+}
+
 body {
     display: flex;
     flex-direction: column;
 }
 
-/* Main content grows to fill available space */
 main {
     flex: 1;
 }
 
-/* Footer styling */
-footer {
-    margin-top: auto;
+/* Custom Earth-themed Navbar & Buttons */
+.navbar {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid rgba(30, 86, 49, 0.08);
 }
 
-/* Optional: make cards lift slightly on hover */
+.bg-success {
+    background-color: var(--primary-color) !important;
+}
+
+.text-success {
+    color: var(--primary-color) !important;
+}
+
+.border-success {
+    border-color: var(--primary-color) !important;
+}
+
+.btn-success {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transition: var(--transition-smooth);
+}
+
+.btn-success:hover {
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(30, 86, 49, 0.15);
+}
+
+.btn-outline-success {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    transition: var(--transition-smooth);
+}
+
+.btn-outline-success:hover {
+    background-color: var(--primary-color) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+}
+
+/* Premium Card Designs & Elevate Hover Effects */
 .card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none !important;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition-smooth);
+    background: #ffffff;
 }
 
 .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(30, 86, 49, 0.08);
+}
+
+/* Custom inputs styling */
+.form-control, .form-select {
+    border: 1.5px solid rgba(30, 86, 49, 0.15) !important;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.9rem;
+    transition: var(--transition-smooth);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 0.25rem rgba(30, 86, 49, 0.1) !important;
+}
+
+/* Custom Accordion Styling */
+.accordion-item {
+    border: 1px solid rgba(30, 86, 49, 0.08) !important;
+    margin-bottom: 1rem;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: rgba(30, 86, 49, 0.03) !important;
+    color: var(--primary-color) !important;
+    box-shadow: none !important;
+}
+
+.accordion-button:focus {
+    box-shadow: none !important;
+}
+
+/* Timeline Custom Markers */
+.border-start.border-success {
+    border-color: var(--primary-color) !important;
+}
+
+/* Micro-animations */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.animate-bounce {
+    animation: bounce 2s infinite ease-in-out;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c3d0c7;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a2b5a8;
+}
+
+/* Font helpers */
+.fs-7 {
+    font-size: 0.85rem !important;
+}
+
+.fs-8 {
+    font-size: 0.78rem !important;
+}
+
+.fs-9 {
+    font-size: 0.7rem !important;
 }

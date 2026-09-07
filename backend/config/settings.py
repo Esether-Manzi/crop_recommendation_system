@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from importlib.util import find_spec
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,9 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
+_debug_value = config('DEBUG', default='False')
+DEBUG = str(_debug_value).strip().lower() in {'1', 'true', 'yes', 'on', 'debug'}
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS',
+    default='127.0.0.1,localhost',
+    cast=lambda v: [s.strip() for s in v.split(',')]
+)
 
 
 # Application definition
@@ -42,11 +48,12 @@ INSTALLED_APPS = [
 
     'accounts',
     'recommendations',
-    # 'dashboard',
-    # 'farms',
-    # 'feedback',
-    # 'ai',
-    # 'advisory',
+    'dashboard',
+    'farms',
+    'feedback',
+    'ai',
+    'advisory',
+    'rotation',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +65,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# WhiteNoise is enabled automatically in environments where the declared
+# production dependency is installed. This keeps local development usable
+# when only application dependencies have been installed.
+if find_spec("whitenoise"):
+    MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 
 ROOT_URLCONF = 'config.urls'
 
@@ -118,7 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Kampala'   # Uganda: UTC+3, no DST
 
 USE_I18N = True
 
@@ -132,9 +145,68 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+# STATIC_ROOT is where collectstatic gathers all files for production serving
+STATIC_ROOT = BASE_DIR / "staticfiles"
+if find_spec("whitenoise"):
+    STORAGES = {
+        "staticfiles": {
+            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        },
+    }
 
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 AUTH_USER_MODEL = "accounts.User"
+
+
+# ── Production security (only active when DEBUG=False) ──────────────────────
+if not DEBUG:
+    SECURE_SSL_REDIRECT               = True
+    SECURE_HSTS_SECONDS               = 31536000   # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS    = True
+    SECURE_HSTS_PRELOAD               = True
+    SESSION_COOKIE_SECURE             = True
+    CSRF_COOKIE_SECURE                = True
+    SECURE_BROWSER_XSS_FILTER         = True
+    SECURE_CONTENT_TYPE_NOSNIFF       = True
+    X_FRAME_OPTIONS                   = 'DENY'
+
+
+# ── Logging ─────────────────────────────────────────────────────────────────
+_log_dir = BASE_DIR / 'logs'
+_log_dir.mkdir(exist_ok=True)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'logs' / 'django.log',
+            'formatter': 'verbose',
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'root': {
+        'handlers': ['file', 'console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+    },
+}

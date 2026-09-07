@@ -1,0 +1,242 @@
+[
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 1,
+    "fields": {
+      "crop_name": "maize",
+      "stage": "Preparation",
+      "title": "Land Preparation for Maize",
+      "description": "Clear all weeds and crop residue. Plough the land to a depth of 20cm at least 2-3 weeks before the onset of rains. Ensure a clean, loose, and well-pulverized seedbed to facilitate deep root penetration."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 2,
+    "fields": {
+      "crop_name": "maize",
+      "stage": "Planting",
+      "title": "Maize Planting and Spacing",
+      "description": "Plant immediately when rains become steady. Optimal spacing is 75cm between rows and 25cm between plants within the row. Plant 1 seed per hole at a depth of 5cm. Expected seed rate: 25 kg per hectare."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 3,
+    "fields": {
+      "crop_name": "maize",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Maize",
+      "description": "Apply Basal fertilizer (DAP or NPK 17:17:17) at planting at a rate of 50kg/acre. Top-dress with Urea at 50kg/acre when the maize is knee-high (around 5-6 weeks after planting) during moist soil conditions."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 4,
+    "fields": {
+      "crop_name": "maize",
+      "stage": "Weeding",
+      "title": "Weeding and Herbicide Schedule",
+      "description": "Keep the garden weed-free, especially during the first 4-8 weeks. Perform the first weeding 2-3 weeks after crop emergence, and a second weeding 3-4 weeks later before tasseling starts."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 5,
+    "fields": {
+      "crop_name": "maize",
+      "stage": "Pests",
+      "title": "Fall Armyworm and Stalk Borer Control",
+      "description": "Scout weekly for Fall Armyworm damage (leaf feeding holes and frass). If detected, spray with registered insecticides such as Emamectin benzoate or Lufenuron in the early morning or late evening when caterpillars are active."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 6,
+    "fields": {
+      "crop_name": "maize",
+      "stage": "Diseases",
+      "title": "Maize Lethal Necrosis and Rust Management",
+      "description": "Plant certified disease-resistant hybrid seed varieties. Practice crop rotation with non-cereal crops (like beans or groundnuts) and immediately uproot and burn infected plants showing mosaic or yellowing patterns."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 7,
+    "fields": {
+      "crop_name": "maize",
+      "stage": "Harvest",
+      "title": "Harvesting Maize",
+      "description": "Harvest when the leaves turn yellow and dry, and the moisture content of grain drops to around 18-20%. De-husk and sun-dry on clean tarpaulins to prevent soil contamination and aflatoxins."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 8,
+    "fields": {
+      "crop_name": "maize",
+      "stage": "Storage",
+      "title": "Safe Post-Harvest Storage",
+      "description": "Dry grains to 13.5% moisture content (kernels make a sharp cracking sound when bitten). Store in clean, airtight hermetic bags (PICS bags) or metal silos to protect against maize weevils without chemical dusts."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 9,
+    "fields": {
+      "crop_name": "gardenbean",
+      "stage": "Preparation",
+      "title": "Land Preparation for Beans",
+      "description": "Beans require a fine, weed-free seedbed. Plough twice to break up large clay clods. Ensure adequate drainage as beans are highly sensitive to waterlogging."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 10,
+    "fields": {
+      "crop_name": "gardenbean",
+      "stage": "Planting",
+      "title": "Bean Planting and Spacing",
+      "description": "Optimal planting spacing is 50cm between rows and 10cm between seeds within the row. Plant at a depth of 3-4cm. Seed rate: 60-80 kg/hectare depending on bean size."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 11,
+    "fields": {
+      "crop_name": "gardenbean",
+      "stage": "Fertilizer",
+      "title": "Nutrient Management for Beans",
+      "description": "Beans fix their own Nitrogen via root nodules. Apply a phosphorus-rich basal fertilizer like TSP or SSP at planting (approx 30-40kg/acre) to stimulate root development and nodulation."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 12,
+    "fields": {
+      "crop_name": "gardenbean",
+      "stage": "Weeding",
+      "title": "Weeding Beans",
+      "description": "Hand-weed beans 2-3 weeks after emergence. Avoid weeding when the bean plants are wet or during flowering to prevent flower shedding and spread of fungal spores."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 13,
+    "fields": {
+      "crop_name": "gardenbean",
+      "stage": "Pests",
+      "title": "Bean Fly and Aphids Control",
+      "description": "Bean fly larvae mine inside the stem causing wilting. Use insecticide seed dressing before planting. For aphids, spray with soapy water or systemic insecticides (Imidacloprid) if populations build up."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 14,
+    "fields": {
+      "crop_name": "gardenbean",
+      "stage": "Diseases",
+      "title": "Anthracnose and Bean Mosaic Virus",
+      "description": "Use clean, certified disease-free seeds. Avoid working in the garden while plants are wet. Uproot virus-infected plants showing leaf curling or mosaic patterns immediately."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 15,
+    "fields": {
+      "crop_name": "gardenbean",
+      "stage": "Harvest",
+      "title": "Harvesting Beans",
+      "description": "Harvest when pods turn yellow-brown and dry. Uproot the entire plant in the morning (to prevent pod shattering) and dry on tarpaulins for 3-5 days."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 16,
+    "fields": {
+      "crop_name": "gardenbean",
+      "stage": "Storage",
+      "title": "Storage of Dry Beans",
+      "description": "Thresh beans carefully. Sort out broken, discolored, or mouldy grains. Store at 12-13% moisture level in hermetic bags. Add food-grade diatomaceous earth or ash to prevent bean weevils."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 17,
+    "fields": {
+      "crop_name": "cassava",
+      "stage": "Preparation",
+      "title": "Land Preparation for Cassava",
+      "description": "Cassava needs deep loose soils for root expansion. Plough the field and construct ridges or mounds. Ridges are recommended for heavy soils to avoid water accumulation around the roots."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 18,
+    "fields": {
+      "crop_name": "cassava",
+      "stage": "Planting",
+      "title": "Cassava Planting Methods",
+      "description": "Plant healthy, disease-free stem cuttings (cuttings should be 20-30cm long with 4-6 nodes). Insert cuttings into the soil at an angle of 45 degrees, burying 2/3 of the length. Spacing: 1m x 1m."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 19,
+    "fields": {
+      "crop_name": "cassava",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Requirements for Cassava",
+      "description": "Cassava is tolerant to low nutrients but responds well to Potassium. Apply organic manure during land prep. If using inorganic fertilizers, apply NPK 15:15:15 at 80kg/acre around 6-8 weeks after planting."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 20,
+    "fields": {
+      "crop_name": "cassava",
+      "stage": "Weeding",
+      "title": "Weeding Cassava Fields",
+      "description": "Weed regularly during the first 3-4 months until the crop canopy closes and suppresses weeds naturally. Be careful not to damage the emerging tuberous roots near the surface."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 21,
+    "fields": {
+      "crop_name": "cassava",
+      "stage": "Pests",
+      "title": "Cassava Green Mite and Mealybugs",
+      "description": "Release biological predators or spray with organic neem oil for mite infestations. Practice early planting to ensure crop maturity before the dry season when pest populations surge."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 22,
+    "fields": {
+      "crop_name": "cassava",
+      "stage": "Diseases",
+      "title": "Cassava Mosaic Disease (CMD)",
+      "description": "Plant CMD-tolerant varieties developed by NARO Uganda (e.g. NASE series). Rogue (uproot) infected plants showing yellow-green mosaic leaf spots to limit whitefly transmission."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 23,
+    "fields": {
+      "crop_name": "cassava",
+      "stage": "Harvest",
+      "title": "Harvesting Cassava",
+      "description": "Harvest between 9-12 months depending on variety. Cut stem foliage 2 weeks before harvest to concentrate starch in the roots. Carefully dig around the root cluster and pull to avoid snapping."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 24,
+    "fields": {
+      "crop_name": "cassava",
+      "stage": "Storage",
+      "title": "Post-Harvest Processing",
+      "description": "Fresh cassava spoils within 48 hours. Process immediately by peeling, washing, chipping, and sun-drying to produce cassava chips/flour. Keep dried chips in cool dry storage."
+    }
+  }
+]

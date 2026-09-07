@@ -8,6 +8,7 @@ registration, login, and logout.
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 
 from .forms import UserRegistrationForm
 
@@ -74,6 +75,7 @@ def login_view(request):
     return render(request, "accounts/login.html")
 
 
+@require_POST
 def logout_view(request):
     """
     Log the current user out.

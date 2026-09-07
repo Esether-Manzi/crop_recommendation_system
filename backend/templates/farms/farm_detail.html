@@ -1,0 +1,247 @@
+{% extends "base/base.html" %}
+
+{% block title %}{{ farm.farm_name }} - Crop Advisor{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="{% url 'farms:list' %}" class="btn btn-outline-secondary rounded-pill fw-semibold">
+        <i class="fa-solid fa-arrow-left me-2"></i>Back to Farms
+    </a>
+</div>
+
+<div class="row g-4">
+    <!-- Main Detail Panel -->
+    <div class="col-lg-8">
+        <!-- Farm Info Header -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-success text-white">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <span class="badge bg-white text-success px-3 py-2 rounded-pill fs-7 fw-bold mb-2">
+                        <i class="fa-solid fa-seedling me-1"></i>{{ farm.soil_type }} Soil
+                    </span>
+                    <h1 class="fw-bold mb-1">{{ farm.farm_name }}</h1>
+                    <p class="mb-0 fs-6"><i class="fa-solid fa-location-dot me-1"></i>{{ farm.subcounty }}, {{ farm.district }} District</p>
+                </div>
+                <div class="bg-white bg-opacity-25 rounded-4 p-3 text-center">
+                    <span class="d-block fs-8 text-uppercase tracking-wider opacity-75">Farm Size</span>
+                    <span class="fs-3 fw-bold">{{ farm.size_acres }}</span>
+                    <span class="fs-8 d-block opacity-75">Acres</span>
+                </div>
+            </div>
+            
+            <hr class="my-3 opacity-25">
+
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                <div class="fs-7">
+                    <i class="fa-solid fa-compass me-1"></i>GPS Coordinates: 
+                    {% if farm.latitude and farm.longitude %}
+                        <strong>{{ farm.latitude|stringformat:".4f" }}, {{ farm.longitude|stringformat:".4f" }}</strong>
+                    {% else %}
+                        <span class="opacity-75">Not recorded</span>
+                    {% endif %}
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{% url 'recommendations:predict_crop' %}?farm_id={{ farm.id }}" class="btn btn-white text-success rounded-pill fw-bold">
+                        <i class="fa-solid fa-robot me-1"></i>Get Recommendation
+                    </a>
+                    <a href="{% url 'rotation:planner' %}?farm_id={{ farm.id }}" class="btn btn-light rounded-pill fw-bold text-success">
+                        <i class="fa-solid fa-rotate me-1"></i>Rotation Planner
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Soil Nutrient History Chart -->
+        {% if soil_records|length > 1 %}
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+            <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-chart-line me-2"></i>Soil Nutrient Trends</h4>
+            <div style="height: 300px;">
+                <canvas id="soilTrendChart"></canvas>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Soil Record History Table -->
+        <div class="card border-0 shadow-sm rounded-4 p-4">
+            <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-clock-rotate-left me-2"></i>Soil Logs</h4>
+            
+            {% if soil_records %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr class="text-muted fs-7">
+                            <th>Date</th>
+                            <th class="text-center">N (mg/kg)</th>
+                            <th class="text-center">P (mg/kg)</th>
+                            <th class="text-center">K (mg/kg)</th>
+                            <th class="text-center">pH</th>
+                            <th class="text-center">Temp (°C)</th>
+                            <th class="text-center">Hum (%)</th>
+                            <th class="text-center">Rain (mm)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for record in soil_records %}
+                        <tr>
+                            <td class="fw-semibold">{{ record.recorded_at|date:"Y-m-d H:i" }}</td>
+                            <td class="text-center text-primary fw-bold">{{ record.nitrogen }}</td>
+                            <td class="text-center text-success fw-bold">{{ record.phosphorus }}</td>
+                            <td class="text-center text-danger fw-bold">{{ record.potassium }}</td>
+                            <td class="text-center fw-bold">{{ record.ph }}</td>
+                            <td class="text-center">{{ record.temperature }}</td>
+                            <td class="text-center">{{ record.humidity }}</td>
+                            <td class="text-center">{{ record.rainfall }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <div class="text-muted mb-3" style="font-size: 40px;">
+                    <i class="fa-solid fa-flask"></i>
+                </div>
+                <h5 class="fw-bold">No Soil Records Found</h5>
+                <p class="text-muted fs-7">
+                    Please use the form on the right to log your first soil test parameters.
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Soil Logging Sidebar -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-lg rounded-4 p-4 sticky-top" style="top: 2rem; z-index: 100;">
+            <h3 class="fw-bold text-success mb-2"><i class="fa-solid fa-flask-vial me-2"></i>Log Soil Test</h3>
+            <p class="text-muted fs-7 mb-4">
+                Record new chemical and weather parameters for this farm to refresh AI crop models.
+            </p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="row g-2 mb-3">
+                    <div class="col-4">
+                        <label class="form-label fw-semibold text-muted fs-7">Nitrogen (N)</label>
+                        {{ form.nitrogen }}
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label fw-semibold text-muted fs-7">Phos (P)</label>
+                        {{ form.phosphorus }}
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label fw-semibold text-muted fs-7">Potas (K)</label>
+                        {{ form.potassium }}
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <label class="form-label fw-semibold text-muted fs-7">Soil pH</label>
+                        {{ form.ph }}
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label fw-semibold text-muted fs-7">Temp (°C)</label>
+                        {{ form.temperature }}
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-4">
+                    <div class="col-6">
+                        <label class="form-label fw-semibold text-muted fs-7">Humidity (%)</label>
+                        {{ form.humidity }}
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label fw-semibold text-muted fs-7">Rainfall (mm)</label>
+                        {{ form.rainfall }}
+                    </div>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold">
+                        <i class="fa-solid fa-circle-check me-2"></i>Save Soil Log
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if soil_records|length > 1 %}
+<!-- Chart.js and rendering script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const ctx = document.getElementById('soilTrendChart').getContext('2d');
+        
+        // Reverse array to show chronological order
+        const records = [
+            {% for record in soil_records %}
+            {
+                date: "{{ record.recorded_at|date:'Y-m-d' }}",
+                n: {{ record.nitrogen }},
+                p: {{ record.phosphorus }},
+                k: {{ record.potassium }}
+            },
+            {% endfor %}
+        ].reverse();
+        
+        const labels = records.map(r => r.date);
+        const nData = records.map(r => r.n);
+        const pData = records.map(r => r.p);
+        const kData = records.map(r => r.k);
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Nitrogen (N)',
+                        data: nData,
+                        borderColor: '#0d6efd',
+                        backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    },
+                    {
+                        label: 'Phosphorus (P)',
+                        data: pData,
+                        borderColor: '#198754',
+                        backgroundColor: 'rgba(25, 135, 84, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    },
+                    {
+                        label: 'Potassium (K)',
+                        data: kData,
+                        borderColor: '#dc3545',
+                        backgroundColor: 'rgba(220, 53, 69, 0.1)',
+                        tension: 0.3,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Nutrient Value (mg/kg)'
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endif %}
+{% endblock %}

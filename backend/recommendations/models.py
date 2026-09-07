@@ -8,6 +8,13 @@ class Prediction(models.Model):
         on_delete=models.CASCADE,
         related_name="predictions"
     )
+    farm = models.ForeignKey(
+        "farms.Farm",
+        on_delete=models.SET_NULL,
+        related_name="predictions",
+        blank=True,
+        null=True,
+    )
 
     nitrogen = models.FloatField()
     phosphorus = models.FloatField()

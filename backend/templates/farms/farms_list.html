@@ -1,0 +1,139 @@
+{% extends "base/base.html" %}
+
+{% block title %}My Farms - Crop Advisor{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- List of Farms -->
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-success fw-bold"><i class="fa-solid fa-seedling me-2"></i>My Farms</h2>
+            <span class="badge bg-success px-3 py-2 rounded-pill fs-6">{{ farms|length }} Farm{{ farms|pluralize }}</span>
+        </div>
+
+        {% if farms %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for farm in farms %}
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <span class="badge bg-light text-success border border-success-subtle px-3 py-2 rounded-pill fs-7">
+                                <i class="fa-solid fa-earth-africa me-1"></i>{{ farm.soil_type }} Soil
+                            </span>
+                            <small class="text-muted"><i class="fa-regular fa-calendar me-1"></i>{{ farm.created_at|date:"M Y" }}</small>
+                        </div>
+                        <h4 class="card-title fw-bold text-dark mb-1">{{ farm.farm_name }}</h4>
+                        <p class="text-muted mb-3"><i class="fa-solid fa-location-dot text-danger me-1"></i>{{ farm.subcounty }}, {{ farm.district }}</p>
+                        
+                        <div class="row g-2 mb-4 fs-7 bg-light p-3 rounded-3">
+                            <div class="col-6">
+                                <strong class="text-muted d-block">Size:</strong>
+                                <span class="text-dark fw-semibold">{{ farm.size_acres }} Acres</span>
+                            </div>
+                            <div class="col-6">
+                                <strong class="text-muted d-block">GPS Coordinates:</strong>
+                                {% if farm.latitude and farm.longitude %}
+                                <span class="text-dark fw-semibold">{{ farm.latitude|stringformat:".4f" }}, {{ farm.longitude|stringformat:".4f" }}</span>
+                                {% else %}
+                                <span class="text-muted italic">Not recorded</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'farms:detail' farm.id %}" class="btn btn-success rounded-pill fw-semibold">
+                                <i class="fa-solid fa-folder-open me-2"></i>Manage Farm
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+            <div class="text-success mb-4" style="font-size: 60px;">
+                <i class="fa-solid fa-tractor"></i>
+            </div>
+            <h4 class="fw-bold">No Farms Registered Yet</h4>
+            <p class="text-muted mx-auto" style="max-width: 450px;">
+                Start by registering your first farm field. This will allow you to record soil test parameters, get sequential crop recommendations, and track crop schedules.
+            </p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Register New Farm -->
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-lg rounded-4 p-4 sticky-top" style="top: 2rem; z-index: 100;">
+            <h3 class="fw-bold text-success mb-3"><i class="fa-solid fa-plus-circle me-2"></i>Add New Farm</h3>
+            <p class="text-muted fs-7 mb-4">
+                Register a new field or cultivation block to track its history, run soil analysis, and rotation guides.
+            </p>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-muted fs-7">Farm / Field Name</label>
+                    {{ form.farm_name }}
+                    {% if form.farm_name.errors %}
+                        <div class="text-danger fs-8 mt-1">{{ form.farm_name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-muted fs-7">District</label>
+                        {{ form.district }}
+                        {% if form.district.errors %}
+                            <div class="text-danger fs-8 mt-1">{{ form.district.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-muted fs-7">Subcounty</label>
+                        {{ form.subcounty }}
+                        {% if form.subcounty.errors %}
+                            <div class="text-danger fs-8 mt-1">{{ form.subcounty.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-muted fs-7">Size (Acres)</label>
+                        {{ form.size_acres }}
+                        {% if form.size_acres.errors %}
+                            <div class="text-danger fs-8 mt-1">{{ form.size_acres.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-muted fs-7">Soil Type</label>
+                        {{ form.soil_type }}
+                        {% if form.soil_type.errors %}
+                            <div class="text-danger fs-8 mt-1">{{ form.soil_type.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row g-2 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-muted fs-7">Latitude (Optional)</label>
+                        {{ form.latitude }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold text-muted fs-7">Longitude (Optional)</label>
+                        {{ form.longitude }}
+                    </div>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success btn-lg rounded-pill fw-bold">
+                        <i class="fa-solid fa-floppy-disk me-2"></i>Save Farm
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

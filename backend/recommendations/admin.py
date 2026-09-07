@@ -6,7 +6,12 @@ from .models import Prediction
 class PredictionAdmin(admin.ModelAdmin):
     list_display = (
         "user",
+        "farm",
         "predicted_crop",
+        "nitrogen",
+        "phosphorus",
+        "potassium",
+        "ph",
         "created_at",
     )
 
@@ -17,5 +22,6 @@ class PredictionAdmin(admin.ModelAdmin):
 
     search_fields = (
         "user__username",
+        "farm__farm_name",
         "predicted_crop",
     )

@@ -2,7 +2,15 @@ asgiref==3.11.1
 crispy-bootstrap5==2026.3
 Django==6.0.6
 django-crispy-forms==2.6
+gunicorn==23.0.0
+joblib==1.5.3
 mysqlclient==2.2.8
+numpy==2.4.6
+pandas==3.0.3
 pillow==12.2.0
 python-decouple==3.8
+scikit-learn==1.9.0
+shap==0.52.0
 sqlparse==0.5.5
+whitenoise==6.9.0
+xgboost==3.3.0

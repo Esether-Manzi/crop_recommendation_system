@@ -1,0 +1,88 @@
+{% extends "base/base.html" %}
+
+{% block title %}Agronomic Advisories - Crop Advisor{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="text-success fw-bold mb-4"><i class="fa-solid fa-book-open-reader me-2"></i>Agronomic Knowledge Base</h2>
+
+    <div class="row g-4">
+        <!-- Crop Select Sidebar -->
+        <div class="col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 2rem;">
+                <h5 class="fw-bold text-success mb-3"><i class="fa-solid fa-leaf me-2"></i>Select Crop</h5>
+                <div class="list-group list-group-flush">
+                    {% for crop in crops %}
+                    <a href="?crop={{ crop }}" class="list-group-item list-group-item-action border-0 rounded-3 px-3 py-2 fw-semibold {% if selected_crop == crop %}bg-success text-white{% else %}text-muted{% endif %}">
+                        <i class="fa-solid fa-chevron-right me-2 fs-9"></i>{{ crop|title }}
+                    </a>
+                    {% empty %}
+                    <p class="text-muted fs-7">No agronomic seed data loaded yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Advisory Sheet Details -->
+        <div class="col-lg-9">
+            {% if selected_crop and advisories %}
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white mb-4">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-success text-white rounded-circle p-3 me-3" style="width: 50px; height:50px; display:inline-flex; align-items:center; justify-content:center; font-size:24px;">
+                        🌾
+                    </div>
+                    <div>
+                        <h2 class="fw-bold text-dark mb-0">{{ selected_crop|title }}</h2>
+                        <span class="fs-8 text-muted">Complete NARO / FAO Agronomic Advisory Profile</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Navigation for Stages -->
+            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                <ul class="nav nav-pills nav-fill mb-4 bg-light p-2 rounded-pill gap-1" id="advisoryTabs" role="tablist">
+                    {% for adv in advisories %}
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-pill fw-semibold py-2 {% if forloop.first %}active{% endif %} text-dark" id="tab-{{ adv.stage }}" data-bs-toggle="pill" data-bs-target="#pane-{{ adv.stage }}" type="button" role="tab">
+                            {{ adv.get_stage_display }}
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="tab-content" id="advisoryTabsContent">
+                    {% for adv in advisories %}
+                    <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="pane-{{ adv.stage }}" role="tabpanel">
+                        <div class="p-4 bg-light bg-opacity-50 rounded-4 border">
+                            <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-circle-info me-2"></i>{{ adv.title }}</h4>
+                            <p class="lead fs-6 text-muted mb-0" style="line-height: 1.8;">
+                                {{ adv.description }}
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <!-- Blank State -->
+            <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white" style="min-height: 400px; display:flex; flex-column; justify-content:center; align-items:center;">
+                <div class="text-success mb-4" style="font-size: 60px;">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <h4 class="fw-bold">No Crop Selected</h4>
+                <p class="text-muted mx-auto" style="max-width: 400px;">
+                    Please select a crop from the left sidebar to load its stage-by-stage agronomic instructions.
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .nav-pills .nav-link.active {
+        background-color: #198754 !important;
+        color: white !important;
+    }
+</style>
+{% endblock %}

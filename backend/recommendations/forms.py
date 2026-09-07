@@ -1,33 +1,38 @@
 from django import forms
 
-
-
 class PredictionForm(forms.Form):
 
     nitrogen = forms.FloatField(
-        widget=forms.NumberInput(attrs={"class": "form-control"})
+        min_value=0, max_value=1000,
+        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 1000})
     )
 
     phosphorus = forms.FloatField(
-        widget=forms.NumberInput(attrs={"class": "form-control"})
+        min_value=0, max_value=1000,
+        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 1000})
     )
 
     potassium = forms.FloatField(
-        widget=forms.NumberInput(attrs={"class": "form-control"})
+        min_value=0, max_value=1000,
+        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 1000})
     )
 
     temperature = forms.FloatField(
-        widget=forms.NumberInput(attrs={"class": "form-control"})
+        min_value=-10, max_value=60,
+        widget=forms.NumberInput(attrs={"class": "form-control", "min": -10, "max": 60, "step": "0.1"})
     )
 
     humidity = forms.FloatField(
-        widget=forms.NumberInput(attrs={"class": "form-control"})
+        min_value=0, max_value=100,
+        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 100, "step": "0.1"})
     )
 
     ph = forms.FloatField(
-        widget=forms.NumberInput(attrs={"class": "form-control"})
+        min_value=3.5, max_value=8.5,
+        widget=forms.NumberInput(attrs={"class": "form-control", "min": 3.5, "max": 8.5, "step": "0.1"})
     )
 
     rainfall = forms.FloatField(
-        widget=forms.NumberInput(attrs={"class": "form-control"})
+        min_value=0, max_value=10000,
+        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 10000})
     )
