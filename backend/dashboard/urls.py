@@ -17,8 +17,11 @@ app_name = "dashboard"
 URL configuration for the Dashboard app.
 """
 urlpatterns = [
-    
+
 
     # Landing Page
     path("", views.dashboard_home, name="home"),
+
+    # Crop photo attribution (Wikimedia Commons sources)
+    path("credits/", views.image_credits, name="credits"),
 ]

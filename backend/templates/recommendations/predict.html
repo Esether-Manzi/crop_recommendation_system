@@ -516,28 +516,48 @@
 const STATIC_ROOT = "{% static 'images/crops/' %}";
 
 const CROP_IMAGES = {
-  "maize":       "maize.png",
-  "banana":      "banana.png",
-  "cassava":     "cassava.png",
-  "rice":        "rice.png",
-  "pigeonpeas":  "pigeonpeas.png",
-  "sorghum":     "sorghum.png",
-  "mango":       "mango.png",
-  "sweetpotato": "sweetpotato.png",
-  "tobacco":     "tobacco.png",
-  "soyabean":    "soyabean.png",
-  "tea":         "tea.png",
-  "groundnut":   "groundnut.png",
-  "coffee":      "coffee.png",
+  "maize":         "maize.png",
+  "banana":        "banana.png",
+  "cassava":       "cassava.png",
+  "rice":          "rice.png",
+  "pigeonpeas":    "pigeonpeas.png",
+  "sorghum":       "sorghum.png",
+  "mango":         "mango.png",
+  "sweetpotato":   "sweetpotato.png",
+  "tobacco":       "tobacco.png",
+  "soyabean":      "soyabean.png",
+  "tea":           "tea.png",
+  "groundnut":     "groundnut.png",
+  "coffee":        "coffee.png",
+  "apple":         "apple.jpg",
+  "blackgram":     "blackgram.jpg",
+  "chickpea":      "chickpea.jpg",
+  "cocoa":         "cocoa.jpg",
+  "coconut":       "coconut.jpg",
+  "cotton":        "cotton.jpg",
+  "gardenbean":    "gardenbean.jpg",
+  "grapes":        "grapes.jpg",
+  "jute":          "jute.jpg",
+  "kidneybeans":   "kidneybeans.jpg",
+  "lentil":        "lentil.jpg",
+  "millet":        "millet.jpg",
+  "mungbean":      "mungbean.jpg",
+  "muskmelon":     "muskmelon.jpg",
+  "onion":         "onion.jpg",
+  "orange":        "orange.jpg",
+  "papaya":        "papaya.jpg",
+  "plantain":      "plantain.jpg",
+  "pomegranate":   "pomegranate.jpg",
+  "sesameseed":    "sesameseed.jpg",
+  "sugarcane":     "sugarcane.jpg",
+  "sunflowerseed": "sunflowerseed.jpg",
+  "vanilla":       "vanilla.jpg",
+  "watermelon":    "watermelon.jpg",
 };
 
-/* Icon fallbacks by crop name for those not yet photographed */
-const CROP_ICONS = {
-  "apple":"fa-apple-whole",  "pomegranate":"fa-apple-whole",
-  "orange":"fa-lemon",
-  "millet":"fa-wheat-awn",  "sesameseed":"fa-wheat-awn",
-  "cocoa":"fa-mug-hot",
-};
+/* Icon fallback for the one crop without a verified photo yet (Moth Beans —
+   Wikimedia rate-limited the fetch; retry later and add it to CROP_IMAGES) */
+const CROP_ICONS = {};
 const DEFAULT_CROP_ICON = "fa-seedling";
 
 function getCropIcon(cropLower) {

@@ -5,6 +5,10 @@ from recommendations.models import Prediction
 from feedback.models import HarvestFeedback
 
 
+def image_credits(request):
+    return render(request, "dashboard/image_credits.html")
+
+
 def dashboard_home(request):
     if not request.user.is_authenticated:
         return render(request, "home/index.html")
