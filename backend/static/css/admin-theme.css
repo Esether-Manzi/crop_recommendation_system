@@ -1,0 +1,82 @@
+/* ── CropAI Django admin theme ──────────────────────────────
+   Reskins the default Django admin colour scheme to match the
+   farmer-facing app (forest green + gold accent) by overriding
+   the CSS custom properties Django's own admin CSS defines.
+──────────────────────────────────────────────────────────────── */
+:root, html[data-theme="light"] {
+    --primary: #1e5631;
+    --secondary: #143b21;
+    --accent: #e8a33d;
+    --primary-fg: #fff;
+
+    --header-color: #f4f6f4;
+    --header-branding-color: var(--accent);
+    --header-bg: var(--secondary);
+    --header-link-color: var(--primary-fg);
+
+    --breadcrumbs-fg: #cfe3d5;
+    --breadcrumbs-link-fg: var(--body-bg);
+    --breadcrumbs-bg: var(--secondary);
+
+    --link-fg: #1e5631;
+    --link-hover-color: #143b21;
+    --link-selected-fg: var(--secondary);
+
+    --button-bg: var(--primary);
+    --button-hover-bg: var(--secondary);
+    --default-button-bg: var(--secondary);
+    --default-button-hover-bg: var(--primary);
+
+    --object-tools-bg: var(--primary);
+    --object-tools-hover-bg: var(--secondary);
+}
+
+#site-name a {
+    display: flex;
+    align-items: center;
+}
+
+/* ── Dashboard stat cards ────────────────────────────────── */
+.cropai-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.cropai-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--body-bg);
+    border: 1px solid var(--hairline-color);
+    border-left: 4px solid var(--primary);
+    border-radius: 6px;
+    padding: 16px 18px;
+}
+
+.cropai-stat-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.cropai-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--body-loud-color);
+}
+
+.cropai-stat-label {
+    font-size: 0.8rem;
+    color: var(--body-quiet-color);
+    margin-top: 2px;
+}

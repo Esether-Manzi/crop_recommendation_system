@@ -19,6 +19,8 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from . import admin_site  # noqa: F401 — applies CropAI branding to admin.site on import
+
 urlpatterns = [
 
     # Django Administration Site
