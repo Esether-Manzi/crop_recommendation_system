@@ -5,6 +5,9 @@
 
 {% block extrastyle %}
 {{ block.super }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="{% static 'css/admin-theme.css' %}">
 {% endblock %}
@@ -12,7 +15,7 @@
 {% block branding %}
 <div id="site-name">
     <a href="{% url 'admin:index' %}">
-        <i class="fa-solid fa-seedling me-2"></i>{{ site_header|default:_('Django administration') }}
+        <i class="fa-solid fa-seedling"></i>{{ site_header|default:_('Django administration') }}
     </a>
 </div>
 {% if user.is_anonymous %}

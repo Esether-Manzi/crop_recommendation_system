@@ -1,22 +1,29 @@
-/* ── CropAI Django admin theme ──────────────────────────────
-   Reskins the default Django admin colour scheme to match the
-   farmer-facing app (forest green + gold accent) by overriding
-   the CSS custom properties Django's own admin CSS defines.
-──────────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════
+   CropAI · Django admin theme
+   Reskins the default admin to the farmer-facing app's look:
+   forest green (#1e5631) + gold accent (#e8a33d) + cream, the
+   Outfit typeface, rounded cards and soft shadows. Built on the
+   CSS custom properties Django's own admin CSS exposes, plus a
+   handful of component rules for the dashboard overview.
+══════════════════════════════════════════════════════════════ */
+
 :root, html[data-theme="light"] {
     --primary: #1e5631;
     --secondary: #143b21;
     --accent: #e8a33d;
     --primary-fg: #fff;
 
+    --body-bg: #f4f6f4;
+    --body-fg: #2b3a30;
+
     --header-color: #f4f6f4;
     --header-branding-color: var(--accent);
-    --header-bg: var(--secondary);
+    --header-bg: linear-gradient(120deg, #143b21 0%, #1e5631 100%);
     --header-link-color: var(--primary-fg);
 
     --breadcrumbs-fg: #cfe3d5;
-    --breadcrumbs-link-fg: var(--body-bg);
-    --breadcrumbs-bg: var(--secondary);
+    --breadcrumbs-link-fg: #fff;
+    --breadcrumbs-bg: #143b21;
 
     --link-fg: #1e5631;
     --link-hover-color: #143b21;
@@ -27,56 +34,410 @@
     --default-button-bg: var(--secondary);
     --default-button-hover-bg: var(--primary);
 
-    --object-tools-bg: var(--primary);
-    --object-tools-hover-bg: var(--secondary);
+    --object-tools-bg: var(--secondary);
+    --object-tools-hover-bg: var(--primary);
+
+    --message-success-bg: #e6f2ea;
+    --selected-row: #f0f6f1;
+
+    --cropai-radius: 16px;
+    --cropai-card-shadow: 0 10px 30px rgba(30, 86, 49, 0.07);
+}
+
+html[data-theme="dark"] {
+    --primary: #4caf7d;
+    --secondary: #2e7d4f;
+    --accent: #e8a33d;
+    --header-bg: linear-gradient(120deg, #0f2417 0%, #14361f 100%);
+    --link-fg: #7fd1a3;
+    --link-hover-color: #a4e0c1;
+}
+
+/* ── Typography ────────────────────────────────────────── */
+body, .form-row, .button, input, select, textarea,
+#branding h1, .module h2, .module caption {
+    font-family: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ── Header / branding ─────────────────────────────────── */
+#header {
+    padding: 16px 40px;
+    box-shadow: 0 4px 18px rgba(20, 59, 33, 0.22);
 }
 
 #site-name a {
     display: flex;
     align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
 }
 
-/* ── Dashboard stat cards ────────────────────────────────── */
-.cropai-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 14px;
-    margin-bottom: 24px;
+@media (min-width: 1024px) {
+    #site-name a { font-size: 1.5rem; }
 }
 
-.cropai-stat-card {
+#site-name a i { color: var(--accent); }
+
+#user-tools {
+    font-size: 0.78rem;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+#user-tools a { border-bottom-color: rgba(255, 255, 255, 0.4); }
+
+div.breadcrumbs {
+    padding: 12px 40px;
+    font-size: 0.82rem;
+}
+
+/* ── Dashboard page layout ─────────────────────────────── */
+body.dashboard #content {
+    width: auto;
+    margin: 0;
+    display: block;
+}
+
+body.dashboard #content-main {
+    float: left;
+    width: calc(100% - 346px);
+}
+
+body.dashboard #content-related {
+    float: right;
+    width: 320px;
+    margin: 0;
+    background: transparent;
+}
+
+body.dashboard #content::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+@media (max-width: 1024px) {
+    body.dashboard #content-main,
+    body.dashboard #content-related {
+        float: none;
+        width: 100%;
+    }
+}
+
+/* ── Welcome banner ────────────────────────────────────── */
+.cropai-welcome {
     display: flex;
     align-items: center;
-    gap: 14px;
-    background: var(--body-bg);
-    border: 1px solid var(--hairline-color);
-    border-left: 4px solid var(--primary);
-    border-radius: 6px;
-    padding: 16px 18px;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 22px 0 24px;
+    padding: 24px 28px;
+    border-radius: var(--cropai-radius);
+    color: #fff;
+    background:
+        radial-gradient(circle at 108% -20%, rgba(232, 163, 61, 0.32), transparent 34%),
+        linear-gradient(135deg, #1e5631 0%, #143b21 100%);
+    box-shadow: 0 16px 38px rgba(20, 59, 33, 0.26);
 }
 
-.cropai-stat-icon {
-    width: 42px;
-    height: 42px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: var(--primary);
+.cropai-welcome h1 {
+    margin: 0 0 4px;
+    font-size: 1.5rem;
+    font-weight: 800;
     color: #fff;
+}
+
+.cropai-welcome p {
+    margin: 0;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.cropai-welcome-badge {
+    flex-shrink: 0;
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
+    background: rgba(255, 255, 255, 0.16);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* ── Stat cards ────────────────────────────────────────── */
+.cropai-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 26px;
+}
+
+@media (min-width: 768px)  { .cropai-stats-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1200px) { .cropai-stats-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.cropai-stat-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--body-bg);
+    background: #fff;
+    border: 1px solid rgba(30, 86, 49, 0.1);
+    border-radius: var(--cropai-radius);
+    padding: 18px 20px;
+    box-shadow: var(--cropai-card-shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+html[data-theme="dark"] .cropai-stat-card {
+    background: var(--darkened-bg, #1c1c1c);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.cropai-stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 44px rgba(30, 86, 49, 0.14);
+}
+
+.cropai-stat-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 13px;
+    background: rgba(30, 86, 49, 0.1);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+}
+
+.cropai-stat-card:nth-child(3n-1) .cropai-stat-icon {
+    background: rgba(232, 163, 61, 0.16);
+    color: #c4801f;
 }
 
 .cropai-stat-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1.1;
-    color: var(--body-loud-color);
+    font-size: 1.65rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--body-fg);
 }
 
 .cropai-stat-label {
-    font-size: 0.8rem;
-    color: var(--body-quiet-color);
-    margin-top: 2px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #8a978d;
+    margin-top: 4px;
+}
+
+.cropai-stat-trend {
+    font-size: 0.74rem;
+    font-weight: 600;
+    margin-top: 6px;
+    color: #7a8880;
+}
+
+.cropai-stat-trend.up   { color: #2e7d4f; }
+.cropai-stat-trend.down { color: #c0492f; }
+
+/* ── Module cards (app list + custom) ──────────────────── */
+.cropai-module,
+.dashboard #content-main .module,
+#content-related .module {
+    border: 1px solid rgba(30, 86, 49, 0.1);
+    border-radius: var(--cropai-radius);
+    overflow: hidden;
+    box-shadow: var(--cropai-card-shadow);
+    background: #fff;
+    margin-bottom: 20px;
+}
+
+html[data-theme="dark"] .cropai-module,
+html[data-theme="dark"] .dashboard #content-main .module,
+html[data-theme="dark"] #content-related .module {
+    background: #1c1c1c;
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.dashboard #content-main .module caption,
+.dashboard #content-main .module h2,
+.cropai-module-head h2,
+#content-related .module h2 {
+    background: linear-gradient(120deg, #1e5631, #143b21);
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 13px 18px;
+}
+
+.dashboard #content-main .module caption a,
+.dashboard #content-main .module h2 a { color: #fff; }
+
+.cropai-module-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(120deg, #1e5631, #143b21);
+    padding-right: 18px;
+}
+
+.cropai-module-head h2 { flex: 1; background: transparent; }
+.cropai-module-note {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.dashboard .module table th,
+.dashboard .module table td { padding: 11px 18px; }
+
+.dashboard .module table tr:hover td { background: var(--selected-row); }
+
+.cropai-chart-wrap {
+    position: relative;
+    height: 240px;
+    padding: 18px;
+}
+
+/* ── Activity feed (sidebar) ───────────────────────────── */
+.cropai-feed { list-style: none; margin: 0; padding: 8px 0; }
+
+.cropai-feed li {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    padding: 9px 18px;
+}
+
+.cropai-feed li + li { border-top: 1px solid rgba(30, 86, 49, 0.07); }
+
+.cropai-feed-dot {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background: rgba(30, 86, 49, 0.1);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+}
+
+.cropai-feed-text { display: flex; flex-direction: column; line-height: 1.35; }
+.cropai-feed-text strong { font-size: 0.85rem; }
+.cropai-feed-meta { font-size: 0.72rem; color: #8a978d; }
+
+#recent-actions-module h3 {
+    padding: 10px 18px 4px;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #8a978d;
+}
+
+.actionlist { padding: 4px 18px 14px; }
+
+/* ── Buttons / object tools ────────────────────────────── */
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    border-radius: 999px;
+    font-weight: 600;
+    padding: 9px 18px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.button:hover, input[type=submit]:hover, a.button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(30, 86, 49, 0.22);
+}
+
+.object-tools a {
+    border-radius: 999px;
+    font-weight: 600;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* ── Forms ─────────────────────────────────────────────── */
+.module { border-radius: var(--cropai-radius); }
+
+fieldset.module { box-shadow: var(--cropai-card-shadow); }
+
+input[type=text], input[type=password], input[type=email], input[type=url],
+input[type=number], input[type=tel], textarea, select, .vTextField {
+    border-radius: 10px;
+    border: 1.5px solid rgba(30, 86, 49, 0.18);
+    padding: 8px 12px;
+}
+
+input:focus, textarea:focus, select:focus, .vTextField:focus {
+    border-color: var(--primary) !important;
+    outline: 0;
+    box-shadow: 0 0 0 4px rgba(30, 86, 49, 0.12);
+}
+
+/* ── Changelist ───────────────────────────────────────── */
+#changelist .results {
+    border-radius: var(--cropai-radius);
+    overflow: hidden;
+    box-shadow: var(--cropai-card-shadow);
+}
+
+#changelist-filter { border-radius: var(--cropai-radius); }
+
+#changelist table thead th {
+    background: #eef3ef;
+    border-bottom: 2px solid rgba(30, 86, 49, 0.15);
+}
+
+html[data-theme="dark"] #changelist table thead th { background: #222; }
+
+#toolbar { border-radius: var(--cropai-radius); }
+
+#toolbar input[type=text] { border-radius: 999px; }
+
+.paginator a, .paginator .this-page {
+    border-radius: 8px;
+    padding: 4px 10px;
+}
+
+/* ── Login page ───────────────────────────────────────── */
+body.login {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(30, 86, 49, 0.12), transparent 40%),
+        radial-gradient(circle at 85% 80%, rgba(232, 163, 61, 0.14), transparent 40%),
+        var(--body-bg);
+}
+
+.login #container {
+    border-radius: 20px;
+    border: 1px solid rgba(30, 86, 49, 0.1);
+    box-shadow: 0 24px 60px rgba(20, 59, 33, 0.2);
+    overflow: hidden;
+}
+
+.login #header {
+    padding: 22px 26px;
+    background: linear-gradient(135deg, #1e5631, #143b21);
+}
+
+.login .submit-row input {
+    width: 100%;
+    padding: 11px;
+}
+
+/* ── Messages ─────────────────────────────────────────── */
+ul.messagelist li {
+    border-radius: 10px;
+    box-shadow: var(--cropai-card-shadow);
 }

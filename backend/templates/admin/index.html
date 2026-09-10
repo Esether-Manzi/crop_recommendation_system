@@ -12,30 +12,79 @@
 {% block nav-sidebar %}{% endblock %}
 
 {% block content %}
+<div id="content-main">
+
+<div class="cropai-welcome">
+    <div>
+        <h1>Dashboard Overview</h1>
+        <p>Live snapshot of CropAI activity — farmers, farms, model usage and season tracking.</p>
+    </div>
+    <div class="cropai-welcome-badge"><i class="fa-solid fa-leaf"></i></div>
+</div>
 
 {% if dashboard_stats %}
 <div class="cropai-stats-grid">
     {% for stat in dashboard_stats %}
     <div class="cropai-stat-card">
         <div class="cropai-stat-icon"><i class="fa-solid {{ stat.icon }}"></i></div>
-        <div>
+        <div class="cropai-stat-body">
             <div class="cropai-stat-value">{{ stat.value }}</div>
             <div class="cropai-stat-label">{{ stat.label }}</div>
+            {% if stat.trend %}
+            <div class="cropai-stat-trend {{ stat.trend_dir }}">
+                {% if stat.trend_dir == "up" %}<i class="fa-solid fa-arrow-trend-up"></i>
+                {% elif stat.trend_dir == "down" %}<i class="fa-solid fa-arrow-trend-down"></i>
+                {% else %}<i class="fa-solid fa-minus"></i>{% endif %}
+                {{ stat.trend }}
+            </div>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
 </div>
 {% endif %}
 
-<div id="content-main" class="app-list">
+{% if chart_counts %}
+<div class="cropai-module">
+    <div class="cropai-module-head">
+        <h2><i class="fa-solid fa-chart-column"></i> Prediction Activity</h2>
+        <span class="cropai-module-note">Last 14 days</span>
+    </div>
+    <div class="cropai-chart-wrap"><canvas id="adminPredictionChart"></canvas></div>
+</div>
+{% endif %}
+
+<div class="app-list">
   {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+
 </div>
 {% endblock %}
 
 {% block sidebar %}
 <div id="content-related">
+
+    <div class="module cropai-side-module">
+        <h2><i class="fa-solid fa-wand-magic-sparkles"></i> {% translate 'Latest predictions' %}</h2>
+        {% if recent_predictions %}
+        <ul class="cropai-feed">
+            {% for pred in recent_predictions %}
+            <li>
+                <span class="cropai-feed-dot"><i class="fa-solid fa-seedling"></i></span>
+                <span class="cropai-feed-text">
+                    <strong>{{ pred.predicted_crop|title }}</strong>
+                    <span class="cropai-feed-meta">{{ pred.user.username }} · {{ pred.created_at|date:"M j, H:i" }}</span>
+                </span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>{% translate 'None available' %}</p>
+        {% endif %}
+    </div>
+
     <div class="module" id="recent-actions-module">
-        <h2>{% translate 'Recent actions' %}</h2>
+        <h2><i class="fa-solid fa-clock-rotate-left"></i> {% translate 'Recent actions' %}</h2>
         <h3>{% translate 'My actions' %}</h3>
             {% load log %}
             {% get_admin_log 10 as admin_log for_user user %}
@@ -63,4 +112,47 @@
             {% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block extrahead %}{{ block.super }}
+{% if chart_counts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var el = document.getElementById("adminPredictionChart");
+        if (!el || typeof Chart === "undefined") return;
+        var g = el.getContext("2d").createLinearGradient(0, 0, 0, 240);
+        g.addColorStop(0, "rgba(30, 86, 49, 0.30)");
+        g.addColorStop(1, "rgba(30, 86, 49, 0.02)");
+        new Chart(el, {
+            type: "line",
+            data: {
+                labels: {{ chart_labels|safe }},
+                datasets: [{
+                    data: {{ chart_counts|safe }},
+                    borderColor: "#1e5631",
+                    backgroundColor: g,
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: "#e8a33d",
+                    pointBorderColor: "#fff",
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    });
+</script>
+{% endif %}
 {% endblock %}

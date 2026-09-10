@@ -23,4 +23,3 @@ class HarvestFeedbackAdmin(admin.ModelAdmin):
         "comments",
     )
     raw_id_fields = ("farm",)
-    date_hierarchy = "created_at"

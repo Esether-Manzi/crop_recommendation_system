@@ -360,3 +360,326 @@ main {
 .stage-node.done .stage-node-label {
     color: var(--primary-color);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   FARMER DASHBOARD
+   A cohesive card system: gradient hero, balanced stat grid,
+   panelled sections, and a soft load-in animation. Reference
+   layout borrowed from common admin templates; colours stay
+   on the app's forest-green + gold theme.
+═══════════════════════════════════════════════════════════ */
+:root {
+    --dash-radius: 18px;
+    --dash-border: 1px solid rgba(30, 86, 49, 0.08);
+    --dash-shadow: 0 12px 34px rgba(30, 86, 49, 0.06);
+    --dash-shadow-hover: 0 18px 44px rgba(30, 86, 49, 0.12);
+}
+
+/* ── Load-in animation ─────────────────────────────────── */
+@keyframes dashFadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.dash-animate {
+    opacity: 0;
+    animation: dashFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.dash-animate.d1 { animation-delay: 0.05s; }
+.dash-animate.d2 { animation-delay: 0.12s; }
+.dash-animate.d3 { animation-delay: 0.19s; }
+.dash-animate.d4 { animation-delay: 0.26s; }
+.dash-animate.d5 { animation-delay: 0.33s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .dash-animate { animation: none; opacity: 1; }
+}
+
+/* ── Hero banner ───────────────────────────────────────── */
+.dash-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--dash-radius);
+    padding: 2rem 2.25rem;
+    color: #fff;
+    background:
+        radial-gradient(circle at 106% -15%, rgba(232, 163, 61, 0.32), transparent 36%),
+        linear-gradient(135deg, #1e5631 0%, #143b21 100%);
+    box-shadow: 0 18px 40px rgba(20, 59, 33, 0.28);
+}
+
+.dash-hero::after {
+    content: "\f72d"; /* wheat-awn */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: -12px;
+    bottom: -34px;
+    font-size: 12rem;
+    line-height: 1;
+    opacity: 0.12;
+    transform: rotate(14deg);
+    pointer-events: none;
+}
+
+.dash-hero .hero-content { position: relative; z-index: 1; }
+
+.dash-hero h1 {
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.35rem;
+}
+
+.dash-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.1rem;
+}
+
+.dash-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(4px);
+}
+
+.dash-chip i { color: var(--accent-gold); }
+
+/* ── Stat grid ─────────────────────────────────────────── */
+.dash-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+@media (min-width: 992px) {
+    .dash-stats { grid-template-columns: repeat(4, 1fr); }
+}
+
+.dash-stat {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    background: #fff;
+    border: var(--dash-border);
+    border-radius: var(--dash-radius);
+    padding: 1.15rem 1.2rem;
+    box-shadow: var(--dash-shadow);
+    transition: var(--transition-smooth);
+}
+
+.dash-stat:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--dash-shadow-hover);
+}
+
+.dash-stat-icon {
+    flex-shrink: 0;
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    background: rgba(30, 86, 49, 0.1);
+    color: var(--primary-color);
+}
+
+.dash-stat-icon.gold { background: rgba(232, 163, 61, 0.16); color: var(--accent-gold-hover); }
+
+.dash-stat-value {
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #1f2a22;
+}
+
+.dash-stat-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #8a978d;
+    margin-top: 0.3rem;
+}
+
+.dash-stat-trend {
+    font-size: 0.74rem;
+    font-weight: 600;
+    margin-top: 0.35rem;
+    color: #6c7a70;
+}
+
+.dash-stat-trend i { color: var(--primary-color); }
+
+/* ── Quick actions row ─────────────────────────────────── */
+.qa-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.85rem;
+}
+
+@media (max-width: 991.98px) {
+    .qa-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 575.98px) {
+    .qa-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.qa-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+    text-align: center;
+    padding: 1.15rem 0.6rem;
+    border-radius: 16px;
+    text-decoration: none;
+    color: #23302a;
+    background: var(--qa-tint);
+    border: 1px solid var(--qa-line);
+    box-shadow: 0 8px 22px rgba(30, 86, 49, 0.05);
+    transition: var(--transition-smooth);
+}
+
+.qa-card:hover {
+    transform: translateY(-5px);
+    color: #23302a;
+    box-shadow: 0 16px 34px rgba(30, 86, 49, 0.14);
+}
+
+.qa-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #fff;
+    background: var(--qa-color);
+}
+
+.qa-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.25;
+}
+
+.qa-green { --qa-color: #1e5631; --qa-tint: rgba(30, 86, 49, 0.10);  --qa-line: rgba(30, 86, 49, 0.22); }
+.qa-gold  { --qa-color: #d9902a; --qa-tint: rgba(232, 163, 61, 0.16); --qa-line: rgba(232, 163, 61, 0.38); }
+.qa-teal  { --qa-color: #10796b; --qa-tint: rgba(16, 121, 107, 0.12); --qa-line: rgba(16, 121, 107, 0.30); }
+.qa-clay  { --qa-color: #c0562f; --qa-tint: rgba(192, 86, 47, 0.12);  --qa-line: rgba(192, 86, 47, 0.30); }
+.qa-moss  { --qa-color: #6d8b1f; --qa-tint: rgba(109, 139, 31, 0.14); --qa-line: rgba(109, 139, 31, 0.34); }
+
+/* ── Panels ────────────────────────────────────────────── */
+.dash-panel {
+    background: #fff;
+    border: var(--dash-border);
+    border-radius: var(--dash-radius);
+    box-shadow: var(--dash-shadow);
+    padding: 1.5rem 1.6rem;
+}
+
+.dash-panel + .dash-panel { margin-top: 1.25rem; }
+
+.dash-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.1rem;
+}
+
+.dash-panel-head h4,
+.dash-panel-head h5 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.dash-panel-head .dash-ico {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 86, 49, 0.1);
+    font-size: 0.9rem;
+}
+
+.dash-link {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.dash-link:hover { color: var(--primary-hover); text-decoration: underline; }
+
+/* ── List rows inside panels ───────────────────────────── */
+.dash-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(30, 86, 49, 0.07);
+}
+
+.dash-row:last-child { border-bottom: 0; }
+
+.dash-row-title { font-weight: 700; margin: 0 0 0.15rem; color: #1f2a22; }
+.dash-row-meta { font-size: 0.78rem; color: #8a978d; }
+
+/* ── Soil health gauge ─────────────────────────────────── */
+.soil-metric { margin-bottom: 0.9rem; }
+.soil-metric:last-child { margin-bottom: 0; }
+
+.soil-metric-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #5c6b60;
+}
+
+.soil-bar {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(30, 86, 49, 0.1);
+    overflow: hidden;
+}
+
+.soil-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #1e5631, #3f8f5b);
+}
+
+.soil-bar-fill.low  { background: linear-gradient(90deg, #b5462f, #e0653f); }
+.soil-bar-fill.warn { background: linear-gradient(90deg, #c4801f, #e8a33d); }
+
+/* ── Chart wrapper ─────────────────────────────────────── */
+.dash-chart-wrap { position: relative; height: 260px; }
+
+.dash-empty {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #97a29a;
+    font-size: 0.85rem;
+}

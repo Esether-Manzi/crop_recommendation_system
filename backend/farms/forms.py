@@ -24,9 +24,9 @@ class SoilRecordForm(forms.ModelForm):
             "nitrogen": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 50.0"}),
             "phosphorus": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 25.0"}),
             "potassium": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 35.0"}),
-            "ph": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 6.5", "step": "0.1"}),
-            "temperature": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 22.0", "step": "0.1"}),
-            "humidity": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 75.0", "step": "0.1"}),
+            "ph": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 6.5", "step": "any"}),
+            "temperature": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 22.0", "step": "any"}),
+            "humidity": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 75.0", "step": "any"}),
             "rainfall": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 1000.0", "step": "1.0"}),
         }
 

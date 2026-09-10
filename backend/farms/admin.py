@@ -25,7 +25,6 @@ class FarmAdmin(admin.ModelAdmin):
         "subcounty",
     )
     raw_id_fields = ("user",)
-    date_hierarchy = "created_at"
 
 
 @admin.register(SoilRecord)
@@ -48,4 +47,3 @@ class SoilRecordAdmin(admin.ModelAdmin):
     )
     search_fields = ("farm__farm_name", "farm__user__username")
     raw_id_fields = ("farm",)
-    date_hierarchy = "recorded_at"

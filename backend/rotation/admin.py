@@ -6,7 +6,6 @@ class RotationPlanAdmin(admin.ModelAdmin):
     list_display = ("id", "farm", "created_at")
     list_filter = ("created_at", "farm__district")
     search_fields = ("farm__farm_name", "farm__user__username")
-    date_hierarchy = "created_at"
 
 
 @admin.register(RotationStep)
