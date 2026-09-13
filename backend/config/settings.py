@@ -162,16 +162,24 @@ AUTH_USER_MODEL = "accounts.User"
 
 
 # ── Production security (only active when DEBUG=False) ──────────────────────
+# USE_HTTPS gates the settings that only make sense behind TLS (redirect-to-
+# HTTPS, HSTS, secure-only cookies) — set it once the site is actually served
+# over https://, e.g. via a domain + Let's Encrypt. Until then, DEBUG=False
+# still gets the non-HTTPS-dependent hardening below.
+USE_HTTPS = config('USE_HTTPS', default=False, cast=bool)
+
 if not DEBUG:
-    SECURE_SSL_REDIRECT               = True
-    SECURE_HSTS_SECONDS               = 31536000   # 1 year
-    SECURE_HSTS_INCLUDE_SUBDOMAINS    = True
-    SECURE_HSTS_PRELOAD               = True
-    SESSION_COOKIE_SECURE             = True
-    CSRF_COOKIE_SECURE                = True
     SECURE_BROWSER_XSS_FILTER         = True
     SECURE_CONTENT_TYPE_NOSNIFF       = True
     X_FRAME_OPTIONS                   = 'DENY'
+
+    if USE_HTTPS:
+        SECURE_SSL_REDIRECT               = True
+        SECURE_HSTS_SECONDS               = 31536000   # 1 year
+        SECURE_HSTS_INCLUDE_SUBDOMAINS    = True
+        SECURE_HSTS_PRELOAD               = True
+        SESSION_COOKIE_SECURE             = True
+        CSRF_COOKIE_SECURE                = True
 
 
 # ── Logging ─────────────────────────────────────────────────────────────────
