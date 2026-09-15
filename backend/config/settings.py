@@ -67,6 +67,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+from django.contrib.messages import constants as message_constants
+
+# Maps Django's "error" message level to Bootstrap's "danger" alert class.
+MESSAGE_TAGS = {
+    message_constants.ERROR: 'danger',
+}
+
 # WhiteNoise is enabled automatically in environments where the declared
 # production dependency is installed. This keeps local development usable
 # when only application dependencies have been installed.

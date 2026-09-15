@@ -15,12 +15,6 @@ Login
                         <p class="text-muted mb-0">Welcome back to the Crop Recommendation System.</p>
                     </div>
 
-                    {% if form.errors %}
-                    <div class="alert alert-danger" role="alert">
-                        Your username or password was incorrect. Please try again.
-                    </div>
-                    {% endif %}
-
                     <form method="post" novalidate>
                         {% csrf_token %}
 

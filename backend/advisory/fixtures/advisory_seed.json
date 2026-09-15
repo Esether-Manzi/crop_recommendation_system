@@ -238,5 +238,2805 @@
       "title": "Post-Harvest Processing",
       "description": "Fresh cassava spoils within 48 hours. Process immediately by peeling, washing, chipping, and sun-drying to produce cassava chips/flour. Keep dried chips in cool dry storage."
     }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 25,
+    "fields": {
+      "crop_name": "rice",
+      "stage": "Preparation",
+      "title": "Land Preparation for Rice",
+      "description": "Puddle lowland paddies by ploughing under 5-10cm of standing water to create a compact, weed-suppressing base, or for upland rice, plough and harrow to a fine tilth 2-3 weeks before planting. Level the field well so water depth stays even across the plot."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 26,
+    "fields": {
+      "crop_name": "rice",
+      "stage": "Planting",
+      "title": "Rice Planting and Spacing",
+      "description": "Transplant 20-25 day old seedlings at 20cm x 20cm spacing, 2-3 seedlings per hill, or direct-seed upland rice in rows 20cm apart at a seed rate of 60-80 kg/ha. Maintain 2-5cm of standing water in lowland paddies once seedlings establish."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 27,
+    "fields": {
+      "crop_name": "rice",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Rice",
+      "description": "Apply DAP or NPK 17:17:17 at 50kg/acre as basal dressing at transplanting. Top-dress with Urea at 50kg/acre split between tillering (3 weeks after transplanting) and panicle initiation (6-7 weeks) for best grain fill."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 28,
+    "fields": {
+      "crop_name": "rice",
+      "stage": "Weeding",
+      "title": "Weeding and Water Management",
+      "description": "Weed by hand or rotary weeder 2-3 weeks after transplanting and again at 5-6 weeks; draining the field briefly makes hand-weeding easier. Maintaining a consistent water layer in lowland rice suppresses most weeds between weedings."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 29,
+    "fields": {
+      "crop_name": "rice",
+      "stage": "Pests",
+      "title": "Stem Borer and Rice Bug Control",
+      "description": "Scout for deadhearts (wilted central shoots) from stem borer early in the season and whiteheads (empty panicles) later; remove and destroy affected tillers. Use registered insecticides only if damage exceeds 10% of tillers, and drain fields briefly to expose larvae to predators."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 30,
+    "fields": {
+      "crop_name": "rice",
+      "stage": "Diseases",
+      "title": "Rice Blast and Bacterial Blight Management",
+      "description": "Plant certified, blast-resistant varieties and avoid excess nitrogen, which increases blast susceptibility. For bacterial leaf blight (yellowing, wavy-margined lesions), avoid working in wet fields and remove infected plant debris after harvest."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 31,
+    "fields": {
+      "crop_name": "rice",
+      "stage": "Harvest",
+      "title": "Harvesting Rice",
+      "description": "Harvest when 80-85% of grains have turned golden-yellow and the moisture content is around 20-25%, typically 30-35 days after flowering. Cut, stack, and thresh promptly to avoid shattering losses and grain discoloration."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 32,
+    "fields": {
+      "crop_name": "rice",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Rice",
+      "description": "Dry paddy on tarpaulins until moisture drops to 13-14% before storage, testing by biting a grain - it should crack cleanly, not bend. Store in hermetic bags or sealed containers off the ground to protect from weevils and moisture."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 33,
+    "fields": {
+      "crop_name": "sorghum",
+      "stage": "Preparation",
+      "title": "Land Preparation for Sorghum",
+      "description": "Plough to 15-20cm depth and harrow to a fine seedbed 2-3 weeks before the rains. Sorghum tolerates poorer soils than maize, but removing perennial weeds early prevents early-season competition."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 34,
+    "fields": {
+      "crop_name": "sorghum",
+      "stage": "Planting",
+      "title": "Sorghum Planting and Spacing",
+      "description": "Plant at the onset of reliable rains, spacing rows 60-75cm apart with 15-20cm between plants, at a seed rate of 8-10 kg/ha. Sow 2 seeds per hole at 3-4cm depth and thin to one healthy seedling after emergence."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 35,
+    "fields": {
+      "crop_name": "sorghum",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Sorghum",
+      "description": "Apply DAP at 50kg/acre at planting. Top-dress with Urea at 25-35kg/acre around 4-5 weeks after emergence; sorghum generally needs less nitrogen than maize to avoid excessive vegetative growth and lodging."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 36,
+    "fields": {
+      "crop_name": "sorghum",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Sorghum",
+      "description": "Weed at 2-3 weeks after emergence while plants are still small and weeds are easiest to remove, and again at 5-6 weeks before canopy closure. Early weeding is critical since sorghum seedlings grow slowly at first."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 37,
+    "fields": {
+      "crop_name": "sorghum",
+      "stage": "Pests",
+      "title": "Sorghum Shoot Fly and Midge Control",
+      "description": "Scout for shoot fly damage (deadhearts) in the first 3 weeks after emergence and sorghum midge damage (empty florets) at flowering. Use resistant varieties where available and time planting to avoid peak fly populations."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 38,
+    "fields": {
+      "crop_name": "sorghum",
+      "stage": "Diseases",
+      "title": "Sorghum Anthracnose and Grain Mould",
+      "description": "Rotate with legumes and avoid continuous sorghum cropping to reduce anthracnose (red leaf lesions) buildup in soil. Harvest promptly at maturity and dry quickly to limit grain mould in wet weather."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 39,
+    "fields": {
+      "crop_name": "sorghum",
+      "stage": "Harvest",
+      "title": "Harvesting Sorghum",
+      "description": "Harvest when grains are hard and the panicle has dried to a straw colour, usually 90-120 days after planting depending on variety. Cut panicles individually or whole stalks and dry further on raised platforms before threshing."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 40,
+    "fields": {
+      "crop_name": "sorghum",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Sorghum",
+      "description": "Dry grain to below 13% moisture before storage. Store in airtight containers or treated bags with an appropriate storage insecticide to prevent weevil infestation, which sorghum is particularly prone to in humid conditions."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 41,
+    "fields": {
+      "crop_name": "millet",
+      "stage": "Preparation",
+      "title": "Land Preparation for Millet",
+      "description": "Plough and harrow to a fine, weed-free seedbed since millet seed is tiny and establishes poorly in rough or cloddy soil. Millet tolerates marginal, sandy soils better than most cereals, making deep ploughing less critical."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 42,
+    "fields": {
+      "crop_name": "millet",
+      "stage": "Planting",
+      "title": "Millet Planting and Spacing",
+      "description": "Broadcast or drill seed at a shallow depth of 2-3cm at a seed rate of 3-5 kg/ha, with rows 30-45cm apart if drilled. Plant at the start of rains; millet establishes and matures quickly, making it a good short-season option."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 43,
+    "fields": {
+      "crop_name": "millet",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Millet",
+      "description": "Apply DAP at 25-40kg/acre at planting. Millet responds well to modest nitrogen top-dressing (Urea at 20-25kg/acre) around 3-4 weeks after emergence, but excess fertilizer offers little benefit on the marginal soils it is usually grown on."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 44,
+    "fields": {
+      "crop_name": "millet",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Millet",
+      "description": "Weed within the first 2-3 weeks after emergence, as fine millet seedlings are easily overtaken by weeds. A second weeding at 5 weeks is usually sufficient given millet's fast canopy closure."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 45,
+    "fields": {
+      "crop_name": "millet",
+      "stage": "Pests",
+      "title": "Millet Head Bug and Shoot Fly",
+      "description": "Watch for shoot fly deadhearts in young seedlings and head bugs damaging developing grain at flowering. Early, uniform planting across a field helps reduce pest pressure by limiting the staggered flowering that attracts head bugs."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 46,
+    "fields": {
+      "crop_name": "millet",
+      "stage": "Diseases",
+      "title": "Millet Downy Mildew Management",
+      "description": "Rogue out and destroy plants showing pale, stunted 'green ear' symptoms of downy mildew as soon as seen, before spores spread. Use clean, certified seed and rotate with non-cereal crops to break the disease cycle."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 47,
+    "fields": {
+      "crop_name": "millet",
+      "stage": "Harvest",
+      "title": "Harvesting Millet",
+      "description": "Harvest when the grain is hard and heads have dried to a light brown colour, typically 70-90 days after planting. Cut heads by hand and dry further on mats before threshing to avoid grain loss."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 48,
+    "fields": {
+      "crop_name": "millet",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Millet",
+      "description": "Sun-dry grain to below 13% moisture, which millet reaches faster than most cereals due to its small grain size. Store in sealed containers; millet's hard seed coat gives it good natural resistance to storage pests when kept dry."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 49,
+    "fields": {
+      "crop_name": "chickpea",
+      "stage": "Preparation",
+      "title": "Land Preparation for Chickpea",
+      "description": "Plough to a fine tilth and ensure good drainage, as chickpea is highly sensitive to waterlogging. Plant on residual moisture after the rains taper off, since chickpea performs best as a cool, relatively dry-season crop."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 50,
+    "fields": {
+      "crop_name": "chickpea",
+      "stage": "Planting",
+      "title": "Chickpea Planting and Spacing",
+      "description": "Sow at 4-5cm depth in rows 30cm apart with 10cm between plants, at a seed rate of 60-80 kg/ha. Inoculating seed with Rhizobium before planting improves nodulation and nitrogen fixation on fields new to chickpea."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 51,
+    "fields": {
+      "crop_name": "chickpea",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Chickpea",
+      "description": "Apply a modest basal dose of DAP at 25-30kg/acre at planting to support early root and nodule development; avoid heavy nitrogen, which suppresses the plant's own nitrogen fixation. No top-dressing is typically needed."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 52,
+    "fields": {
+      "crop_name": "chickpea",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Chickpea",
+      "description": "Weed once at 3-4 weeks after emergence, before the canopy closes; chickpea's slow early growth makes it vulnerable to weed competition during this window. Light inter-row cultivation also helps aerate compacted soil."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 53,
+    "fields": {
+      "crop_name": "chickpea",
+      "stage": "Pests",
+      "title": "Pod Borer Control in Chickpea",
+      "description": "Scout regularly for pod borer caterpillars boring into developing pods, the crop's most damaging pest. Hand-pick larvae where feasible or apply a registered biological or chemical insecticide once damage is confirmed."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 54,
+    "fields": {
+      "crop_name": "chickpea",
+      "stage": "Diseases",
+      "title": "Chickpea Wilt and Blight Management",
+      "description": "Use certified, disease-free seed and rotate out of chickpea for 3-4 years on fields with a history of Fusarium wilt (sudden yellowing and wilting). Avoid overhead irrigation late in the season to limit Ascochyta blight spread."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 55,
+    "fields": {
+      "crop_name": "chickpea",
+      "stage": "Harvest",
+      "title": "Harvesting Chickpea",
+      "description": "Harvest when plants turn yellow-brown and pods rattle when shaken, about 90-120 days after sowing. Uproot or cut plants in the cool early morning to minimise pod shattering and seed loss."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 56,
+    "fields": {
+      "crop_name": "chickpea",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Chickpea",
+      "description": "Sun-dry threshed seed to below 10% moisture before storage. Store in sealed, airtight containers with a suitable storage protectant, as chickpea is highly susceptible to bruchid beetle infestation."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 57,
+    "fields": {
+      "crop_name": "kidneybeans",
+      "stage": "Preparation",
+      "title": "Land Preparation for Kidney Beans",
+      "description": "Plough to 15-20cm depth and prepare a fine, well-drained seedbed, as kidney beans are sensitive to waterlogged soil. Incorporate well-rotted manure or compost if available to boost early growth."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 58,
+    "fields": {
+      "crop_name": "kidneybeans",
+      "stage": "Planting",
+      "title": "Kidney Bean Planting and Spacing",
+      "description": "Plant 2 seeds per hole at 4-5cm depth, spacing rows 50cm apart with 10-15cm between holes, at a seed rate of 60-80 kg/ha. Thin to the strongest seedling per hole after emergence."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 59,
+    "fields": {
+      "crop_name": "kidneybeans",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Kidney Beans",
+      "description": "Apply DAP at 50kg/acre at planting to support pod formation. As a legume, kidney beans need little added nitrogen once nodulation begins; avoid heavy Urea application, which can reduce nodule activity."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 60,
+    "fields": {
+      "crop_name": "kidneybeans",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Kidney Beans",
+      "description": "Weed at 2 weeks after emergence and again at flowering (around 5-6 weeks). Shallow cultivation is best near flowering to avoid disturbing the plant's relatively shallow root system."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 61,
+    "fields": {
+      "crop_name": "kidneybeans",
+      "stage": "Pests",
+      "title": "Bean Fly and Aphid Control",
+      "description": "Watch for bean fly damage (wilting seedlings with a swollen stem base) in the first 2 weeks and aphid clusters on new growth throughout the season. Seed dressing at planting protects against early bean fly attack; spray aphids only if colonies are dense."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 62,
+    "fields": {
+      "crop_name": "kidneybeans",
+      "stage": "Diseases",
+      "title": "Bean Rust and Angular Leaf Spot",
+      "description": "Rotate with non-legume crops and avoid overhead irrigation late in the day to reduce rust (orange leaf pustules) and angular leaf spot pressure. Remove and destroy heavily infected plants to slow spread within the field."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 63,
+    "fields": {
+      "crop_name": "kidneybeans",
+      "stage": "Harvest",
+      "title": "Harvesting Kidney Beans",
+      "description": "Harvest for dry grain when pods are fully dry and rattle, about 85-100 days after planting. Pick or uproot in dry weather and dry pods further before threshing to prevent seed moulding."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 64,
+    "fields": {
+      "crop_name": "kidneybeans",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Kidney Beans",
+      "description": "Dry seed to below 13% moisture and store in sealed containers or hermetic bags. A storage protectant or diatomaceous earth mixed with the grain helps prevent bean weevil damage during long storage."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 65,
+    "fields": {
+      "crop_name": "pigeonpeas",
+      "stage": "Preparation",
+      "title": "Land Preparation for Pigeon Peas",
+      "description": "Plough to a moderate depth and prepare a well-drained seedbed; pigeon pea tolerates poor soils and moisture stress better than most legumes once established. Clear perennial weeds since the crop stays in the field for several months."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 66,
+    "fields": {
+      "crop_name": "pigeonpeas",
+      "stage": "Planting",
+      "title": "Pigeon Pea Planting and Spacing",
+      "description": "Sow at 4-5cm depth, spacing rows 75cm apart with 20-30cm between plants, at a seed rate of 15-20 kg/ha. Pigeon pea is often intercropped with cereals or shorter-season legumes given its long, slow-maturing growth habit."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 67,
+    "fields": {
+      "crop_name": "pigeonpeas",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Pigeon Peas",
+      "description": "Apply a light basal dose of DAP at 25kg/acre at planting; pigeon pea fixes much of its own nitrogen once nodulated and rarely needs top-dressing. Avoid excess fertilizer, which favours vegetative growth over pod set."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 68,
+    "fields": {
+      "crop_name": "pigeonpeas",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Pigeon Peas",
+      "description": "Weed at 3-4 weeks and again at 8 weeks after planting while the crop is still establishing; once pigeon pea's canopy closes it suppresses weeds well on its own for the remainder of its long growing season."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 69,
+    "fields": {
+      "crop_name": "pigeonpeas",
+      "stage": "Pests",
+      "title": "Pod Borer and Pod Fly Control",
+      "description": "Pod borer and pod fly are the main threats, attacking developing pods and reducing seed quality. Scout at flowering and early pod-fill and apply a registered insecticide if infestation is significant, timing sprays to avoid harming pollinators."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 70,
+    "fields": {
+      "crop_name": "pigeonpeas",
+      "stage": "Diseases",
+      "title": "Pigeon Pea Wilt and Sterility Mosaic",
+      "description": "Plant resistant varieties where available and rotate fields with a history of Fusarium wilt (yellowing, one-sided wilting). Rogue out plants showing bushy, pale sterility mosaic symptoms early to limit spread by mite vectors."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 71,
+    "fields": {
+      "crop_name": "pigeonpeas",
+      "stage": "Harvest",
+      "title": "Harvesting Pigeon Peas",
+      "description": "Harvest when pods dry and turn brown, which can be staggered over several pickings since pods mature unevenly, typically starting 150-180 days after planting. Pick promptly once dry to avoid pod shattering and weevil attack."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 72,
+    "fields": {
+      "crop_name": "pigeonpeas",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Pigeon Peas",
+      "description": "Dry threshed seed to below 12% moisture. Store in sealed containers with a storage protectant, as pigeon pea seed is vulnerable to bruchid beetle damage, especially if not fully dried before storage."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 73,
+    "fields": {
+      "crop_name": "mothbeans",
+      "stage": "Preparation",
+      "title": "Land Preparation for Moth Beans",
+      "description": "Plough lightly to loosen the topsoil; moth bean is a drought-tolerant, sprawling legume suited to sandy or marginal soils that need little intensive preparation. Ensure the field is well-drained since the crop is intolerant of waterlogging."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 74,
+    "fields": {
+      "crop_name": "mothbeans",
+      "stage": "Planting",
+      "title": "Moth Bean Planting and Spacing",
+      "description": "Broadcast or drill seed at 3-4cm depth, spacing rows 30-45cm apart, at a seed rate of 8-10 kg/ha. Plant with the onset of rains; moth bean's short duration and drought tolerance suit it to areas with unreliable rainfall."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 75,
+    "fields": {
+      "crop_name": "mothbeans",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Moth Beans",
+      "description": "Apply a light basal dressing of DAP at 20-25kg/acre at planting. As a nitrogen-fixing legume adapted to poor soils, moth bean needs minimal additional fertilizer and rarely benefits from top-dressing."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 76,
+    "fields": {
+      "crop_name": "mothbeans",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Moth Beans",
+      "description": "Weed once at 3 weeks after emergence; moth bean's sprawling, prostrate growth habit quickly covers the ground and suppresses further weed growth on its own."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 77,
+    "fields": {
+      "crop_name": "mothbeans",
+      "stage": "Pests",
+      "title": "Aphid and Pod Borer Control in Moth Bean",
+      "description": "Monitor for aphids on young shoots and pod borer caterpillars during pod formation. Populations are usually manageable with early detection and spot treatment rather than blanket spraying."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 78,
+    "fields": {
+      "crop_name": "mothbeans",
+      "stage": "Diseases",
+      "title": "Moth Bean Leaf Spot and Powdery Mildew",
+      "description": "Ensure adequate plant spacing for airflow to reduce humidity-driven leaf spot and powdery mildew. Remove and destroy heavily affected foliage to slow disease spread within the crop."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 79,
+    "fields": {
+      "crop_name": "mothbeans",
+      "stage": "Harvest",
+      "title": "Harvesting Moth Beans",
+      "description": "Harvest when pods turn brown and dry, roughly 75-90 days after planting. Pick in stages as pods mature unevenly, or uproot the whole plant once most pods have dried."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 80,
+    "fields": {
+      "crop_name": "mothbeans",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Moth Beans",
+      "description": "Sun-dry seed to below 12% moisture before storing in sealed, pest-proof containers. Good drying is the main safeguard against weevil damage during storage."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 81,
+    "fields": {
+      "crop_name": "mungbean",
+      "stage": "Preparation",
+      "title": "Land Preparation for Mung Bean",
+      "description": "Plough to a fine tilth in a well-drained field; mung bean is sensitive to waterlogging and benefits from a loose seedbed for quick, even germination. Its short duration makes it a useful crop between main-season plantings."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 82,
+    "fields": {
+      "crop_name": "mungbean",
+      "stage": "Planting",
+      "title": "Mung Bean Planting and Spacing",
+      "description": "Sow at 3-4cm depth, spacing rows 30cm apart with 10cm between plants, at a seed rate of 15-20 kg/ha. Mung bean matures quickly, typically within 60-70 days, so timely planting after the rains start is important."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 83,
+    "fields": {
+      "crop_name": "mungbean",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Mung Bean",
+      "description": "Apply a light basal dose of DAP at 25kg/acre at planting. Like other legumes, mung bean fixes nitrogen once nodulated and generally does not need top-dressing."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 84,
+    "fields": {
+      "crop_name": "mungbean",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Mung Bean",
+      "description": "Weed once at 2-3 weeks after emergence while the crop canopy is still open; mung bean's fast growth and quick canopy closure limit the need for further weeding after this stage."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 85,
+    "fields": {
+      "crop_name": "mungbean",
+      "stage": "Pests",
+      "title": "Aphid and Pod Borer Control in Mung Bean",
+      "description": "Scout for aphids on new growth and pod borer larvae during flowering and pod-fill, the crop's most vulnerable stage. Treat only if infestation is heavy, since mung bean's short cycle limits the window for pest buildup."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 86,
+    "fields": {
+      "crop_name": "mungbean",
+      "stage": "Diseases",
+      "title": "Mung Bean Yellow Mosaic and Powdery Mildew",
+      "description": "Control whitefly, the vector for yellow mosaic virus (yellow mottled leaves), and rogue out infected plants promptly. Ensure adequate spacing for airflow to limit powdery mildew in humid conditions."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 87,
+    "fields": {
+      "crop_name": "mungbean",
+      "stage": "Harvest",
+      "title": "Harvesting Mung Bean",
+      "description": "Harvest in stages as pods mature and turn dark brown or black, since pods do not ripen uniformly, generally starting around 60-70 days after planting. Pick promptly to avoid shattering losses."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 88,
+    "fields": {
+      "crop_name": "mungbean",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Mung Bean",
+      "description": "Dry seed to below 12% moisture and store in sealed containers. A storage protectant helps prevent bruchid beetle infestation, a common issue for small-seeded pulses like mung bean."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 89,
+    "fields": {
+      "crop_name": "blackgram",
+      "stage": "Preparation",
+      "title": "Land Preparation for Blackgram",
+      "description": "Plough to a fine, well-drained seedbed; blackgram is sensitive to waterlogging and grows best on loose soil that allows quick germination. Clear residue from the previous crop to reduce disease carryover."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 90,
+    "fields": {
+      "crop_name": "blackgram",
+      "stage": "Planting",
+      "title": "Blackgram Planting and Spacing",
+      "description": "Sow at 3-4cm depth, spacing rows 30cm apart with 10cm between plants, at a seed rate of 15-20 kg/ha. Blackgram matures in about 70-90 days, making it suitable for short rainy seasons or as a relay crop."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 91,
+    "fields": {
+      "crop_name": "blackgram",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Blackgram",
+      "description": "Apply a light basal dressing of DAP at 25kg/acre at planting to support early root and nodule development. Additional nitrogen top-dressing is generally unnecessary once nodulation is established."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 92,
+    "fields": {
+      "crop_name": "blackgram",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Blackgram",
+      "description": "Weed once at 2-3 weeks after emergence before canopy closure. Blackgram's spreading growth habit suppresses most weeds on its own once established."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 93,
+    "fields": {
+      "crop_name": "blackgram",
+      "stage": "Pests",
+      "title": "Pod Borer and Whitefly Control in Blackgram",
+      "description": "Monitor for pod borer larvae during flowering and pod-fill, and whitefly, which spreads yellow mosaic virus. Treat with a registered insecticide only if damage thresholds are exceeded."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 94,
+    "fields": {
+      "crop_name": "blackgram",
+      "stage": "Diseases",
+      "title": "Blackgram Yellow Mosaic and Leaf Spot",
+      "description": "Control whitefly vectors and remove infected plants promptly to limit yellow mosaic virus spread. Ensure good field drainage and spacing to reduce leaf spot pressure in humid weather."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 95,
+    "fields": {
+      "crop_name": "blackgram",
+      "stage": "Harvest",
+      "title": "Harvesting Blackgram",
+      "description": "Harvest when 80% of pods turn black and dry, usually 70-90 days after planting. Pick in rounds as pods mature unevenly, or cut the whole plant once most pods are ready."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 96,
+    "fields": {
+      "crop_name": "blackgram",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Blackgram",
+      "description": "Dry threshed seed to below 12% moisture before storage. Store in airtight containers with a protectant to guard against bruchid beetle damage."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 97,
+    "fields": {
+      "crop_name": "lentil",
+      "stage": "Preparation",
+      "title": "Land Preparation for Lentil",
+      "description": "Plough to a fine tilth in a well-drained field, as lentil is a cool-season legume intolerant of waterlogging. Plant on residual soil moisture after the main rains taper off for best establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 98,
+    "fields": {
+      "crop_name": "lentil",
+      "stage": "Planting",
+      "title": "Lentil Planting and Spacing",
+      "description": "Sow at 3-4cm depth, spacing rows 25-30cm apart with 5-8cm between plants, at a seed rate of 40-50 kg/ha. Inoculating seed with Rhizobium improves nodulation on fields new to lentil."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 99,
+    "fields": {
+      "crop_name": "lentil",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Lentil",
+      "description": "Apply a light basal dose of DAP at 25-30kg/acre at planting. Avoid heavy nitrogen application, which can reduce the plant's own nitrogen fixation and encourage excess leaf growth over seed set."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 100,
+    "fields": {
+      "crop_name": "lentil",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Lentil",
+      "description": "Weed once at 3-4 weeks after emergence, as lentil's slow early growth and low canopy make it vulnerable to weed competition during this period."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 101,
+    "fields": {
+      "crop_name": "lentil",
+      "stage": "Pests",
+      "title": "Aphid and Pod Borer Control in Lentil",
+      "description": "Scout for aphids on tender growth and pod borer during flowering and pod-fill. Light infestations rarely need treatment; spray only if populations threaten yield."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 102,
+    "fields": {
+      "crop_name": "lentil",
+      "stage": "Diseases",
+      "title": "Lentil Rust and Wilt Management",
+      "description": "Use certified seed and rotate out of lentil on fields with a history of Fusarium wilt. Remove volunteer plants and crop debris after harvest to reduce rust spore carryover."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 103,
+    "fields": {
+      "crop_name": "lentil",
+      "stage": "Harvest",
+      "title": "Harvesting Lentil",
+      "description": "Harvest when pods and lower leaves turn yellow-brown and pods rattle, typically 100-110 days after sowing. Harvest in the cool morning to reduce pod shattering."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 104,
+    "fields": {
+      "crop_name": "lentil",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Lentil",
+      "description": "Dry seed to below 12% moisture before storing in sealed, airtight containers. A storage protectant helps prevent bruchid beetle infestation common to small-seeded pulses."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 105,
+    "fields": {
+      "crop_name": "groundnut",
+      "stage": "Preparation",
+      "title": "Land Preparation for Groundnut",
+      "description": "Plough and harrow to a fine, loose seedbed since groundnut pods develop underground and need soft, well-aerated soil to peg and expand properly. Ensure good drainage as waterlogging damages developing pods."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 106,
+    "fields": {
+      "crop_name": "groundnut",
+      "stage": "Planting",
+      "title": "Groundnut Planting and Spacing",
+      "description": "Plant shelled seed at 5cm depth, spacing rows 45-60cm apart with 10-15cm between plants, at a seed rate of 60-90 kg/ha depending on variety. Plant with the first reliable rains for full-season establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 107,
+    "fields": {
+      "crop_name": "groundnut",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Groundnut",
+      "description": "Apply DAP at 30-40kg/acre at planting along with gypsum at pegging to support pod filling. As a legume, groundnut needs little nitrogen top-dressing once nodulation is established."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 108,
+    "fields": {
+      "crop_name": "groundnut",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Groundnut",
+      "description": "Weed at 3 weeks after emergence and again just before flowering/pegging begins (around 5-6 weeks); avoid deep cultivation after pegging starts to prevent disturbing developing pods."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 109,
+    "fields": {
+      "crop_name": "groundnut",
+      "stage": "Pests",
+      "title": "Aphid and Leaf Miner Control in Groundnut",
+      "description": "Watch for aphids, which can transmit rosette virus, and leaf miners tunnelling in foliage. Early detection and targeted spraying prevent significant yield loss, especially where rosette virus is present locally."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 110,
+    "fields": {
+      "crop_name": "groundnut",
+      "stage": "Diseases",
+      "title": "Groundnut Rosette and Leaf Spot Management",
+      "description": "Control aphid vectors promptly to limit rosette virus spread, one of groundnut's most destructive diseases. Rotate crops and remove infected plants to manage leaf spot (Cercospora) pressure."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 111,
+    "fields": {
+      "crop_name": "groundnut",
+      "stage": "Harvest",
+      "title": "Harvesting Groundnut",
+      "description": "Harvest when leaves start yellowing and pods show a dark internal husk lining, typically 90-120 days after planting depending on variety. Lift plants carefully to avoid leaving pods in the soil."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 112,
+    "fields": {
+      "crop_name": "groundnut",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Groundnut",
+      "description": "Dry pods thoroughly to below 8% kernel moisture before storage to prevent aflatoxin-producing mould growth. Store shelled or unshelled nuts in dry, well-ventilated, pest-proof containers."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 113,
+    "fields": {
+      "crop_name": "soyabean",
+      "stage": "Preparation",
+      "title": "Land Preparation for Soyabean",
+      "description": "Plough and harrow to a fine, well-drained seedbed. Inoculate the field or seed with the correct Rhizobium strain if soyabean has not been grown there before, since it needs a specific inoculant for effective nodulation."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 114,
+    "fields": {
+      "crop_name": "soyabean",
+      "stage": "Planting",
+      "title": "Soyabean Planting and Spacing",
+      "description": "Sow at 3-5cm depth, spacing rows 45-60cm apart with 5cm between plants, at a seed rate of 60-80 kg/ha. Plant with reliable rains for even germination and stand establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 115,
+    "fields": {
+      "crop_name": "soyabean",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Soyabean",
+      "description": "Apply DAP at 40-50kg/acre at planting to support early growth and nodulation. Nitrogen top-dressing is generally unnecessary once nodules form, as soyabean fixes most of its own nitrogen needs."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 116,
+    "fields": {
+      "crop_name": "soyabean",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Soyabean",
+      "description": "Weed at 2-3 weeks after emergence and again at 5-6 weeks before canopy closure; soyabean competes poorly with weeds early on but shades them out well once established."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 117,
+    "fields": {
+      "crop_name": "soyabean",
+      "stage": "Pests",
+      "title": "Pod Borer and Stink Bug Control in Soyabean",
+      "description": "Scout for pod borer larvae and stink bugs during flowering and pod-fill, which can damage developing seeds. Treat with a registered insecticide only if populations exceed economic thresholds."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 118,
+    "fields": {
+      "crop_name": "soyabean",
+      "stage": "Diseases",
+      "title": "Soyabean Rust and Bacterial Blight",
+      "description": "Plant resistant varieties where available and ensure good field airflow to reduce humidity-driven rust (orange-brown leaf pustules). Rotate with non-legume crops to reduce bacterial blight carryover in soil."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 119,
+    "fields": {
+      "crop_name": "soyabean",
+      "stage": "Harvest",
+      "title": "Harvesting Soyabean",
+      "description": "Harvest when pods and leaves turn brown and dry and rattle when shaken, typically 90-120 days after planting. Harvest promptly at maturity to avoid pod shattering in dry weather."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 120,
+    "fields": {
+      "crop_name": "soyabean",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Soyabean",
+      "description": "Dry seed to below 12% moisture before storage. Store in sealed, cool, dry containers, as soyabean oil content makes it prone to rancidity and quality loss in warm, humid storage."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 121,
+    "fields": {
+      "crop_name": "sweetpotato",
+      "stage": "Preparation",
+      "title": "Land Preparation for Sweet Potato",
+      "description": "Form ridges or mounds 25-30cm high and 75-100cm apart to give tubers loose soil to expand into and improve drainage. Deep ploughing before ridging helps root penetration in heavier soils."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 122,
+    "fields": {
+      "crop_name": "sweetpotato",
+      "stage": "Planting",
+      "title": "Sweet Potato Planting and Spacing",
+      "description": "Plant healthy 25-30cm vine cuttings at a slant on ridge tops, spacing 30cm apart within the ridge. Use disease-free planting material from a clean source to avoid carrying over weevil and virus problems."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 123,
+    "fields": {
+      "crop_name": "sweetpotato",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Sweet Potato",
+      "description": "Apply a light basal dressing of DAP at 25-30kg/acre at planting; sweet potato generally performs well on residual soil fertility and excess nitrogen favours vine growth over tuber development. Potassium-rich fertilizer, where available, improves tuber quality."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 124,
+    "fields": {
+      "crop_name": "sweetpotato",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Sweet Potato",
+      "description": "Weed at 3 weeks after planting before vines spread; once the crop's vines cover the ridges (around 6-8 weeks) they suppress weeds effectively on their own."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 125,
+    "fields": {
+      "crop_name": "sweetpotato",
+      "stage": "Pests",
+      "title": "Sweet Potato Weevil Control",
+      "description": "Sweet potato weevil is the crop's most serious pest, tunnelling into tubers and causing a bitter taste. Practice crop rotation, earth up ridges to cover exposed tubers, and use clean planting material to break the pest cycle."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 126,
+    "fields": {
+      "crop_name": "sweetpotato",
+      "stage": "Diseases",
+      "title": "Sweet Potato Virus Disease Management",
+      "description": "Use certified, virus-free planting material, as viruses spread through vine cuttings and cause stunted, mottled growth. Rogue out and destroy visibly diseased plants to limit spread within the field."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 127,
+    "fields": {
+      "crop_name": "sweetpotato",
+      "stage": "Harvest",
+      "title": "Harvesting Sweet Potato",
+      "description": "Harvest 90-120 days after planting once leaves begin to yellow, or earlier for smaller tubers. Dig carefully to avoid bruising or cutting tubers, which shortens storage life and invites rot."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 128,
+    "fields": {
+      "crop_name": "sweetpotato",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Sweet Potato",
+      "description": "Cure tubers in a warm, humid spot for 4-7 days to heal cuts before storage, then store in a cool, well-ventilated, dark place. Avoid washing tubers before storage, as residual soil helps protect against rot."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 129,
+    "fields": {
+      "crop_name": "banana",
+      "stage": "Preparation",
+      "title": "Land Preparation for Banana",
+      "description": "Dig planting holes 60cm x 60cm x 60cm, mixing topsoil with well-rotted manure or compost before backfilling. Banana is a long-term perennial crop, so investing in deep, fertile planting holes pays off over many years of harvest."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 130,
+    "fields": {
+      "crop_name": "banana",
+      "stage": "Planting",
+      "title": "Banana Planting and Spacing",
+      "description": "Plant healthy sword suckers or tissue-culture plantlets at 3m x 3m spacing, setting the corm just below the soil surface. Mulch heavily around new plants to conserve moisture and suppress weeds while the mat establishes."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 131,
+    "fields": {
+      "crop_name": "banana",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Banana",
+      "description": "Apply well-rotted manure or compost around the base each season, supplemented with NPK or Urea at 200-300g per mat every 3-4 months once established. Banana is a heavy feeder, particularly for potassium, which supports bunch fill."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 132,
+    "fields": {
+      "crop_name": "banana",
+      "stage": "Weeding",
+      "title": "Weeding and Desuckering for Banana",
+      "description": "Keep the base weed-free, especially in the first year before the mat closes canopy. Regularly desucker each mat down to 3-4 followers of different ages to maintain steady, well-spaced production."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 133,
+    "fields": {
+      "crop_name": "banana",
+      "stage": "Pests",
+      "title": "Banana Weevil and Nematode Control",
+      "description": "Banana weevil bores into the corm and base, weakening plants and toppling mats; trap adults using split pseudostem traps and practice field sanitation. Nematodes damaging roots are managed with clean planting material and crop rotation on badly affected land."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 134,
+    "fields": {
+      "crop_name": "banana",
+      "stage": "Diseases",
+      "title": "Banana Bacterial Wilt and Panama Disease",
+      "description": "Disinfect tools between plants and remove the male bud after the last hand to reduce banana bacterial wilt spread via insect vectors. Uproot and destroy any wilting mat entirely, including the corm, and avoid replanting susceptible varieties on Panama disease-affected land."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 135,
+    "fields": {
+      "crop_name": "banana",
+      "stage": "Harvest",
+      "title": "Harvesting Banana",
+      "description": "Harvest bunches when fingers fill out and round off, typically 3-4 months after flowering depending on variety and altitude. Cut the whole pseudostem after harvest to make way for the next follower sucker."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 136,
+    "fields": {
+      "crop_name": "banana",
+      "stage": "Storage",
+      "title": "Post-Harvest Handling for Banana",
+      "description": "Handle harvested bunches gently to avoid bruising and store in a cool, shaded, well-ventilated place. For fresh consumption, ripen at room temperature away from direct sun; for matooke, cook soon after harvest as it does not store long."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 137,
+    "fields": {
+      "crop_name": "coffee",
+      "stage": "Preparation",
+      "title": "Land Preparation for Coffee",
+      "description": "Dig planting holes 60cm x 60cm x 60cm at least a season ahead, mixing topsoil with well-rotted manure. Plant shade trees in advance on exposed sites, as young coffee benefits from partial shade."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 138,
+    "fields": {
+      "crop_name": "coffee",
+      "stage": "Planting",
+      "title": "Coffee Planting and Spacing",
+      "description": "Transplant healthy seedlings at the start of the rains, spacing 2.5m x 2.5m for Robusta or 2m x 2m for Arabica. Firm soil around the root ball and mulch to conserve moisture during establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 139,
+    "fields": {
+      "crop_name": "coffee",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Coffee",
+      "description": "Apply well-rotted manure or compost annually around the drip line, supplemented with NPK fertilizer split into two applications at the start and end of the main rains. Mature bearing trees need higher rates than young, non-bearing plants."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 140,
+    "fields": {
+      "crop_name": "coffee",
+      "stage": "Weeding",
+      "title": "Weeding and Mulching for Coffee",
+      "description": "Keep a weed-free ring around the base of each tree and mulch generously to conserve moisture and suppress weeds between rows. Avoid deep cultivation near the trunk, which can damage coffee's shallow feeder roots."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 141,
+    "fields": {
+      "crop_name": "coffee",
+      "stage": "Pests",
+      "title": "Coffee Berry Borer and Antestia Bug Control",
+      "description": "Scout for coffee berry borer boring into ripening cherries and antestia bugs causing potato-taste defect; strip and destroy over-ripe or fallen berries, which harbour borer populations. Apply registered insecticides only when infestation exceeds threshold levels."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 142,
+    "fields": {
+      "crop_name": "coffee",
+      "stage": "Diseases",
+      "title": "Coffee Wilt Disease and Leaf Rust",
+      "description": "Uproot and burn trees affected by coffee wilt disease (tracheomycosis) immediately, as it spreads through root contact and has no cure. Prune for good airflow and apply copper-based fungicide where leaf rust (orange leaf spots) is a recurring problem."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 143,
+    "fields": {
+      "crop_name": "coffee",
+      "stage": "Harvest",
+      "title": "Harvesting Coffee",
+      "description": "Handpick only fully ripe, red cherries for best quality, typically over several pickings across the main harvest season. Avoid stripping unripe green cherries, which lowers cup quality and processing yield."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 144,
+    "fields": {
+      "crop_name": "coffee",
+      "stage": "Storage",
+      "title": "Post-Harvest Processing and Storage for Coffee",
+      "description": "Process cherries promptly after picking, either washed or dried as parchment/kiboko, to avoid fermentation defects. Store dried coffee in clean, dry, well-ventilated bags off the ground, away from strong odours which coffee readily absorbs."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 145,
+    "fields": {
+      "crop_name": "cotton",
+      "stage": "Preparation",
+      "title": "Land Preparation for Cotton",
+      "description": "Plough deeply to 20-25cm to break any hardpan, since cotton develops a deep taproot, and harrow to a fine seedbed. Clear and destroy old cotton stalks and crop residue ahead of planting to reduce pest carryover."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 146,
+    "fields": {
+      "crop_name": "cotton",
+      "stage": "Planting",
+      "title": "Cotton Planting and Spacing",
+      "description": "Plant at 2-3cm depth, spacing rows 90cm apart with 30cm between plants, at a seed rate of 15-20 kg/ha. Plant at the onset of reliable rains within the recommended regional planting window to synchronise pest management across an area."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 147,
+    "fields": {
+      "crop_name": "cotton",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Cotton",
+      "description": "Apply DAP at 50kg/acre at planting, then top-dress with Urea at 50kg/acre at squaring (around 6 weeks) to support boll development. Avoid excess late nitrogen, which promotes vegetative growth over boll set."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 148,
+    "fields": {
+      "crop_name": "cotton",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Cotton",
+      "description": "Weed at 3 weeks and again at 6 weeks after emergence, keeping the field clean through early squaring. Cotton competes poorly with weeds in its first 8 weeks."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 149,
+    "fields": {
+      "crop_name": "cotton",
+      "stage": "Pests",
+      "title": "Bollworm and Aphid Control in Cotton",
+      "description": "Scout weekly for bollworm damage on squares and bolls and aphid colonies on new growth, cotton's most significant pests. Follow an integrated pest management schedule with threshold-based spraying rather than calendar spraying to slow resistance buildup."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 150,
+    "fields": {
+      "crop_name": "cotton",
+      "stage": "Diseases",
+      "title": "Cotton Bacterial Blight and Fusarium Wilt",
+      "description": "Use certified, treated seed to reduce bacterial blight (angular leaf spots) carryover. Rotate out of cotton on fields with a history of Fusarium wilt and avoid working in wet fields, which spreads bacterial disease."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 151,
+    "fields": {
+      "crop_name": "cotton",
+      "stage": "Harvest",
+      "title": "Harvesting Cotton",
+      "description": "Pick bolls as they open and fibre is dry and fluffy, usually in 2-4 pickings starting around 150-160 days after planting. Pick in dry conditions and keep harvested cotton free of leaf trash and soil to maintain grade."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 152,
+    "fields": {
+      "crop_name": "cotton",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Cotton",
+      "description": "Store picked seed cotton in a dry, well-ventilated store, keeping different grades and picking rounds separate. Avoid storing damp cotton, which discolours and loses value quickly."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 153,
+    "fields": {
+      "crop_name": "jute",
+      "stage": "Preparation",
+      "title": "Land Preparation for Jute",
+      "description": "Plough and harrow well to a fine, weed-free seedbed since jute seed is small and needs good soil-seed contact for uniform germination. Jute favours well-drained but moisture-retentive soils with high organic matter."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 154,
+    "fields": {
+      "crop_name": "jute",
+      "stage": "Planting",
+      "title": "Jute Planting and Spacing",
+      "description": "Broadcast or drill seed at 2cm depth at a seed rate of 5-8 kg/ha, thinning to a spacing of about 7-10cm between plants after establishment. Plant early in the rains for the longest possible growing period before harvest."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 155,
+    "fields": {
+      "crop_name": "jute",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Jute",
+      "description": "Apply DAP at 40kg/acre at planting, followed by a Urea top-dressing at 30-40kg/acre around 4-5 weeks after emergence to support the rapid stem growth jute is grown for."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 156,
+    "fields": {
+      "crop_name": "jute",
+      "stage": "Weeding",
+      "title": "Weeding and Thinning for Jute",
+      "description": "Thin seedlings to the target spacing at 2-3 weeks and weed at the same time, since jute is very sensitive to weed competition in its early, fast-growing stage. A second weeding at 5-6 weeks is usually sufficient after that."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 157,
+    "fields": {
+      "crop_name": "jute",
+      "stage": "Pests",
+      "title": "Jute Hairy Caterpillar and Stem Weevil",
+      "description": "Scout for hairy caterpillars defoliating young plants and stem weevil damaging the fibre-bearing stem. Hand-collect caterpillar egg masses where practical and remove weevil-damaged stems promptly."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 158,
+    "fields": {
+      "crop_name": "jute",
+      "stage": "Diseases",
+      "title": "Jute Stem Rot and Black Band Disease",
+      "description": "Avoid waterlogging, which encourages stem rot, and rotate fields to reduce soil-borne disease buildup. Remove and destroy plants showing black, water-soaked stem lesions to limit spread."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 159,
+    "fields": {
+      "crop_name": "jute",
+      "stage": "Harvest",
+      "title": "Harvesting Jute",
+      "description": "Harvest at flowering to early pod stage, around 100-120 days after sowing, for the best balance of fibre strength and yield. Cut stems close to the ground and bundle for retting."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 160,
+    "fields": {
+      "crop_name": "jute",
+      "stage": "Storage",
+      "title": "Post-Harvest Processing and Storage for Jute",
+      "description": "Ret cut stems in clean, still water for 10-20 days until fibre separates easily from the stem, then wash, dry, and bundle the extracted fibre. Store dried fibre in a dry, well-ventilated place away from direct sun to preserve strength and colour."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 161,
+    "fields": {
+      "crop_name": "coconut",
+      "stage": "Preparation",
+      "title": "Land Preparation for Coconut",
+      "description": "Dig planting holes 90cm x 90cm x 90cm well ahead of planting, mixing topsoil with manure or compost before backfilling. Coconut needs deep, well-drained soil and does best in warm, humid coastal or lakeshore conditions."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 162,
+    "fields": {
+      "crop_name": "coconut",
+      "stage": "Planting",
+      "title": "Coconut Planting and Spacing",
+      "description": "Plant selected, sprouted seed nuts with the nut half-buried and the sprout pointing up, spacing palms 7.5m-9m apart in a square or triangular pattern. Stake young palms if needed and mulch to conserve moisture during establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 163,
+    "fields": {
+      "crop_name": "coconut",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Coconut",
+      "description": "Apply well-rotted manure or compost annually around the base, supplemented with NPK fertilizer rich in potassium and split across two applications per year. Mature bearing palms need considerably more fertilizer than young, non-bearing ones."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 164,
+    "fields": {
+      "crop_name": "coconut",
+      "stage": "Weeding",
+      "title": "Weeding and Basin Management for Coconut",
+      "description": "Keep a clean, weed-free basin around each young palm and mulch to conserve moisture; intercropping with shade-tolerant food crops is common once palms mature and canopy allows enough light through."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 165,
+    "fields": {
+      "crop_name": "coconut",
+      "stage": "Pests",
+      "title": "Rhinoceros Beetle and Red Palm Weevil Control",
+      "description": "Rhinoceros beetles bore into the crown, damaging fronds, while red palm weevil larvae tunnel into the trunk; keep the field free of rotting organic matter that attracts breeding beetles. Remove and destroy severely weevil-infested palms to prevent spread."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 166,
+    "fields": {
+      "crop_name": "coconut",
+      "stage": "Diseases",
+      "title": "Coconut Bud Rot and Leaf Blight",
+      "description": "Ensure good drainage to reduce bud rot risk, which causes the crown to collapse if untreated, and remove affected tissue promptly with a copper fungicide application. Prune and destroy fronds showing advanced leaf blight symptoms."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 167,
+    "fields": {
+      "crop_name": "coconut",
+      "stage": "Harvest",
+      "title": "Harvesting Coconut",
+      "description": "Harvest mature nuts (12 months from flowering for copra, earlier for drinking coconuts) by cutting bunches down carefully. Regular harvesting every 45-60 days keeps pace with the palm's continuous fruiting cycle."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 168,
+    "fields": {
+      "crop_name": "coconut",
+      "stage": "Storage",
+      "title": "Post-Harvest Handling for Coconut",
+      "description": "Store whole nuts in a cool, dry, well-ventilated place if not processed immediately; they keep reasonably well in the husk. For copra, split and dry the flesh thoroughly to prevent mould before storage or sale."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 169,
+    "fields": {
+      "crop_name": "papaya",
+      "stage": "Preparation",
+      "title": "Land Preparation for Papaya",
+      "description": "Dig planting holes 60cm x 60cm x 60cm, mixing topsoil with well-rotted manure, in a site with good drainage since papaya roots rot quickly in waterlogged soil. Raised beds help in heavier or poorly drained soils."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 170,
+    "fields": {
+      "crop_name": "papaya",
+      "stage": "Planting",
+      "title": "Papaya Planting and Spacing",
+      "description": "Transplant seedlings at 6-8 weeks old, spacing 2m x 2m to 2.5m x 2.5m depending on variety. Plant several seedlings per hole and thin to the best plants once sex can be determined at flowering, since papaya is dioecious."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 171,
+    "fields": {
+      "crop_name": "papaya",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Papaya",
+      "description": "Apply well-rotted manure at planting, then top-dress with NPK fertilizer every 6-8 weeks as the fast-growing plant establishes. Mature fruiting papaya is a heavy feeder and benefits from regular, split fertilizer applications."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 172,
+    "fields": {
+      "crop_name": "papaya",
+      "stage": "Weeding",
+      "title": "Weeding and Mulching for Papaya",
+      "description": "Keep the base weed-free and mulch to conserve moisture, since papaya's shallow root system competes poorly with weeds and is sensitive to moisture stress."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 173,
+    "fields": {
+      "crop_name": "papaya",
+      "stage": "Pests",
+      "title": "Papaya Fruit Fly and Mealybug Control",
+      "description": "Fruit fly damages ripening fruit; use pheromone or bait traps and collect fallen fruit promptly to break the pest's breeding cycle. Papaya mealybug forms white, waxy colonies on leaves and fruit and can be controlled with targeted insecticide or biological control agents."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 174,
+    "fields": {
+      "crop_name": "papaya",
+      "stage": "Diseases",
+      "title": "Papaya Ringspot Virus Management",
+      "description": "Control aphid vectors and remove infected plants showing mottled leaves and ringed fruit spots promptly, as ringspot virus has no cure. Source seed or seedlings from disease-free stock to avoid introducing the virus."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 175,
+    "fields": {
+      "crop_name": "papaya",
+      "stage": "Harvest",
+      "title": "Harvesting Papaya",
+      "description": "Harvest fruit as it begins to show yellow streaks on the skin, typically 5-9 months after transplanting depending on variety, for the best balance of ripening during transport and eating quality. Handle fruit gently to avoid bruising the soft flesh."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 176,
+    "fields": {
+      "crop_name": "papaya",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Papaya",
+      "description": "Store harvested fruit at room temperature to ripen fully within a few days, or in a cool store to slow ripening for longer transport. Avoid stacking fruit deeply, as papaya bruises easily under its own weight."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 177,
+    "fields": {
+      "crop_name": "mango",
+      "stage": "Preparation",
+      "title": "Land Preparation for Mango",
+      "description": "Dig planting holes 90cm x 90cm x 90cm well ahead of planting, mixing topsoil with manure or compost. Mango tolerates a wide range of soils but needs good drainage to avoid root rot in young trees."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 178,
+    "fields": {
+      "crop_name": "mango",
+      "stage": "Planting",
+      "title": "Mango Planting and Spacing",
+      "description": "Plant grafted seedlings at the start of the rains, spacing 8m x 8m to 10m x 10m for standard varieties to allow for full canopy development. Stake young trees and mulch to retain moisture during establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 179,
+    "fields": {
+      "crop_name": "mango",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Mango",
+      "description": "Apply well-rotted manure annually around the drip line, supplemented with NPK fertilizer split into applications before flowering and after fruit set. Reduce nitrogen as trees approach flowering age, since excess nitrogen can suppress flowering in favour of vegetative growth."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 180,
+    "fields": {
+      "crop_name": "mango",
+      "stage": "Weeding",
+      "title": "Weeding and Basin Management for Mango",
+      "description": "Keep a clean, weed-free basin around young trees and mulch to conserve moisture; mature trees with full canopy suppress most weeds through shading."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 181,
+    "fields": {
+      "crop_name": "mango",
+      "stage": "Pests",
+      "title": "Mango Fruit Fly and Mealybug Control",
+      "description": "Fruit fly is mango's most damaging pest; use pheromone traps, bait sprays, and prompt collection of fallen fruit to reduce populations. Mealybugs cluster on flower panicles and young shoots and can be managed with a sticky banding trap on the trunk plus targeted spraying."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 182,
+    "fields": {
+      "crop_name": "mango",
+      "stage": "Diseases",
+      "title": "Mango Anthracnose and Powdery Mildew",
+      "description": "Prune for open canopy airflow to reduce humidity-driven anthracnose (black fruit and leaf spots) and powdery mildew on flower panicles. Apply a protective fungicide at flowering in seasons with persistent wet, humid weather."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 183,
+    "fields": {
+      "crop_name": "mango",
+      "stage": "Harvest",
+      "title": "Harvesting Mango",
+      "description": "Harvest when fruit reaches full size and shows a slight colour change at the stem end, generally 100-120 days after flowering depending on variety. Pick with a short stem intact and handle gently to avoid sap burn and bruising."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 184,
+    "fields": {
+      "crop_name": "mango",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Mango",
+      "description": "Store harvested fruit in a cool, shaded, well-ventilated place to ripen over several days. For longer transport, harvest at a slightly less mature stage and avoid stacking fruit too deeply to prevent bruising."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 185,
+    "fields": {
+      "crop_name": "apple",
+      "stage": "Preparation",
+      "title": "Land Preparation for Apple",
+      "description": "Apple needs cool highland conditions and well-drained, fertile soil; dig planting holes 60cm x 60cm x 60cm and mix in manure or compost ahead of planting. Select a site with good air drainage to reduce frost pocket risk at higher altitudes."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 186,
+    "fields": {
+      "crop_name": "apple",
+      "stage": "Planting",
+      "title": "Apple Planting and Spacing",
+      "description": "Plant grafted, dormant-season nursery trees, spacing 4m x 4m to 5m x 5m depending on rootstock vigour. Stake young trees for support and mulch to conserve moisture during establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 187,
+    "fields": {
+      "crop_name": "apple",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Apple",
+      "description": "Apply well-rotted manure annually around the drip line, supplemented with a balanced NPK fertilizer split before flowering and after fruit set. Adjust rates upward as trees mature into full bearing."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 188,
+    "fields": {
+      "crop_name": "apple",
+      "stage": "Weeding",
+      "title": "Weeding and Pruning for Apple",
+      "description": "Keep a weed-free ring around young trees and prune annually during dormancy to maintain an open canopy for light penetration and airflow, which improves fruit quality and reduces disease pressure."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 189,
+    "fields": {
+      "crop_name": "apple",
+      "stage": "Pests",
+      "title": "Codling Moth and Aphid Control in Apple",
+      "description": "Codling moth larvae tunnel into fruit; use pheromone traps to monitor flight activity and time sprays accordingly. Control aphid colonies on new shoots early, as they can distort growth and transmit viruses."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 190,
+    "fields": {
+      "crop_name": "apple",
+      "stage": "Diseases",
+      "title": "Apple Scab and Powdery Mildew",
+      "description": "Prune for good airflow and apply protective fungicide sprays during wet spring weather to manage scab (dark leaf and fruit lesions). Remove and destroy fallen leaves after harvest, which harbour scab spores over winter dormancy."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 191,
+    "fields": {
+      "crop_name": "apple",
+      "stage": "Harvest",
+      "title": "Harvesting Apple",
+      "description": "Harvest when fruit reaches full colour and separates easily from the spur with a gentle twist, timing varying by variety. Pick by hand carefully to avoid bruising, which shortens storage life."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 192,
+    "fields": {
+      "crop_name": "apple",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Apple",
+      "description": "Store harvested fruit in a cool, humid, well-ventilated place; apple keeps notably longer than most tropical fruit under cool storage. Keep ripening fruit away from unripe produce, as apples release ethylene gas that speeds ripening of nearby produce."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 193,
+    "fields": {
+      "crop_name": "orange",
+      "stage": "Preparation",
+      "title": "Land Preparation for Orange",
+      "description": "Dig planting holes 60cm x 60cm x 60cm, mixing topsoil with manure or compost, in a well-drained site since citrus roots are sensitive to waterlogging. Test and adjust soil pH toward a slightly acidic range if needed before planting."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 194,
+    "fields": {
+      "crop_name": "orange",
+      "stage": "Planting",
+      "title": "Orange Planting and Spacing",
+      "description": "Plant grafted seedlings at the start of the rains, spacing 5m x 5m to 6m x 6m depending on variety and rootstock. Keep the graft union above soil level and mulch to conserve moisture while roots establish."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 195,
+    "fields": {
+      "crop_name": "orange",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Orange",
+      "description": "Apply well-rotted manure annually, supplemented with NPK fertilizer split into 2-3 applications per year timed around flowering and fruit development. Include micronutrients like zinc where deficiency symptoms (mottled, yellowing leaves) appear."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 196,
+    "fields": {
+      "crop_name": "orange",
+      "stage": "Weeding",
+      "title": "Weeding and Basin Management for Orange",
+      "description": "Keep a clean, weed-free basin around young trees and mulch to conserve moisture and moderate soil temperature; mature trees suppress weeds well once canopy closes."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 197,
+    "fields": {
+      "crop_name": "orange",
+      "stage": "Pests",
+      "title": "Citrus Leaf Miner and Fruit Fly Control",
+      "description": "Leaf miner tunnels through new leaf flushes causing silvery trails; prune and destroy heavily mined shoots. Manage fruit fly with bait traps and prompt removal of fallen or overripe fruit that harbours larvae."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 198,
+    "fields": {
+      "crop_name": "orange",
+      "stage": "Diseases",
+      "title": "Citrus Greening and Gummosis Management",
+      "description": "Control psyllid vectors and remove trees showing blotchy mottled leaves and lopsided fruit typical of citrus greening disease, which has no cure. Avoid piling soil or mulch against the trunk to reduce collar rot (gummosis) risk."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 199,
+    "fields": {
+      "crop_name": "orange",
+      "stage": "Harvest",
+      "title": "Harvesting Orange",
+      "description": "Harvest when fruit reaches full colour and a sweet-tart taste, generally 7-12 months after flowering depending on variety. Clip fruit from the tree rather than pulling, to avoid tearing the rind and shortening storage life."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 200,
+    "fields": {
+      "crop_name": "orange",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Orange",
+      "description": "Store harvested fruit in a cool, well-ventilated place; oranges keep reasonably well for several weeks under cool conditions. Avoid storing bruised or damaged fruit with sound fruit, as it accelerates spoilage."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 201,
+    "fields": {
+      "crop_name": "grapes",
+      "stage": "Preparation",
+      "title": "Land Preparation for Grapes",
+      "description": "Dig planting holes or trenches 60cm deep, mixing in generous well-rotted manure, since grapevines are deep-rooted and benefit from a fertile, well-drained profile. Install a trellis system ahead of planting to support vine growth from the start."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 202,
+    "fields": {
+      "crop_name": "grapes",
+      "stage": "Planting",
+      "title": "Grape Planting and Spacing",
+      "description": "Plant rooted cuttings or grafted vines at the start of the rains, spacing 2m-3m within rows and 2.5m-3m between rows depending on trellis system. Train the young vine up a stake to the trellis wire as it grows."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 203,
+    "fields": {
+      "crop_name": "grapes",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Grapes",
+      "description": "Apply well-rotted manure annually during the dormant pruning period, supplemented with a balanced NPK fertilizer split before flowering and after fruit set. Avoid excess nitrogen once vines are established, which favours leafy growth over fruit quality."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 204,
+    "fields": {
+      "crop_name": "grapes",
+      "stage": "Weeding",
+      "title": "Weeding and Pruning for Grapes",
+      "description": "Keep the vine base weed-free and prune annually during dormancy to remove old wood and maintain an open canopy, which is essential for fruit quality and disease control in grapes."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 205,
+    "fields": {
+      "crop_name": "grapes",
+      "stage": "Pests",
+      "title": "Grape Mealybug and Thrips Control",
+      "description": "Mealybugs cluster in bunches and on new shoots; control with targeted insecticide or biological agents before bunch closure makes them hard to reach. Thrips scar young berries; monitor at flowering and treat if populations are high."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 206,
+    "fields": {
+      "crop_name": "grapes",
+      "stage": "Diseases",
+      "title": "Downy and Powdery Mildew in Grapes",
+      "description": "Prune for an open canopy to improve airflow and reduce humidity, the main driver of both downy and powdery mildew. Apply protective fungicide sprays through the wet flowering-to-fruit-set period when disease risk is highest."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 207,
+    "fields": {
+      "crop_name": "grapes",
+      "stage": "Harvest",
+      "title": "Harvesting Grapes",
+      "description": "Harvest when berries reach full colour and sugar content for the variety, as grapes do not ripen further after picking. Cut bunches with secateurs rather than pulling, to avoid damaging the vine and remaining fruit."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 208,
+    "fields": {
+      "crop_name": "grapes",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Grapes",
+      "description": "Store harvested bunches in a cool, well-ventilated place and handle gently, as grapes bruise and shed berries easily. Refrigeration extends freshness considerably if available, since grapes are highly perishable at room temperature."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 209,
+    "fields": {
+      "crop_name": "pomegranate",
+      "stage": "Preparation",
+      "title": "Land Preparation for Pomegranate",
+      "description": "Dig planting holes 60cm x 60cm x 60cm, mixing topsoil with manure or compost; pomegranate tolerates a wide range of soils, including marginal ones, provided drainage is adequate."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 210,
+    "fields": {
+      "crop_name": "pomegranate",
+      "stage": "Planting",
+      "title": "Pomegranate Planting and Spacing",
+      "description": "Plant rooted cuttings or grafted seedlings at the start of the rains, spacing 4m x 4m to 5m x 5m to allow the multi-stemmed shrub-like tree to spread. Stake young plants if needed during establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 211,
+    "fields": {
+      "crop_name": "pomegranate",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Pomegranate",
+      "description": "Apply well-rotted manure annually around the base, supplemented with NPK fertilizer split before flowering and after fruit set. Increase rates gradually as the tree matures into full bearing over its first several years."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 212,
+    "fields": {
+      "crop_name": "pomegranate",
+      "stage": "Weeding",
+      "title": "Weeding and Pruning for Pomegranate",
+      "description": "Keep the base weed-free while young and prune annually to remove crowded, crossing branches and suckers from the base, which improves airflow and fruit quality."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 213,
+    "fields": {
+      "crop_name": "pomegranate",
+      "stage": "Pests",
+      "title": "Pomegranate Fruit Borer and Aphid Control",
+      "description": "Fruit borer larvae tunnel into developing fruit, causing internal rot; bag fruit or apply targeted insecticide at flowering to fruit-set stage when risk is highest. Control aphid colonies on new shoots before they distort growth."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 214,
+    "fields": {
+      "crop_name": "pomegranate",
+      "stage": "Diseases",
+      "title": "Pomegranate Bacterial Blight and Fruit Rot",
+      "description": "Prune for good airflow and avoid overhead irrigation late in the day to reduce bacterial blight (dark leaf and fruit spots) and fruit rot in humid conditions. Remove and destroy infected fruit and foliage promptly."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 215,
+    "fields": {
+      "crop_name": "pomegranate",
+      "stage": "Harvest",
+      "title": "Harvesting Pomegranate",
+      "description": "Harvest when fruit develops full colour and makes a metallic sound when tapped, typically 5-7 months after flowering. Clip fruit from the tree rather than pulling, to avoid damaging the rind."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 216,
+    "fields": {
+      "crop_name": "pomegranate",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Pomegranate",
+      "description": "Store harvested fruit in a cool, dry, well-ventilated place; pomegranate keeps notably longer than most fruit due to its thick rind. Avoid bruising during handling, as damaged rind invites rot."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 217,
+    "fields": {
+      "crop_name": "watermelon",
+      "stage": "Preparation",
+      "title": "Land Preparation for Watermelon",
+      "description": "Plough and harrow to a fine, well-drained seedbed and form low mounds or ridges to improve drainage around the root zone. Watermelon needs loose, fertile soil to support its extensive trailing vines."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 218,
+    "fields": {
+      "crop_name": "watermelon",
+      "stage": "Planting",
+      "title": "Watermelon Planting and Spacing",
+      "description": "Plant 2-3 seeds per hole at 2-3cm depth, spacing hills 1m-1.5m apart within rows and 2m-2.5m between rows to give vines room to trail. Thin to the strongest 1-2 seedlings per hill after emergence."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 219,
+    "fields": {
+      "crop_name": "watermelon",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Watermelon",
+      "description": "Apply well-rotted manure or DAP at 50kg/acre at planting, then top-dress with Urea at flowering to support fruit development. Potassium-rich fertilizer improves fruit sweetness and rind quality as fruit matures."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 220,
+    "fields": {
+      "crop_name": "watermelon",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Watermelon",
+      "description": "Weed at 2-3 weeks after emergence before vines start trailing; once vines spread they suppress weeds effectively through ground cover, reducing the need for further weeding."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 221,
+    "fields": {
+      "crop_name": "watermelon",
+      "stage": "Pests",
+      "title": "Fruit Fly and Aphid Control in Watermelon",
+      "description": "Fruit fly stings developing fruit, causing rot; use bait traps and remove damaged fruit promptly. Aphids on new growth can transmit mosaic viruses, so scout regularly and treat colonies early."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 222,
+    "fields": {
+      "crop_name": "watermelon",
+      "stage": "Diseases",
+      "title": "Watermelon Fusarium Wilt and Anthracnose",
+      "description": "Rotate out of watermelon and other cucurbits for 3-4 years on fields with a history of Fusarium wilt (sudden vine collapse). Ensure good spacing and airflow to reduce anthracnose pressure in humid weather."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 223,
+    "fields": {
+      "crop_name": "watermelon",
+      "stage": "Harvest",
+      "title": "Harvesting Watermelon",
+      "description": "Harvest when the tendril nearest the fruit dries and the underside patch turns from white to yellow, generally 80-100 days after planting. Cut the fruit from the vine with a sharp knife rather than pulling."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 224,
+    "fields": {
+      "crop_name": "watermelon",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Watermelon",
+      "description": "Store whole, uncut fruit in a cool, shaded, well-ventilated place; watermelon keeps reasonably well for 2-3 weeks uncut. Handle carefully during transport, as impact bruising causes internal flesh damage that is not visible externally."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 225,
+    "fields": {
+      "crop_name": "muskmelon",
+      "stage": "Preparation",
+      "title": "Land Preparation for Muskmelon",
+      "description": "Plough and harrow to a fine, well-drained seedbed, forming low mounds to improve drainage around the root zone. Muskmelon needs fertile, loose soil to support healthy vine growth and fruit development."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 226,
+    "fields": {
+      "crop_name": "muskmelon",
+      "stage": "Planting",
+      "title": "Muskmelon Planting and Spacing",
+      "description": "Plant 2-3 seeds per hole at 2cm depth, spacing hills 60-90cm apart within rows and 1.5m-2m between rows. Thin to the strongest 1-2 seedlings per hill after emergence."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 227,
+    "fields": {
+      "crop_name": "muskmelon",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Muskmelon",
+      "description": "Apply DAP at 40-50kg/acre at planting, then top-dress with Urea at flowering to support fruit set and development. Potassium-rich fertilizer during fruit fill improves sweetness and quality."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 228,
+    "fields": {
+      "crop_name": "muskmelon",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Muskmelon",
+      "description": "Weed at 2-3 weeks after emergence before vines spread; once vines trail and cover the ground they suppress further weed growth on their own."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 229,
+    "fields": {
+      "crop_name": "muskmelon",
+      "stage": "Pests",
+      "title": "Fruit Fly and Aphid Control in Muskmelon",
+      "description": "Fruit fly damages ripening fruit; use bait or pheromone traps and remove infested fruit promptly to break the breeding cycle. Aphids can transmit mosaic viruses, so scout new growth regularly."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 230,
+    "fields": {
+      "crop_name": "muskmelon",
+      "stage": "Diseases",
+      "title": "Muskmelon Powdery Mildew and Fusarium Wilt",
+      "description": "Ensure good spacing and airflow to reduce powdery mildew (white powdery patches on leaves) in humid conditions. Rotate out of cucurbits for 3-4 years on fields with a history of Fusarium wilt."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 231,
+    "fields": {
+      "crop_name": "muskmelon",
+      "stage": "Harvest",
+      "title": "Harvesting Muskmelon",
+      "description": "Harvest when fruit develops full netting on the skin and slips easily from the vine with light pressure, typically 80-100 days after planting. Pick in the cool morning for best shelf life."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 232,
+    "fields": {
+      "crop_name": "muskmelon",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Muskmelon",
+      "description": "Store harvested fruit in a cool, shaded, well-ventilated place; muskmelon ripens further after picking, so timing harvest slightly early extends usable shelf life for transport."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 233,
+    "fields": {
+      "crop_name": "sesameseed",
+      "stage": "Preparation",
+      "title": "Land Preparation for Sesame",
+      "description": "Plough and harrow to a fine, weed-free seedbed, as sesame's tiny seeds need good soil-seed contact for even germination. Sesame tolerates poorer, well-drained soils better than most oilseeds."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 234,
+    "fields": {
+      "crop_name": "sesameseed",
+      "stage": "Planting",
+      "title": "Sesame Planting and Spacing",
+      "description": "Broadcast or drill seed at 2cm depth at a seed rate of 3-5 kg/ha, thinning to a spacing of about 10-15cm between plants in rows 30-45cm apart. Plant at the onset of rains for even establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 235,
+    "fields": {
+      "crop_name": "sesameseed",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Sesame",
+      "description": "Apply a light basal dressing of DAP at 20-25kg/acre at planting. Sesame generally performs well with minimal fertilizer and rarely needs top-dressing on reasonably fertile soils."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 236,
+    "fields": {
+      "crop_name": "sesameseed",
+      "stage": "Weeding",
+      "title": "Weeding and Thinning for Sesame",
+      "description": "Thin and weed at 2-3 weeks after emergence, when seedlings are still small and vulnerable to weed competition. A second weeding at 5 weeks is usually enough before canopy closes."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 237,
+    "fields": {
+      "crop_name": "sesameseed",
+      "stage": "Pests",
+      "title": "Sesame Gall Midge and Leaf Webber Control",
+      "description": "Watch for gall midge distorting flower buds and leaf webbers tying leaves together with webbing. Remove and destroy affected buds and webbed leaves by hand where infestation is light."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 238,
+    "fields": {
+      "crop_name": "sesameseed",
+      "stage": "Diseases",
+      "title": "Sesame Phyllody and Leaf Spot",
+      "description": "Rogue out plants showing phyllody (flowers turning into leaf-like structures) promptly, as it spreads via insect vectors and has no cure. Ensure adequate spacing for airflow to reduce leaf spot in humid weather."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 239,
+    "fields": {
+      "crop_name": "sesameseed",
+      "stage": "Harvest",
+      "title": "Harvesting Sesame",
+      "description": "Harvest when lower leaves yellow and capsules turn brown but before they shatter open, typically 90-120 days after planting. Cut and stook plants upright to dry further, since sesame capsules shatter easily once fully ripe."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 240,
+    "fields": {
+      "crop_name": "sesameseed",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Sesame",
+      "description": "Thresh by inverting dried, bundled plants over a cloth to catch shattering seed, then dry further to below 6% moisture. Store in sealed, dry containers, as sesame's high oil content makes it prone to rancidity in warm, humid storage."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 241,
+    "fields": {
+      "crop_name": "sugarcane",
+      "stage": "Preparation",
+      "title": "Land Preparation for Sugarcane",
+      "description": "Plough deeply to 25-30cm and harrow to break clods, since sugarcane is a long-duration crop that benefits from a deep, well-prepared seedbed. Form furrows 30cm deep for planting setts."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 242,
+    "fields": {
+      "crop_name": "sugarcane",
+      "stage": "Planting",
+      "title": "Sugarcane Planting and Spacing",
+      "description": "Lay 2-3 budded setts end-to-end in furrows spaced 90cm-1.2m apart and cover with 5-8cm of soil. Plant healthy, disease-free setts from a mature (10-14 month) cane field for the best germination."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 243,
+    "fields": {
+      "crop_name": "sugarcane",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Sugarcane",
+      "description": "Apply DAP at 100kg/acre as basal dressing at planting, then top-dress with Urea in split applications at 6 weeks and 12 weeks after planting to support the crop's long, heavy-feeding growth cycle."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 244,
+    "fields": {
+      "crop_name": "sugarcane",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Sugarcane",
+      "description": "Weed at 4-6 weeks and again at 10-12 weeks after planting before canopy closes; earthing up around the base during weeding also supports root and stalk development."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 245,
+    "fields": {
+      "crop_name": "sugarcane",
+      "stage": "Pests",
+      "title": "Sugarcane Stalk Borer and Termite Control",
+      "description": "Scout for stalk borer damage (dead hearts and bored stalks) and termite damage to setts and young shoots. Remove and destroy severely bored stalks and use termite-resistant treated setts where termite pressure is high."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 246,
+    "fields": {
+      "crop_name": "sugarcane",
+      "stage": "Diseases",
+      "title": "Sugarcane Smut and Red Rot Management",
+      "description": "Use certified, disease-free setts and rogue out whip-like smut-infected shoots as soon as seen. Avoid planting in fields with a history of red rot (reddened stalk interior with white patches) for at least one season."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 247,
+    "fields": {
+      "crop_name": "sugarcane",
+      "stage": "Harvest",
+      "title": "Harvesting Sugarcane",
+      "description": "Harvest when stalks reach full maturity and sugar content peaks, typically 12-18 months after planting depending on variety and altitude. Cut stalks close to the ground to maximise yield and leave stubble for ratoon regrowth."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 248,
+    "fields": {
+      "crop_name": "sugarcane",
+      "stage": "Storage",
+      "title": "Post-Harvest Handling for Sugarcane",
+      "description": "Transport and process or mill cut cane as soon as possible, ideally within 24-48 hours, as sugar content declines quickly after cutting. Avoid stacking cut cane in the sun for extended periods before delivery."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 249,
+    "fields": {
+      "crop_name": "plantain",
+      "stage": "Preparation",
+      "title": "Land Preparation for Plantain",
+      "description": "Dig planting holes 60cm x 60cm x 60cm, mixing topsoil with well-rotted manure or compost. Plantain, like banana, is a long-term perennial and benefits from deep, fertile planting holes."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 250,
+    "fields": {
+      "crop_name": "plantain",
+      "stage": "Planting",
+      "title": "Plantain Planting and Spacing",
+      "description": "Plant healthy suckers or tissue-culture plantlets at 3m x 3m spacing, setting the corm just below the soil surface. Mulch heavily to conserve moisture and suppress weeds while the mat establishes."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 251,
+    "fields": {
+      "crop_name": "plantain",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Plantain",
+      "description": "Apply well-rotted manure or compost around the base each season, supplemented with NPK or Urea at 200-300g per mat every 3-4 months once established, with an emphasis on potassium for good bunch fill."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 252,
+    "fields": {
+      "crop_name": "plantain",
+      "stage": "Weeding",
+      "title": "Weeding and Desuckering for Plantain",
+      "description": "Keep the base weed-free, especially in the first year before canopy closes. Desucker regularly to maintain 3-4 followers of different ages per mat for continuous, well-spaced production."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 253,
+    "fields": {
+      "crop_name": "plantain",
+      "stage": "Pests",
+      "title": "Plantain Weevil and Nematode Control",
+      "description": "Banana/plantain weevil bores into the corm and weakens plants; use trap methods and field sanitation to reduce populations. Manage root-damaging nematodes with clean planting material and rotation on badly affected land."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 254,
+    "fields": {
+      "crop_name": "plantain",
+      "stage": "Diseases",
+      "title": "Plantain Bacterial Wilt and Black Sigatoka",
+      "description": "Disinfect tools between plants and remove the male bud after the last hand to slow bacterial wilt spread via insect vectors. Remove heavily Black Sigatoka-affected leaves (dark streaking) to reduce spore load and slow spread."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 255,
+    "fields": {
+      "crop_name": "plantain",
+      "stage": "Harvest",
+      "title": "Harvesting Plantain",
+      "description": "Harvest bunches when fingers fill out and round off, typically 3-4 months after flowering. Cut the pseudostem after harvest to make way for the next follower sucker."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 256,
+    "fields": {
+      "crop_name": "plantain",
+      "stage": "Storage",
+      "title": "Post-Harvest Handling for Plantain",
+      "description": "Handle harvested bunches gently to avoid bruising and store in a cool, shaded, well-ventilated place. Plantain can be left to ripen at room temperature or used green for cooking, depending on the intended use."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 257,
+    "fields": {
+      "crop_name": "onion",
+      "stage": "Preparation",
+      "title": "Land Preparation for Onion",
+      "description": "Plough and harrow to a fine, well-drained seedbed free of clods, since onion bulbs need loose soil to expand properly. Raise beds in heavier soils to improve drainage and ease weeding."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 258,
+    "fields": {
+      "crop_name": "onion",
+      "stage": "Planting",
+      "title": "Onion Planting and Spacing",
+      "description": "Transplant 6-8 week old nursery seedlings at 10cm x 15cm spacing, or direct-sow at 1cm depth in rows 20-30cm apart. Avoid planting too deep, which can produce elongated necks and poor bulb shape."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 259,
+    "fields": {
+      "crop_name": "onion",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Onion",
+      "description": "Apply DAP at 40-50kg/acre at transplanting, then top-dress with Urea in split applications during vegetative growth, stopping nitrogen once bulbing begins to avoid delaying maturity and reducing storage quality."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 260,
+    "fields": {
+      "crop_name": "onion",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Onion",
+      "description": "Weed regularly, every 2-3 weeks, since onion's narrow, upright leaves provide little ground shading and the crop competes poorly with weeds throughout its growing period."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 261,
+    "fields": {
+      "crop_name": "onion",
+      "stage": "Pests",
+      "title": "Onion Thrips Control",
+      "description": "Thrips are onion's main pest, causing silvery streaks on leaves and reduced bulb size under heavy infestation. Scout regularly, especially in dry weather when thrips populations build quickly, and treat with a registered insecticide if numbers are high."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 262,
+    "fields": {
+      "crop_name": "onion",
+      "stage": "Diseases",
+      "title": "Onion Downy Mildew and Purple Blotch",
+      "description": "Ensure good spacing and airflow and avoid overhead irrigation late in the day to reduce downy mildew and purple blotch, both favoured by humid, wet foliage. Rotate with non-allium crops to reduce soil-borne disease carryover."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 263,
+    "fields": {
+      "crop_name": "onion",
+      "stage": "Harvest",
+      "title": "Harvesting Onion",
+      "description": "Harvest when about 50-70% of tops have fallen over and started to dry, typically 90-120 days after transplanting. Lift bulbs carefully and cure in the field or a shaded, airy spot for a few days before topping."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 264,
+    "fields": {
+      "crop_name": "onion",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Onion",
+      "description": "Cure bulbs until the neck and outer skins are fully dry and papery, then store in a cool, dry, well-ventilated place in shallow layers or mesh bags. Avoid storing bruised or thick-necked bulbs with sound ones, as they spoil first and can spread rot."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 265,
+    "fields": {
+      "crop_name": "sunflowerseed",
+      "stage": "Preparation",
+      "title": "Land Preparation for Sunflower",
+      "description": "Plough and harrow to a fine seedbed; sunflower's deep taproot allows it to tolerate a range of soils, but a loose, well-drained seedbed improves early establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 266,
+    "fields": {
+      "crop_name": "sunflowerseed",
+      "stage": "Planting",
+      "title": "Sunflower Planting and Spacing",
+      "description": "Plant at 4-5cm depth, spacing rows 60-75cm apart with 25-30cm between plants, at a seed rate of 5-6 kg/ha. Plant with reliable rains, since even moisture during establishment is important for a uniform stand."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 267,
+    "fields": {
+      "crop_name": "sunflowerseed",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Sunflower",
+      "description": "Apply DAP at 40-50kg/acre at planting, then top-dress with Urea at 25-30kg/acre around 4-5 weeks after emergence to support head development. Boron deficiency can cause poor seed fill, so include a micronutrient mix where soils are known to be deficient."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 268,
+    "fields": {
+      "crop_name": "sunflowerseed",
+      "stage": "Weeding",
+      "title": "Weeding Schedule for Sunflower",
+      "description": "Weed at 3 weeks after emergence and again at 6 weeks before the crop's broad canopy closes and naturally suppresses further weed growth."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 269,
+    "fields": {
+      "crop_name": "sunflowerseed",
+      "stage": "Pests",
+      "title": "Sunflower Head Borer and Aphid Control",
+      "description": "Scout for head borer damage during flowering and bud stage, sunflower's most vulnerable period, and treat with a registered insecticide if infestation is heavy. Control aphid colonies on buds and stems before they build up."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 270,
+    "fields": {
+      "crop_name": "sunflowerseed",
+      "stage": "Diseases",
+      "title": "Sunflower Downy Mildew and Head Rot",
+      "description": "Use certified, treated seed to reduce downy mildew risk, which causes stunted, pale seedlings. Ensure good spacing and airflow, and avoid waterlogging, to reduce head rot during wet weather near maturity."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 271,
+    "fields": {
+      "crop_name": "sunflowerseed",
+      "stage": "Harvest",
+      "title": "Harvesting Sunflower",
+      "description": "Harvest when the back of the flower head turns brown and yellow and seeds are hard, typically 90-110 days after planting. Cut heads and dry further before threshing if moisture is still high."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 272,
+    "fields": {
+      "crop_name": "sunflowerseed",
+      "stage": "Storage",
+      "title": "Post-Harvest Storage for Sunflower",
+      "description": "Dry threshed seed to below 9% moisture before storage. Store in a cool, dry, sealed container, as sunflower's high oil content makes seed prone to rancidity in warm, humid conditions."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 273,
+    "fields": {
+      "crop_name": "tea",
+      "stage": "Preparation",
+      "title": "Land Preparation for Tea",
+      "description": "Tea needs cool, high-altitude conditions and deep, well-drained, acidic soil; dig planting holes 45cm x 45cm x 45cm and mix in manure or compost ahead of planting. Establish contour terraces on sloped land to control erosion."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 274,
+    "fields": {
+      "crop_name": "tea",
+      "stage": "Planting",
+      "title": "Tea Planting and Spacing",
+      "description": "Plant rooted cuttings from a nursery at the start of the rains, spacing 1.2m x 0.6m in double-row hedges to form a dense, pluckable bush. Mulch generously to conserve moisture during the establishment period."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 275,
+    "fields": {
+      "crop_name": "tea",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Tea",
+      "description": "Apply NPK fertilizer in split applications, typically 3-4 times per year, once the bush is established and being regularly plucked, since frequent leaf harvesting removes nutrients steadily. Adjust rates based on plucking intensity and bush age."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 276,
+    "fields": {
+      "crop_name": "tea",
+      "stage": "Weeding",
+      "title": "Weeding and Pruning for Tea",
+      "description": "Keep young bushes weed-free until the canopy closes and forms a shading table. Prune periodically to maintain a low, even plucking table and stimulate the fresh new growth that produces the best quality leaf."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 277,
+    "fields": {
+      "crop_name": "tea",
+      "stage": "Pests",
+      "title": "Tea Mosquito Bug and Red Spider Mite Control",
+      "description": "Tea mosquito bug damages young shoots, causing blister-like lesions; scout regularly and treat promptly since damage spreads quickly in humid weather. Red spider mite thrives in dry conditions and causes bronzing of mature leaves; monitor the underside of leaves for early signs."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 278,
+    "fields": {
+      "crop_name": "tea",
+      "stage": "Diseases",
+      "title": "Tea Blister Blight Management",
+      "description": "Blister blight, favoured by cool, wet, humid weather, causes translucent blisters on young leaves; pluck affected shoots promptly and apply a copper-based fungicide during high-risk periods. Maintain good bush spacing and airflow to reduce humidity around the plucking table."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 279,
+    "fields": {
+      "crop_name": "tea",
+      "stage": "Harvest",
+      "title": "Harvesting (Plucking) Tea",
+      "description": "Pluck two leaves and a bud from each shoot on a regular cycle, typically every 7-14 days depending on growth rate and season, once the bush reaches plucking height (around 2 years after planting). Consistent, skilled plucking is central to both yield and leaf quality."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 280,
+    "fields": {
+      "crop_name": "tea",
+      "stage": "Storage",
+      "title": "Post-Harvest Processing for Tea",
+      "description": "Process plucked leaf (withering, rolling, oxidation, and drying for black tea, or steaming/pan-firing for green tea) as soon as possible after plucking, since fresh leaf deteriorates quickly. Store finished, dried tea in airtight, moisture-proof packaging away from strong odours and light."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 281,
+    "fields": {
+      "crop_name": "tobacco",
+      "stage": "Preparation",
+      "title": "Land Preparation for Tobacco",
+      "description": "Plough deeply and harrow to a fine, weed-free seedbed, since tobacco's small seedlings establish poorly in rough soil. Raise nursery beds separately for seedling production before transplanting to the main field."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 282,
+    "fields": {
+      "crop_name": "tobacco",
+      "stage": "Planting",
+      "title": "Tobacco Planting and Spacing",
+      "description": "Transplant 6-8 week old nursery seedlings, spacing 60cm x 50cm to allow full leaf development. Transplant on a cloudy day or in the late afternoon to reduce transplant shock."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 283,
+    "fields": {
+      "crop_name": "tobacco",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Tobacco",
+      "description": "Apply a balanced basal fertilizer low in chlorine at transplanting, since chlorine reduces leaf burning quality, then top-dress with a modest nitrogen application 2-3 weeks later. Avoid excess nitrogen late in the season, which delays maturity and reduces leaf quality."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 284,
+    "fields": {
+      "crop_name": "tobacco",
+      "stage": "Weeding",
+      "title": "Weeding and Topping for Tobacco",
+      "description": "Weed regularly in the first 6 weeks after transplanting while the crop establishes. Top (remove the flower head) once the desired number of leaves has formed to redirect growth into leaf size and quality, and remove side suckers regularly afterward."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 285,
+    "fields": {
+      "crop_name": "tobacco",
+      "stage": "Pests",
+      "title": "Tobacco Budworm and Aphid Control",
+      "description": "Budworm larvae feed on buds and leaves, reducing marketable leaf; scout regularly and treat with a registered insecticide at threshold levels. Control aphid colonies on new growth, which can also transmit viruses."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 286,
+    "fields": {
+      "crop_name": "tobacco",
+      "stage": "Diseases",
+      "title": "Tobacco Mosaic Virus and Black Shank",
+      "description": "Wash hands and disinfect tools between plants to limit tobacco mosaic virus spread, since it transmits easily through contact. Rotate out of tobacco for several years on fields with a history of black shank (blackened stem base and wilting)."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 287,
+    "fields": {
+      "crop_name": "tobacco",
+      "stage": "Harvest",
+      "title": "Harvesting Tobacco",
+      "description": "Harvest (prime) leaves individually from the bottom of the plant upward as they ripen to a yellow-green colour, over several pickings across the season. Handle leaves carefully to avoid tearing, which reduces grade and value."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 288,
+    "fields": {
+      "crop_name": "tobacco",
+      "stage": "Storage",
+      "title": "Post-Harvest Curing and Storage for Tobacco",
+      "description": "Cure harvested leaf using the appropriate method for the variety (air, flue, or sun curing) to develop colour, aroma, and burning quality. Store cured leaf in a dry, well-ventilated place, bundled or baled, away from moisture that can cause mould."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 289,
+    "fields": {
+      "crop_name": "cocoa",
+      "stage": "Preparation",
+      "title": "Land Preparation for Cocoa",
+      "description": "Establish shade trees ahead of planting, as young cocoa needs partial shade to thrive; dig planting holes 45cm x 45cm x 45cm and mix in manure or compost. Cocoa needs deep, fertile, well-drained soil in warm, humid conditions."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 290,
+    "fields": {
+      "crop_name": "cocoa",
+      "stage": "Planting",
+      "title": "Cocoa Planting and Spacing",
+      "description": "Transplant nursery seedlings at the start of the rains, spacing 3m x 3m under established shade cover. Firm soil around the root ball and mulch to retain moisture during establishment."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 291,
+    "fields": {
+      "crop_name": "cocoa",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Cocoa",
+      "description": "Apply well-rotted manure or compost around the base annually, supplemented with NPK fertilizer split into two applications per year once the tree begins bearing. Reduce shade gradually as trees mature to balance light needs with fertilizer response."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 292,
+    "fields": {
+      "crop_name": "cocoa",
+      "stage": "Weeding",
+      "title": "Weeding and Shade Management for Cocoa",
+      "description": "Keep a clean basin around young trees and manage shade tree pruning to balance light for cocoa without exposing it to full sun, which stresses the crop. Mature, well-shaded cocoa suppresses most weeds naturally."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 293,
+    "fields": {
+      "crop_name": "cocoa",
+      "stage": "Pests",
+      "title": "Cocoa Mirid and Pod Borer Control",
+      "description": "Mirids (capsids) pierce pods and stems causing dieback; scout regularly and treat with a registered insecticide at threshold levels. Remove and destroy pod borer-damaged pods promptly to limit spread."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 294,
+    "fields": {
+      "crop_name": "cocoa",
+      "stage": "Diseases",
+      "title": "Cocoa Black Pod Disease Management",
+      "description": "Black pod disease, favoured by wet, humid conditions, causes pods to blacken and rot; harvest ripe pods promptly and remove diseased pods from the field regularly to reduce spore spread. Prune for good airflow to lower humidity within the canopy."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 295,
+    "fields": {
+      "crop_name": "cocoa",
+      "stage": "Harvest",
+      "title": "Harvesting Cocoa",
+      "description": "Harvest pods when they change to a full ripe colour (yellow or orange depending on variety), typically year-round with peak seasons, about 5-6 months after flowering. Cut pods carefully with a knife or pod hook to avoid damaging the flower cushion, which produces future pods."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 296,
+    "fields": {
+      "crop_name": "cocoa",
+      "stage": "Storage",
+      "title": "Post-Harvest Fermentation and Storage for Cocoa",
+      "description": "Ferment beans in boxes or heaps for 5-7 days, turning regularly, to develop chocolate flavour precursors, then sun-dry to around 7% moisture. Store dried beans in clean, dry, well-ventilated bags away from strong odours, which cocoa readily absorbs."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 297,
+    "fields": {
+      "crop_name": "vanilla",
+      "stage": "Preparation",
+      "title": "Land Preparation for Vanilla",
+      "description": "Vanilla is a climbing orchid that needs a living or artificial support tree and partial shade; establish support trees ahead of planting and prepare planting holes enriched with organic matter."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 298,
+    "fields": {
+      "crop_name": "vanilla",
+      "stage": "Planting",
+      "title": "Vanilla Planting and Spacing",
+      "description": "Plant healthy vine cuttings at the base of support trees, spacing plants 2m-3m apart along the support row. Train the young vine to loop loosely around the support as it grows rather than climbing straight up."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 299,
+    "fields": {
+      "crop_name": "vanilla",
+      "stage": "Fertilizer",
+      "title": "Fertilizer Application for Vanilla",
+      "description": "Apply well-rotted manure or compost regularly around the base, as vanilla is a light feeder that responds well to organic matter rather than heavy mineral fertilizer. Mulch generously, since vanilla's aerial roots are sensitive to drying out."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 300,
+    "fields": {
+      "crop_name": "vanilla",
+      "stage": "Weeding",
+      "title": "Weeding and Vine Management for Vanilla",
+      "description": "Keep the base weed-free and periodically loop and train the vine along its support to keep it within hand-pollinating reach. Prune support tree foliage as needed to maintain the dappled shade vanilla requires."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 301,
+    "fields": {
+      "crop_name": "vanilla",
+      "stage": "Pests",
+      "title": "Vanilla Weevil and Mealybug Control",
+      "description": "Vanilla weevil bores into stems, causing dieback; remove and destroy affected stem sections promptly. Mealybugs cluster in leaf axils and on beans; control with targeted insecticide or biological methods to avoid contaminating developing pods."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 302,
+    "fields": {
+      "crop_name": "vanilla",
+      "stage": "Diseases",
+      "title": "Vanilla Root and Stem Rot",
+      "description": "Ensure good drainage and avoid waterlogging around the base, as vanilla is highly susceptible to fungal root and stem rot in wet soil. Remove and destroy affected vine sections promptly to prevent spread along the support."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 303,
+    "fields": {
+      "crop_name": "vanilla",
+      "stage": "Harvest",
+      "title": "Harvesting Vanilla",
+      "description": "Hand-pollinate flowers within hours of opening, as vanilla flowers must be pollinated manually outside their native range, then harvest pods 8-9 months later when the tip just begins to turn yellow. Harvesting at the right maturity is critical for good cured bean quality."
+    }
+  },
+  {
+    "model": "advisory.cropadvisory",
+    "pk": 304,
+    "fields": {
+      "crop_name": "vanilla",
+      "stage": "Storage",
+      "title": "Post-Harvest Curing and Storage for Vanilla",
+      "description": "Cure harvested pods through blanching, sweating, slow-drying, and conditioning stages over several weeks to develop vanilla's characteristic aroma. Store cured beans in airtight containers away from light and strong odours, which vanilla readily absorbs."
+    }
   }
 ]
