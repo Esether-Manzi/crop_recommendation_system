@@ -1,5 +1,5 @@
 {% extends "admin/base_site.html" %}
-{% load i18n static %}
+{% load i18n static humanize %}
 
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/dashboard.css" %}">{% endblock %}
 
@@ -9,7 +9,7 @@
 
 {% block nav-breadcrumbs %}{% endblock %}
 
-{% block nav-sidebar %}{% endblock %}
+{% block content_title %}{% endblock %}
 
 {% block content %}
 <div id="content-main">
@@ -22,47 +22,45 @@
     <div class="cropai-welcome-badge"><i class="fa-solid fa-leaf"></i></div>
 </div>
 
-{% if dashboard_stats %}
-<div class="cropai-stats-grid">
-    {% for stat in dashboard_stats %}
-    <div class="cropai-stat-card">
-        <div class="cropai-stat-icon"><i class="fa-solid {{ stat.icon }}"></i></div>
-        <div class="cropai-stat-body">
-            <div class="cropai-stat-value">{{ stat.value }}</div>
-            <div class="cropai-stat-label">{{ stat.label }}</div>
-            {% if stat.trend %}
-            <div class="cropai-stat-trend {{ stat.trend_dir }}">
-                {% if stat.trend_dir == "up" %}<i class="fa-solid fa-arrow-trend-up"></i>
-                {% elif stat.trend_dir == "down" %}<i class="fa-solid fa-arrow-trend-down"></i>
-                {% else %}<i class="fa-solid fa-minus"></i>{% endif %}
-                {{ stat.trend }}
+<div class="cropai-dash-grid">
+
+  <div class="cropai-dash-primary">
+
+    {% if dashboard_stats %}
+    <div class="cropai-stats-grid">
+        {% for stat in dashboard_stats %}
+        <div class="cropai-stat-card cropai-stat-card--{{ stat.variant|default:'activity' }}">
+            <div class="cropai-stat-icon"><i class="fa-solid {{ stat.icon }}"></i></div>
+            <div class="cropai-stat-body">
+                <div class="cropai-stat-value">{{ stat.value }}</div>
+                <div class="cropai-stat-label">{{ stat.label }}</div>
+                {% if stat.trend %}
+                <div class="cropai-stat-trend {{ stat.trend_dir }}">
+                    {% if stat.trend_dir == "up" %}<i class="fa-solid fa-arrow-trend-up"></i>
+                    {% elif stat.trend_dir == "down" %}<i class="fa-solid fa-arrow-trend-down"></i>
+                    {% else %}<i class="fa-solid fa-minus"></i>{% endif %}
+                    {{ stat.trend }}
+                </div>
+                {% endif %}
             </div>
-            {% endif %}
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-{% endif %}
+    {% endif %}
 
-{% if chart_counts %}
-<div class="cropai-module">
-    <div class="cropai-module-head">
-        <h2><i class="fa-solid fa-chart-column"></i> Prediction Activity</h2>
-        <span class="cropai-module-note">Last 14 days</span>
+    {% if chart_counts %}
+    <div class="cropai-module">
+        <div class="cropai-module-head">
+            <h2><i class="fa-solid fa-chart-column"></i> Prediction Activity</h2>
+            <span class="cropai-module-note">Last 14 days</span>
+        </div>
+        <div class="cropai-chart-wrap"><canvas id="adminPredictionChart"></canvas></div>
     </div>
-    <div class="cropai-chart-wrap"><canvas id="adminPredictionChart"></canvas></div>
-</div>
-{% endif %}
+    {% endif %}
 
-<div class="app-list">
-  {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
-</div>
+  </div>
 
-</div>
-{% endblock %}
-
-{% block sidebar %}
-<div id="content-related">
+  <div class="cropai-dash-side">
 
     <div class="module cropai-side-module">
         <h2><i class="fa-solid fa-wand-magic-sparkles"></i> {% translate 'Latest predictions' %}</h2>
@@ -70,16 +68,19 @@
         <ul class="cropai-feed">
             {% for pred in recent_predictions %}
             <li>
-                <span class="cropai-feed-dot"><i class="fa-solid fa-seedling"></i></span>
+                <span class="cropai-feed-dot cropai-crop-dot--{{ pred.crop_color }}"><i class="fa-solid {{ pred.crop_icon }}"></i></span>
                 <span class="cropai-feed-text">
                     <strong>{{ pred.predicted_crop|title }}</strong>
-                    <span class="cropai-feed-meta">{{ pred.user.username }} · {{ pred.created_at|date:"M j, H:i" }}</span>
+                    <span class="cropai-feed-meta">{{ pred.user.username }} · {{ pred.created_at|naturaltime }}</span>
                 </span>
             </li>
             {% endfor %}
         </ul>
         {% else %}
-        <p>{% translate 'None available' %}</p>
+        <div class="cropai-empty-state">
+            <i class="fa-solid fa-seedling"></i>
+            <p>{% translate 'Predictions will appear here once farmers start using the model.' %}</p>
+        </div>
         {% endif %}
     </div>
 
@@ -89,7 +90,10 @@
             {% load log %}
             {% get_admin_log 10 as admin_log for_user user %}
             {% if not admin_log %}
-            <p>{% translate 'None available' %}</p>
+            <div class="cropai-empty-state">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <p>{% translate 'Your actions will show up here as you manage the site.' %}</p>
+            </div>
             {% else %}
             <ul class="actionlist">
             {% for entry in admin_log %}
@@ -111,8 +115,24 @@
             </ul>
             {% endif %}
     </div>
+
+  </div>
+
+  <div class="cropai-dash-manage">
+    <div class="cropai-section-heading">
+        <h2><i class="fa-solid fa-grip"></i> {% translate 'Manage' %}</h2>
+    </div>
+    <div class="app-list">
+      {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+    </div>
+  </div>
+
+</div>
+
 </div>
 {% endblock %}
+
+{% block sidebar %}{% endblock %}
 
 {% block extrahead %}{{ block.super }}
 {% if chart_counts %}

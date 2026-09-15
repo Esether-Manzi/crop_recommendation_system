@@ -1,0 +1,56 @@
+{% load i18n %}
+{% if app_list %}
+<div class="cropai-app-grid">
+  {% for app in app_list %}
+  <div class="cropai-app-card{% if app.is_low_priority %} cropai-app-card--compact{% endif %}">
+    <div class="cropai-app-card-head">
+      <span class="cropai-app-icon">
+        <i class="fa-solid
+          {% if app.app_label == 'accounts' %}fa-users
+          {% elif app.app_label == 'farms' %}fa-tractor
+          {% elif app.app_label == 'recommendations' %}fa-wand-magic-sparkles
+          {% elif app.app_label == 'rotation' %}fa-arrows-spin
+          {% elif app.app_label == 'advisory' %}fa-book-open
+          {% elif app.app_label == 'feedback' %}fa-comment-dots
+          {% elif app.app_label == 'auth' %}fa-user-shield
+          {% else %}fa-layer-group
+          {% endif %}"></i>
+      </span>
+      <div class="cropai-app-card-title">
+        <h3><a href="{{ app.app_url }}">{{ app.name }}</a></h3>
+        <span>{{ app.models|length }} model{{ app.models|length|pluralize }}</span>
+      </div>
+    </div>
+    <ul class="cropai-app-model-list">
+      {% for model in app.models %}
+      <li class="{% if model.admin_url in request.path|urlencode %}current-model{% endif %}">
+        {% if model.admin_url %}
+          <a href="{{ model.admin_url }}"{% if model.admin_url in request.path|urlencode %} aria-current="page"{% endif %}>
+            <i class="fa-solid fa-circle-dot"></i>{{ model.name }}
+          </a>
+        {% else %}
+          <span><i class="fa-solid fa-circle-dot"></i>{{ model.name }}</span>
+        {% endif %}
+        {% if not app.is_low_priority %}
+        <span class="cropai-app-model-actions">
+          {% if model.add_url %}
+            <a href="{{ model.add_url }}" class="cropai-mini-btn" title="{% translate 'Add' %}"><i class="fa-solid fa-plus"></i></a>
+          {% endif %}
+          {% if model.admin_url and show_changelinks %}
+            {% if model.view_only %}
+              <a href="{{ model.admin_url }}" class="cropai-mini-btn" title="{% translate 'View' %}"><i class="fa-solid fa-eye"></i></a>
+            {% else %}
+              <a href="{{ model.admin_url }}" class="cropai-mini-btn" title="{% translate 'Change' %}"><i class="fa-solid fa-pen"></i></a>
+            {% endif %}
+          {% endif %}
+        </span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+  <p>{% translate "You don't have permission to view or edit anything." %}</p>
+{% endif %}

@@ -1,0 +1,74 @@
+{% load i18n %}
+{% url 'admin:index' as cropai_index_url %}
+<button class="sticky toggle-nav-sidebar" id="toggle-nav-sidebar" aria-label="{% translate 'Toggle navigation' %}"></button>
+<nav class="sticky" id="nav-sidebar" aria-label="{% translate 'Sidebar' %}">
+
+  <div class="cropai-nav-brand">
+    <span class="cropai-nav-brand-icon"><i class="fa-solid fa-seedling"></i></span>
+    <span class="cropai-nav-brand-text">
+      <strong>CropAI</strong>
+      <small>{% translate 'Administration' %}</small>
+    </span>
+  </div>
+
+  <div class="cropai-nav-search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" id="nav-filter"
+           placeholder="{% translate 'Start typing to filter…' %}"
+           aria-label="{% translate 'Filter navigation items' %}">
+  </div>
+
+  <div class="cropai-nav-scroll">
+
+    <div class="cropai-nav-section">
+      <a class="cropai-nav-link{% if request.path == cropai_index_url %} active{% endif %}" href="{{ cropai_index_url }}">
+        <i class="fa-solid fa-gauge-high"></i><span>{% translate 'Dashboard' %}</span>
+      </a>
+    </div>
+
+    {% if available_apps %}
+    <div class="cropai-nav-section">
+      <p class="cropai-nav-heading">{% translate 'Manage' %}</p>
+
+      {% for app in available_apps %}
+      <div class="cropai-nav-group{% if app.app_url in request.path|urlencode %} current-app{% endif %}">
+        <div class="cropai-nav-group-label">
+          <i class="fa-solid
+            {% if app.app_label == 'accounts' %}fa-users
+            {% elif app.app_label == 'farms' %}fa-tractor
+            {% elif app.app_label == 'recommendations' %}fa-wand-magic-sparkles
+            {% elif app.app_label == 'rotation' %}fa-arrows-spin
+            {% elif app.app_label == 'advisory' %}fa-book-open
+            {% elif app.app_label == 'feedback' %}fa-comment-dots
+            {% elif app.app_label == 'auth' %}fa-user-shield
+            {% else %}fa-layer-group
+            {% endif %}"></i>
+          <span>{{ app.name }}</span>
+        </div>
+        <div class="cropai-nav-group-body">
+          {% for model in app.models %}
+          <div class="cropai-nav-sublink{% if model.admin_url in request.path|urlencode %} current-model{% endif %}">
+            <a class="cropai-nav-sublink-main" href="{{ model.admin_url|default:'#' }}">
+              <i class="fa-solid fa-circle cropai-nav-dot"></i><span>{{ model.name }}</span>
+            </a>
+            {% if model.add_url %}
+            <a href="{{ model.add_url }}" class="cropai-nav-add" title="{% translate 'Add' %} {{ model.name }}" aria-label="{% translate 'Add' %} {{ model.name }}">
+              <i class="fa-solid fa-plus"></i>
+            </a>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+
+  <div class="cropai-nav-footer">
+    <i class="fa-solid fa-leaf"></i>
+    <span>{% translate 'CropAI · Uganda' %}</span>
+  </div>
+
+</nav>
