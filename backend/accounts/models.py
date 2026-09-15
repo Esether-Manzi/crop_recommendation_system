@@ -24,5 +24,13 @@ class User(AbstractUser):
         null=True,
     )
 
+    def save(self, *args, **kwargs):
+        # createsuperuser doesn't know about this custom field, so it
+        # would otherwise silently leave superusers at the default
+        # Farmer role.
+        if self.is_superuser and self.role != self.Role.ADMIN:
+            self.role = self.Role.ADMIN
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.username} ({self.get_role_display()})"
