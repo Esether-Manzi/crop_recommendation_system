@@ -42,5 +42,14 @@ class UserRegistrationForm(UserCreationForm):
         """
         super().__init__(*args, **kwargs)
 
+        # Administrator accounts are provisioned by an existing admin
+        # (Django admin site or a management command), not self-registered.
+        # Restricting the field's choices also rejects a role=admin POST
+        # submitted directly, not just what the widget renders.
+        self.fields["role"].choices = [
+            choice for choice in self.fields["role"].choices
+            if choice[0] != User.Role.ADMIN
+        ]
+
         for field_name, field in self.fields.items():
             field.widget.attrs["class"] = "form-control"

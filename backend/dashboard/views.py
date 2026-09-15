@@ -72,6 +72,18 @@ def dashboard_home(request):
                     "type": "danger",
                     "message": f"Critical low Nitrogen ({latest_soil.nitrogen} mg/kg) detected on '{farm.farm_name}'. Consider planting legumes (e.g. Beans/Groundnuts) next to restore soil organic matter."
                 })
+            if latest_soil.phosphorus < 20:
+                alerts.append({
+                    "farm": farm,
+                    "type": "danger",
+                    "message": f"Critical low Phosphorus ({latest_soil.phosphorus} mg/kg) detected on '{farm.farm_name}'. Apply a phosphorus-rich fertilizer (e.g. DAP) before the next planting to support root development."
+                })
+            if latest_soil.potassium < 30:
+                alerts.append({
+                    "farm": farm,
+                    "type": "danger",
+                    "message": f"Critical low Potassium ({latest_soil.potassium} mg/kg) detected on '{farm.farm_name}'. Apply a potassium-rich fertilizer (e.g. Muriate of Potash) or incorporate crop residues to rebuild soil reserves."
+                })
             if latest_soil.ph < 5.0 or latest_soil.ph > 8.0:
                 alerts.append({
                     "farm": farm,
