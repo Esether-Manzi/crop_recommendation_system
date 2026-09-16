@@ -169,6 +169,22 @@ MEDIA_ROOT = BASE_DIR / "media"
 AUTH_USER_MODEL = "accounts.User"
 
 
+# ── Email (password reset links) ─────────────────────────────────────────────
+# Defaults to printing emails to the console so password reset works out of
+# the box in local dev without SMTP credentials. Set EMAIL_HOST/EMAIL_HOST_USER/
+# EMAIL_HOST_PASSWORD in backend/.env to send real emails.
+EMAIL_BACKEND = config(
+    "EMAIL_BACKEND",
+    default="django.core.mail.backends.console.EmailBackend",
+)
+EMAIL_HOST = config("EMAIL_HOST", default="")
+EMAIL_PORT = config("EMAIL_PORT", default=587, cast=int)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="no-reply@cropadvisor.local")
+
+
 # ── Production security (only active when DEBUG=False) ──────────────────────
 # USE_HTTPS gates the settings that only make sense behind TLS (redirect-to-
 # HTTPS, HSTS, secure-only cookies) — set it once the site is actually served

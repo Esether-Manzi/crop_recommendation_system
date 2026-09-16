@@ -28,6 +28,10 @@ Login
                             <input type="password" name="password" class="form-control" id="id_password" placeholder="Enter your password" required>
                         </div>
 
+                        <div class="text-end mb-3">
+                            <a href="{% url 'accounts:password_reset_request' %}" class="text-success small">Forgot password?</a>
+                        </div>
+
                         <button type="submit" class="btn btn-success w-100 py-2">Login</button>
                     </form>
 

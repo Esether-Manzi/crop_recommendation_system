@@ -6,7 +6,7 @@ registration and authentication.
 """
 
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import SetPasswordForm, UserCreationForm
 
 from .models import User
 
@@ -50,6 +50,38 @@ class UserRegistrationForm(UserCreationForm):
             choice for choice in self.fields["role"].choices
             if choice[0] != User.Role.ADMIN
         ]
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs["class"] = "form-control"
+
+
+class PasswordResetRequestForm(forms.Form):
+    """
+    Collects the email address a reset link should be sent to.
+
+    Deliberately doesn't validate that the address belongs to an
+    existing account — the view sends the same confirmation message
+    either way, so this form can't be used to enumerate users.
+    """
+
+    email = forms.EmailField(
+        widget=forms.EmailInput(
+            attrs={
+                "class": "form-control",
+                "placeholder": "Enter your registered email",
+            }
+        )
+    )
+
+
+class SetNewPasswordForm(SetPasswordForm):
+    """
+    Django's SetPasswordForm (new_password1/new_password2 with the
+    project's AUTH_PASSWORD_VALIDATORS applied) styled with Bootstrap.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         for field_name, field in self.fields.items():
             field.widget.attrs["class"] = "form-control"

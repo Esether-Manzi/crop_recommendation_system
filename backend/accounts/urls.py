@@ -37,4 +37,22 @@ urlpatterns = [
         views.logout_view,
         name="logout",
     ),
+
+    # -------------------------------
+    # Password Reset URLs
+    # -------------------------------
+
+    # Request a reset link by email
+    path(
+        "password-reset/",
+        views.password_reset_request_view,
+        name="password_reset_request",
+    ),
+
+    # Follow the emailed link to set a new password
+    path(
+        "password-reset/<uidb64>/<token>/",
+        views.password_reset_confirm_view,
+        name="password_reset_confirm",
+    ),
 ]
