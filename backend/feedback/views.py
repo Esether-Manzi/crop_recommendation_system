@@ -99,13 +99,13 @@ def feedback_submit(request):
                         humidity=latest_soil.humidity,
                         rainfall=latest_soil.rainfall
                     )
-                    messages.success(request, "Harvest feedback saved! Farm soil parameters have been updated dynamically.")
+                    messages.success(request, "Harvest feedback saved! We've updated your farm's soil record.")
                 else:
-                    messages.warning(request, f"Feedback saved, but crop '{crop_name}' was not found in our depletion dataset to update soil.")
+                    messages.warning(request, f"Feedback saved, but we don't have soil data for '{crop_name}' yet, so we couldn't update your soil record.")
             except Exception:
-                messages.warning(request, "Feedback was saved, but the soil update could not be completed.")
+                messages.warning(request, "Feedback saved, but we couldn't update your soil record this time.")
         else:
-            messages.warning(request, "Feedback saved, but no existing soil record was found to adapt.")
+            messages.warning(request, "Feedback saved, but there's no soil record yet to update.")
 
         # Archive active trackers for this crop
         from advisory.models import SeasonTracker

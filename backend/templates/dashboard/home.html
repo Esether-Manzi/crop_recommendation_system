@@ -9,7 +9,7 @@
     <div class="dash-hero dash-animate d1 mb-4">
         <div class="hero-content">
             <h1 class="mb-1">Welcome back, {{ request.user.first_name|default:request.user.username }}</h1>
-            <p class="mb-0 opacity-75">Manage your plots, simulate sequential crop schedules, and get tailored scientific recommendations.</p>
+            <p class="mb-0 opacity-75">Manage your farms, plan your next seasons, and get crop advice based on your soil.</p>
             <div class="dash-chip-row">
                 <span class="dash-chip"><i class="fa-solid fa-tractor"></i>{{ farms_count }} field{{ farms_count|pluralize }}</span>
                 <span class="dash-chip"><i class="fa-solid fa-calendar-check"></i>{{ active_trackers|length }} active season{{ active_trackers|length|pluralize }}</span>
@@ -51,7 +51,7 @@
         <div class="alert alert-{{ alert.type }} border-0 shadow-sm rounded-4 p-3 mb-3 d-flex align-items-center gap-3 dash-animate d2">
             <div class="fs-4"><i class="fa-solid fa-circle-exclamation"></i></div>
             <div class="fs-7 flex-grow-1"><strong>Soil Health Warning:</strong> {{ alert.message }}</div>
-            <a href="{% url 'farms:detail' alert.farm.id %}" class="btn btn-sm btn-{{ alert.type }} rounded-pill px-3 flex-shrink-0">Fix Log</a>
+            <a href="{% url 'farms:detail' alert.farm.id %}" class="btn btn-sm btn-{{ alert.type }} rounded-pill px-3 flex-shrink-0">View Farm</a>
         </div>
         {% endfor %}
     {% endif %}
@@ -87,7 +87,7 @@
             <div>
                 <div class="dash-stat-value">{{ feedbacks_total }}</div>
                 <div class="dash-stat-label">Harvest Logs</div>
-                <div class="dash-stat-trend"><i class="fa-solid fa-recycle"></i> Feeding soil model</div>
+                <div class="dash-stat-trend"><i class="fa-solid fa-recycle"></i> Keeps your soil record fresh</div>
             </div>
         </div>
     </div>
@@ -114,7 +114,7 @@
             <!-- Farms overview -->
             <div class="dash-panel dash-animate d3">
                 <div class="dash-panel-head">
-                    <h4><span class="dash-ico"><i class="fa-solid fa-tractor"></i></span>My Cultivation Fields</h4>
+                    <h4><span class="dash-ico"><i class="fa-solid fa-tractor"></i></span>My Farms</h4>
                     <a href="{% url 'farms:list' %}" class="dash-link">View All</a>
                 </div>
                 {% if farms %}
@@ -132,7 +132,7 @@
                     {% endfor %}
                 {% else %}
                     <div class="dash-empty">
-                        <p class="mb-3">No farms registered under your profile.</p>
+                        <p class="mb-3">You haven't added any farms yet.</p>
                         <a href="{% url 'farms:list' %}" class="btn btn-success rounded-pill fw-bold btn-sm">
                             <i class="fa-solid fa-plus-circle me-1"></i>Add Your First Farm
                         </a>
@@ -176,7 +176,7 @@
                     </div>
                     {% endfor %}
                 {% else %}
-                    <div class="dash-empty">No crop seasons are currently being tracked.</div>
+                    <div class="dash-empty">No crops are being tracked right now.</div>
                 {% endif %}
             </div>
         </div>

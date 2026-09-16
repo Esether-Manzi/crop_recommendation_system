@@ -3,11 +3,28 @@
 {% block title %}AI Chat Assistant - Crop Advisor{% endblock %}
 
 {% block content %}
+<style>
+    /* Desktop: fixed height, as before. Below lg, the bottom tab bar covers
+       the last 64px of the viewport, so a fixed 700px card could run off
+       the bottom of the screen with the send button hidden under it. Give
+       it a sane viewport-based height here; the script below measures the
+       page's actual chrome (navbar height varies slightly by content) and
+       corrects it exactly, so the card always ends right above the tab bar. */
+    .chat-card {
+        height: 700px;
+    }
+    @media (max-width: 991.98px) {
+        .chat-card {
+            height: calc(100vh - 209px);
+            height: calc(100dvh - 209px);
+        }
+    }
+</style>
 <div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <!-- Chat Card -->
-            <div class="card card-bold rounded-4 overflow-hidden" style="height: 700px; display: flex; flex-direction: column;">
+            <div class="card card-bold rounded-4 overflow-hidden chat-card" style="display: flex; flex-direction: column;">
                 
                 <!-- Chat Header -->
                 <div class="card-header bg-success text-white py-3 px-4 rounded-top-4 d-flex justify-content-between align-items-center">
@@ -16,8 +33,8 @@
                             <i class="fa-solid fa-robot"></i>
                         </div>
                         <div>
-                            <h5 class="fw-bold mb-0">Antigravity Agronomist</h5>
-                            <span class="fs-9 opacity-75">Your local extension officer assistant</span>
+                            <h5 class="fw-bold mb-0">CropAI Assistant</h5>
+                            <span class="fs-9 opacity-75">Ask any question about your crops</span>
                         </div>
                     </div>
                     <div>
@@ -48,7 +65,8 @@
                                     <i class="fa-solid fa-seedling"></i>
                                 </div>
                                 <div class="message-bubble bg-white text-dark p-3 rounded-4 shadow-sm border" style="max-width: 75%; border-top-left-radius: 4px !important;">
-                                    <p class="mb-0 fs-7" style="white-space: pre-wrap;">{{ msg.text }}</p>
+                                    <div class="mb-0 fs-7 chat-markdown"></div>
+                                    {{ msg.text|json_script }}
                                 </div>
                             </div>
                             {% endif %}
@@ -59,9 +77,9 @@
                         <div class="text-success mb-4 fs-1">
                             <i class="fa-solid fa-robot"></i>
                         </div>
-                        <h4 class="fw-bold">Welcome to AI Assistant</h4>
+                        <h4 class="fw-bold">Ask me anything about farming</h4>
                         <p class="text-muted fs-7 mx-auto" style="max-width: 400px;">
-                            Ask me any agricultural question about crop selection, weeding schedules, fertilizers, pests, or disease treatments.
+                            What to plant, when to weed, fertilizer, pests, plant diseases, anything on your mind.
                         </p>
                     </div>
                     {% endif %}
@@ -75,7 +93,7 @@
                             <!-- Select farm to ground prompt -->
                             <div class="col-md-3">
                                 <select name="farm_id" class="form-select form-select-sm rounded-pill border-success-subtle fs-8">
-                                    <option value="">-- No Farm Context --</option>
+                                    <option value="">-- No Farm Selected --</option>
                                     {% for farm in farms %}
                                     <option value="{{ farm.id }}">{{ farm.farm_name }}</option>
                                     {% endfor %}
@@ -101,7 +119,104 @@
 </div>
 
 <script>
+    /* Bot replies are written in Markdown (the AI prompt asks for it, and the
+       offline fallback text uses it too), so render **bold**, numbered and
+       bulleted lists instead of showing the raw asterisks to the farmer.
+       Escaping happens before any tag is added, so nothing from the reply
+       text can inject markup of its own. */
+    function escapeHtml(str) {
+        return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    function renderInline(text) {
+        text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+        text = text.replace(/(^|[^*])\*([^*]+)\*(?!\*)/g, "$1<em>$2</em>");
+        return text;
+    }
+
+    function renderChatMarkdown(raw) {
+        const lines = raw.split(/\r?\n/);
+        let html = "";
+        let listType = null;
+        let paraBuffer = [];
+
+        function flushPara() {
+            if (paraBuffer.length) {
+                html += "<p class=\"mb-2\">" + paraBuffer.join("<br>") + "</p>";
+                paraBuffer = [];
+            }
+        }
+        function closeList() {
+            if (listType) {
+                html += "</" + listType + ">";
+                listType = null;
+            }
+        }
+
+        lines.forEach(function (rawLine) {
+            const line = rawLine.trim();
+            if (!line) { flushPara(); closeList(); return; }
+
+            const numbered = line.match(/^(\d+)\.\s+(.*)$/);
+            const bulleted = line.match(/^[-*]\s+(.*)$/);
+
+            if (numbered) {
+                flushPara();
+                if (listType !== "ol") { closeList(); html += "<ol class=\"mb-2 ps-3\">"; listType = "ol"; }
+                html += "<li>" + renderInline(escapeHtml(numbered[2])) + "</li>";
+            } else if (bulleted) {
+                flushPara();
+                if (listType !== "ul") { closeList(); html += "<ul class=\"mb-2 ps-3\">"; listType = "ul"; }
+                html += "<li>" + renderInline(escapeHtml(bulleted[1])) + "</li>";
+            } else {
+                closeList();
+                paraBuffer.push(renderInline(escapeHtml(line)));
+            }
+        });
+        flushPara();
+        closeList();
+        return html;
+    }
+
+    /* The CSS above gets the chat card's mobile height roughly right, but
+       navbar height shifts a little with content (e.g. the "(Farmer)" role
+       label), and mobile browsers resize the viewport as their address bar
+       shows/hides. Measure the real gap between the card and the tab bar
+       and correct the height exactly, so the message input never ends up
+       hidden below the fold or under the tab bar. */
+    function sizeChatCard() {
+        const card = document.querySelector(".chat-card");
+        if (!card) return;
+
+        if (window.innerWidth >= 992) {
+            card.style.height = "700px";
+            return;
+        }
+
+        const bottomNav = document.querySelector(".bottom-nav");
+        const reservedBottom = bottomNav ? bottomNav.getBoundingClientRect().height : 0;
+        const cardTop = card.getBoundingClientRect().top;
+        const breathingRoom = 16;
+        const available = window.innerHeight - cardTop - reservedBottom - breathingRoom;
+
+        card.style.height = Math.max(available, 420) + "px";
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".chat-markdown").forEach(function (el) {
+            const dataScript = el.nextElementSibling;
+            if (dataScript && dataScript.type === "application/json") {
+                try {
+                    el.innerHTML = renderChatMarkdown(JSON.parse(dataScript.textContent));
+                } catch (e) {
+                    el.textContent = dataScript.textContent;
+                }
+            }
+        });
+
+        sizeChatCard();
+        window.addEventListener("resize", sizeChatCard);
+
         const chatContainer = document.getElementById("chatContainer");
         // Auto scroll to bottom
         chatContainer.scrollTop = chatContainer.scrollHeight;

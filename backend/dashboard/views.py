@@ -70,25 +70,25 @@ def dashboard_home(request):
                 alerts.append({
                     "farm": farm,
                     "type": "danger",
-                    "message": f"Critical low Nitrogen ({latest_soil.nitrogen} mg/kg) detected on '{farm.farm_name}'. Consider planting legumes (e.g. Beans/Groundnuts) next to restore soil organic matter."
+                    "message": f"Nitrogen is very low ({latest_soil.nitrogen} mg/kg) on '{farm.farm_name}'. Planting legumes like beans or groundnuts next can help build it back up."
                 })
             if latest_soil.phosphorus < 20:
                 alerts.append({
                     "farm": farm,
                     "type": "danger",
-                    "message": f"Critical low Phosphorus ({latest_soil.phosphorus} mg/kg) detected on '{farm.farm_name}'. Apply a phosphorus-rich fertilizer (e.g. DAP) before the next planting to support root development."
+                    "message": f"Phosphorus is very low ({latest_soil.phosphorus} mg/kg) on '{farm.farm_name}'. A phosphorus-rich fertilizer like DAP before your next planting can help roots grow stronger."
                 })
             if latest_soil.potassium < 30:
                 alerts.append({
                     "farm": farm,
                     "type": "danger",
-                    "message": f"Critical low Potassium ({latest_soil.potassium} mg/kg) detected on '{farm.farm_name}'. Apply a potassium-rich fertilizer (e.g. Muriate of Potash) or incorporate crop residues to rebuild soil reserves."
+                    "message": f"Potassium is very low ({latest_soil.potassium} mg/kg) on '{farm.farm_name}'. A potassium-rich fertilizer like Muriate of Potash, or leaving crop residues in the field, can help build it back up."
                 })
             if latest_soil.ph < 5.0 or latest_soil.ph > 8.0:
                 alerts.append({
                     "farm": farm,
                     "type": "warning",
-                    "message": f"Suboptimal soil pH ({latest_soil.ph}) on '{farm.farm_name}'. Suitability rates might decay. Standard lime application may be required."
+                    "message": f"Soil pH on '{farm.farm_name}' is out of the ideal range ({latest_soil.ph}), which can make it harder for most crops to grow well. Adding lime can help balance it."
                 })
 
     return render(

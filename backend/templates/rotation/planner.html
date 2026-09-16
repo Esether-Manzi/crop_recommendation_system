@@ -1,12 +1,12 @@
 {% extends "base/base.html" %}
 
-{% block title %}Sequential Rotation Planner - Crop Advisor{% endblock %}
+{% block title %}Rotation Planner - Crop Advisor{% endblock %}
 
 {% block content %}
 <div class="container py-4">
     <!-- Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-success fw-bold"><i class="fa-solid fa-rotate me-2"></i>Sequential Crop Rotation Planner</h2>
+        <h2 class="text-success fw-bold"><i class="fa-solid fa-rotate me-2"></i>Crop Rotation Planner</h2>
     </div>
 
     <!-- Farm Selector -->
@@ -15,7 +15,7 @@
             <form method="get" id="farmSelectForm" class="row align-items-center g-3">
                 <div class="col-md-5">
                     <label class="form-label fw-bold text-success mb-1">
-                        <i class="fa-solid fa-tractor me-1"></i>Select Active Farm
+                        <i class="fa-solid fa-tractor me-1"></i>Select Farm
                     </label>
                     <select name="farm_id" class="form-select rounded-pill" onchange="this.form.submit()">
                         <option value="">-- Choose Farm --</option>
@@ -44,9 +44,9 @@
                 <div class="text-warning mb-4" style="font-size: 60px;">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                 </div>
-                <h4 class="fw-bold">No Soil Records Available</h4>
+                <h4 class="fw-bold">No Soil Records Yet</h4>
                 <p class="text-muted mx-auto mb-4" style="max-width: 450px;">
-                    Sequential recommendations simulate future soil states by starting with your current soil profile. Please add a soil record for this farm first.
+                    We plan your next seasons starting from your latest soil test. Please add a soil record for this farm first.
                 </p>
                 <div class="d-grid gap-2 col-md-4 mx-auto">
                     <a href="{% url 'farms:detail' selected_farm.id %}" class="btn btn-success rounded-pill fw-bold">
@@ -60,8 +60,8 @@
                 <div class="col-lg-4">
                     <!-- Current Soil Profile Summary -->
                     <div class="card card-bold rounded-4 p-4 mb-4">
-                        <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-flask me-2"></i>Baseline Soil State</h4>
-                        <p class="text-muted fs-7">This is the starting point for the multi-season simulation, based on the record dated {{ latest_soil.recorded_at|date:"Y-m-d" }}.</p>
+                        <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-flask me-2"></i>Your Soil Right Now</h4>
+                        <p class="text-muted fs-7">This is the soil test we'll use to plan your next seasons, recorded on {{ latest_soil.recorded_at|date:"Y-m-d" }}.</p>
                         <div class="bg-light p-3 rounded-4">
                             <table class="table table-sm table-borderless mb-0 fs-7 align-middle">
                                 <tbody>
@@ -92,32 +92,32 @@
 
                     <!-- Generate Plan Card -->
                     <div class="card card-bold rounded-4 p-4">
-                        <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-gears me-2"></i>Simulation Settings</h4>
-                        <p class="text-muted fs-7">Set up parameters for the sequential rules-based crop prediction engine.</p>
-                        
+                        <h4 class="fw-bold text-success mb-3"><i class="fa-solid fa-gears me-2"></i>Plan Your Next 4 Seasons</h4>
+                        <p class="text-muted fs-7">Tell us whether you'll use fertilizer, and we'll suggest what to grow each season.</p>
+
                         <form method="post">
                             {% csrf_token %}
                             <input type="hidden" name="farm_id" value="{{ selected_farm.id }}">
-                            
+
                             <div class="mb-4">
-                                <label class="form-label fw-semibold text-muted fs-7">Simulate Fertilizer Schedule?</label>
+                                <label class="form-label fw-semibold text-muted fs-7">Will you use fertilizer between seasons?</label>
                                 <div class="form-check mb-2">
                                     <input class="form-check-input" type="radio" name="fertilizer" id="fertYes" value="yes" checked>
                                     <label class="form-check-label fs-7" for="fertYes">
-                                        Yes (Simulates NPK replenishment at each season start)
+                                        Yes, I'll add fertilizer before each season
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="fertilizer" id="fertNo" value="no">
                                     <label class="form-check-label fs-7" for="fertNo">
-                                        No (Simulates continuous soil nutrient extraction)
+                                        No, I won't use fertilizer
                                     </label>
                                 </div>
                             </div>
 
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-accent btn-lg rounded-pill fw-bold py-3">
-                                    <i class="fa-solid fa-play me-2"></i>Simulate 4 Seasons
+                                    <i class="fa-solid fa-play me-2"></i>Plan My 4 Seasons
                                 </button>
                             </div>
                         </form>
@@ -129,8 +129,8 @@
                     {% if latest_plan %}
                     <div class="card card-bold rounded-4 p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h4 class="fw-bold text-success mb-0"><i class="fa-solid fa-timeline me-2"></i>Simulated 4-Season Timeline</h4>
-                            <span class="fs-8 text-muted">Generated: {{ latest_plan.created_at|date:"Y-m-d H:i" }}</span>
+                            <h4 class="fw-bold text-success mb-0"><i class="fa-solid fa-timeline me-2"></i>Your 4-Season Plan</h4>
+                            <span class="fs-8 text-muted">Created: {{ latest_plan.created_at|date:"Y-m-d H:i" }}</span>
                         </div>
 
                         <!-- Rotation Timeline Vertical Layout -->
@@ -154,16 +154,16 @@
                                     
                                     {% if step.fertilizer_applied %}
                                         <p class="text-success fs-8 fw-semibold mb-3">
-                                            <i class="fa-solid fa-flask-vial me-1"></i>Replenishing fertilizer simulated (N: +40, P: +20, K: +15)
+                                            <i class="fa-solid fa-flask-vial me-1"></i>Fertilizer added this season, putting some Nitrogen, Phosphorus and Potassium back into the soil
                                         </p>
                                     {% else %}
                                         <p class="text-danger fs-8 fw-semibold mb-3">
-                                            <i class="fa-solid fa-circle-minus me-1"></i>No fertilizer simulated (Nutrients depletion only)
+                                            <i class="fa-solid fa-circle-minus me-1"></i>No fertilizer this season, so the crop will use up soil nutrients
                                         </p>
                                     {% endif %}
 
                                     <!-- Nutrient Transitions -->
-                                    <div class="row g-2 text-center text-dark">
+                                    <div class="row g-2 text-center text-center-keep text-dark">
                                         <!-- Nitrogen -->
                                         <div class="col-6 col-md-3">
                                             <div class="p-2 bg-light rounded-3">
@@ -197,11 +197,11 @@
                                     <!-- Dynamic text reason -->
                                     <div class="mt-3 fs-8 text-muted border-top pt-2">
                                         {% if step.crop_family == 'Legume' %}
-                                            <i class="fa-solid fa-info-circle text-success me-1"></i>This leguminous crop provides Nitrogen Fixation (adding up to 80 kg/ha of N back to the soil), preparing it for the next heavy feeder.
+                                            <i class="fa-solid fa-info-circle text-success me-1"></i>This is a legume, so it adds nitrogen back into the soil naturally, a good move before a crop that feeds heavily.
                                         {% elif step.crop_recommended == 'Cassava' %}
-                                            <i class="fa-solid fa-info-circle text-warning me-1"></i>Cassava is a root/tuber crop that consumes moderate Nitrogen but extracts high Potassium.
+                                            <i class="fa-solid fa-info-circle text-warning me-1"></i>Cassava uses a fair amount of Nitrogen and a lot of Potassium from the soil.
                                         {% else %}
-                                            <i class="fa-solid fa-info-circle text-muted me-1"></i>Standard crop sequence. The algorithm automatically selected this crop to avoid repeating families and maintain soil quality.
+                                            <i class="fa-solid fa-info-circle text-muted me-1"></i>We picked this crop so you're not growing the same type of crop two seasons in a row, which helps keep your soil healthy.
                                         {% endif %}
                                     </div>
                                 </div>
@@ -215,9 +215,9 @@
                         <div class="text-success mb-4" style="font-size: 60px;">
                             <i class="fa-solid fa-shuffle animate-spin"></i>
                         </div>
-                        <h4 class="fw-bold">No Active Plan Simulated</h4>
+                        <h4 class="fw-bold">No Rotation Plan Yet</h4>
                         <p class="text-muted mx-auto" style="max-width: 400px;">
-                            Configure fertilizer parameters on the left and click "Simulate 4 Seasons" to compute the multi-season crop sequence based on chemical models.
+                            Choose your fertilizer option on the left and tap "Plan My 4 Seasons" to see what to grow next.
                         </p>
                     </div>
                     {% endif %}
@@ -231,9 +231,9 @@
             <div class="text-success mb-4" style="font-size: 60px;">
                 <i class="fa-solid fa-tractor"></i>
             </div>
-            <h4 class="fw-bold">Select a Farm Field to Plan Rotation</h4>
+            <h4 class="fw-bold">Select a Farm to Plan Its Rotation</h4>
             <p class="text-muted mx-auto" style="max-width: 450px;">
-                To generate multi-season sequential recommendations, select a farm from the dropdown above to pull its baseline soil nutrients.
+                Select a farm above and we'll use its latest soil test to plan your next few seasons.
             </p>
         </div>
     {% endif %}

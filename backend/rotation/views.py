@@ -82,7 +82,7 @@ def planner(request):
                     ph_after=h["features_after"]["pH_Value"]
                 )
 
-            messages.success(request, "Successfully simulated and saved a new 4-Season Rotation Plan!")
+            messages.success(request, "Your 4-season rotation plan is ready!")
             return redirect(f"{request.path}?farm_id={selected_farm.id}")
 
         except Exception:

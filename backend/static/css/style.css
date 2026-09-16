@@ -683,3 +683,17 @@ main {
     color: #97a29a;
     font-size: 0.85rem;
 }
+
+/* ── Mobile: left-align text for readability ───────────────
+   Centered headings/paragraphs are hard to read on narrow
+   screens, so default `.text-center` blocks to left-aligned
+   text below the tablet breakpoint. Numeric/stat displays
+   (mini stat boxes, data tables) opt back into centering with
+   `.text-center-keep` since ragged left-aligned numbers in a
+   grid or table column look broken, not more readable.
+──────────────────────────────────────────────────────────── */
+@media (max-width: 767.98px) {
+    .text-center:not(.text-center-keep) {
+        text-align: left !important;
+    }
+}

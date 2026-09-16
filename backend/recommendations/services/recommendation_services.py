@@ -84,18 +84,17 @@ class RecommendationService:
                 unsuitable = [p for p, info in analysis.items() if info["status"] != "Suitable"]
                 if not unsuitable:
                     reasons.append(
-                        f"Perfect match! All soil nutrients and climatic parameters fall "
-                        f"within the ideal range for growing {crop_name.title()}."
+                        f"Perfect match! Your soil and weather are ideal for growing {crop_name.title()}."
                     )
                 else:
                     reasons.append(
-                        f"Highly compatible, though environmental metrics like "
-                        f"{', '.join(unsuitable)} are slightly offset from ideal values."
+                        f"A good match for {crop_name.title()}, though {', '.join(unsuitable)} "
+                        f"could be closer to ideal."
                     )
             else:
                 reasons.append(
-                    f"Lacks baseline suitability range records, but predicted as a strong "
-                    f"candidate by the ML model."
+                    f"We don't have ideal-range data for {crop_name.title()} yet, but our AI "
+                    f"still expects it to grow well here."
                 )
 
             recommendations.append({

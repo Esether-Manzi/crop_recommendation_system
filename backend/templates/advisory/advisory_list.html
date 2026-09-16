@@ -1,14 +1,26 @@
 {% extends "base/base.html" %}
 
-{% block title %}Agronomic Advisories - Crop Advisor{% endblock %}
+{% block title %}Knowledge Base - Crop Advisor{% endblock %}
 
 {% block content %}
 <div class="container py-4">
-    <h2 class="text-success fw-bold mb-4"><i class="fa-solid fa-book-open-reader me-2"></i>Agronomic Knowledge Base</h2>
+    <h2 class="text-success fw-bold mb-4"><i class="fa-solid fa-book-open-reader me-2"></i>Knowledge Base</h2>
+
+    <!-- Crop picker: compact dropdown on mobile so picking a crop doesn't
+         mean scrolling past the whole crop list to reach its content. -->
+    <div class="d-lg-none mb-3">
+        <label class="form-label fw-semibold text-success mb-1"><i class="fa-solid fa-leaf me-2"></i>Select Crop</label>
+        <select class="form-select rounded-pill fw-semibold" onchange="if (this.value) { window.location = '?crop=' + this.value; }">
+            <option value="">-- Choose a crop --</option>
+            {% for crop in crops %}
+            <option value="{{ crop }}" {% if selected_crop == crop %}selected{% endif %}>{{ crop|title }}</option>
+            {% endfor %}
+        </select>
+    </div>
 
     <div class="row g-4">
-        <!-- Crop Select Sidebar -->
-        <div class="col-lg-3">
+        <!-- Crop Select Sidebar (desktop) -->
+        <div class="col-lg-3 d-none d-lg-block">
             <div class="card card-bold rounded-4 p-4 sticky-top" style="top: 2rem;">
                 <h5 class="fw-bold text-success mb-3"><i class="fa-solid fa-leaf me-2"></i>Select Crop</h5>
                 <div class="list-group list-group-flush">
@@ -17,7 +29,7 @@
                         <i class="fa-solid fa-chevron-right me-2 fs-9"></i>{{ crop|title }}
                     </a>
                     {% empty %}
-                    <p class="text-muted fs-7">No agronomic seed data loaded yet.</p>
+                    <p class="text-muted fs-7">No crops available yet.</p>
                     {% endfor %}
                 </div>
             </div>
@@ -33,7 +45,7 @@
                     </div>
                     <div>
                         <h2 class="fw-bold text-dark mb-0">{{ selected_crop|title }}</h2>
-                        <span class="fs-8 text-muted">Complete NARO / FAO Agronomic Advisory Profile</span>
+                        <span class="fs-8 text-muted">A complete growing guide, stage by stage</span>
                     </div>
                 </div>
             </div>
@@ -71,7 +83,7 @@
                 </div>
                 <h4 class="fw-bold">No Crop Selected</h4>
                 <p class="text-muted mx-auto" style="max-width: 400px;">
-                    Please select a crop from the left sidebar to load its stage-by-stage agronomic instructions.
+                    Please select a crop above to see how to grow it, stage by stage.
                 </p>
             </div>
             {% endif %}
@@ -83,6 +95,29 @@
     .nav-pills .nav-link.active {
         background-color: #198754 !important;
         color: white !important;
+    }
+
+    /* Below lg, nav-fill stretches every stage pill to equal width and
+       wraps them once they run out of room — with 4+ stages that reads as
+       a jumbled grid of half-cut buttons. Scroll them as one row instead,
+       sized to their own text, so they stay usable with one thumb. */
+    @media (max-width: 991.98px) {
+        #advisoryTabs {
+            flex-wrap: nowrap;
+            justify-content: flex-start !important;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        #advisoryTabs::-webkit-scrollbar {
+            display: none;
+        }
+        #advisoryTabs .nav-item {
+            flex: 0 0 auto;
+        }
+        #advisoryTabs .nav-link {
+            white-space: nowrap;
+        }
     }
 </style>
 {% endblock %}

@@ -28,7 +28,7 @@
                         <option value="">-- Type values manually --</option>
                         {% for farm in farms %}
                         <option value="{{ farm.id }}" {% if selected_farm.id == farm.id %}selected{% endif %}>
-                            {{ farm.farm_name }} — {{ farm.district }}
+                            {{ farm.farm_name }}, {{ farm.district }}
                         </option>
                         {% endfor %}
                     </select>
@@ -122,7 +122,7 @@
             {% with top=recommendations.0 %}
 
             <!-- ─── TOP CROP HERO CARD ─────────────────────────── -->
-            <div class="card border-0 shadow-lg rounded-4 mb-3 overflow-hidden">
+            <div id="recommendationResults" class="card border-0 shadow-lg rounded-4 mb-3 overflow-hidden">
                 <div class="position-relative" style="height:220px;background:linear-gradient(135deg,#166534,#15803d 60%,#22c55e);">
                     <!-- Crop photo -->
                     <img id="hero-crop-img"
@@ -149,7 +149,7 @@
                                 <h1 class="display-5 fw-bold mb-1">{{ top.crop|title }}</h1>
                                 <p class="mb-0 opacity-90" style="font-size:.95rem;">
                                     {% if top.suitability.success %}
-                                        {{ top.suitability.score }}/{{ top.suitability.total }} soil parameters ideal for this crop
+                                        {{ top.suitability.score }}/{{ top.suitability.total }} soil conditions are ideal for this crop
                                     {% else %}
                                         {{ top.reasons.0 }}
                                     {% endif %}
@@ -257,7 +257,7 @@
                     {% if top.suitability_fertilized.success %}
                     <div id="fertSummary-top" class="d-none rounded-3 p-3 mt-2 text-center"
                          style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1px solid #bbf7d0;">
-                        <div class="row g-0 text-center">
+                        <div class="row g-0 text-center text-center-keep">
                             <div class="col">
                                 <div class="fs-8 text-muted">Without fertilizer</div>
                                 <div class="fw-bold fs-4 text-warning">{{ top.suitability.score }}/{{ top.suitability.total }}</div>
@@ -363,7 +363,7 @@
                             </h6>
                             <div class="d-flex gap-2 align-items-center">
                                 <span class="badge {% if item.suitability.percentage >= 80 %}bg-success{% elif item.suitability.percentage >= 50 %}bg-warning text-dark{% else %}bg-secondary{% endif %} rounded-pill px-2 py-1 fs-8">
-                                    {{ item.suitability.percentage|default:"—" }}% fit
+                                    {{ item.suitability.percentage|default:"N/A" }}% fit
                                 </span>
                                 <span class="badge bg-primary-subtle text-primary rounded-pill px-2 py-1 fs-8">
                                     {{ item.confidence }}% AI
@@ -395,10 +395,10 @@
                                 </div>
                                 {% endif %}
 
-                                <table class="suit-table-base-{{ forloop.counter }} table table-sm table-bordered rounded-3 overflow-hidden text-center align-middle fs-8 mb-0">
+                                <table class="suit-table-base-{{ forloop.counter }} table table-sm table-bordered rounded-3 overflow-hidden text-center text-center-keep align-middle fs-8 mb-0">
                                     <thead class="table-success">
                                         <tr>
-                                            <th class="text-start ps-2">Parameter</th>
+                                            <th class="text-start ps-2">Factor</th>
                                             <th>Your value</th>
                                             <th>Ideal range</th>
                                             <th>Status</th>
@@ -421,10 +421,10 @@
                                 </table>
 
                                 {% if item.suitability_fertilized.success %}
-                                <table class="suit-table-fert-{{ forloop.counter }} table table-sm table-bordered rounded-3 overflow-hidden text-center align-middle fs-8 mb-0 d-none">
+                                <table class="suit-table-fert-{{ forloop.counter }} table table-sm table-bordered rounded-3 overflow-hidden text-center text-center-keep align-middle fs-8 mb-0 d-none">
                                     <thead style="background:#d1e7dd;">
                                         <tr>
-                                            <th class="text-start ps-2">Parameter</th>
+                                            <th class="text-start ps-2">Factor</th>
                                             <th>With fertilizer</th>
                                             <th>Ideal range</th>
                                             <th>Status</th>
@@ -594,6 +594,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const emoji   = img.parentElement.querySelector(".crop-thumb-emoji");
     loadCropImage(crop, img, emoji);
   });
+
+  // On mobile, the results land below the input form in document order —
+  // jump straight to them after a submit instead of leaving the user to scroll.
+  // Deferred a frame so the browser has finished laying out the page before
+  // we ask it to scroll (calling scrollIntoView synchronously here is a no-op
+  // in some mobile browsers since layout isn't settled yet).
+  const results = document.getElementById("recommendationResults");
+  if (results && window.innerWidth < 992) {
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        results.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
 });
 </script>
 <script>
