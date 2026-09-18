@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "crop-dev",
+      "runtimeExecutable": ".venv/bin/python",
+      "runtimeArgs": ["backend/manage.py", "runserver", "8765"],
+      "port": 8765,
+      "autoPort": false
+    }
+  ]
+}

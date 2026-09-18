@@ -85,3 +85,32 @@ class SetNewPasswordForm(SetPasswordForm):
 
         for field_name, field in self.fields.items():
             field.widget.attrs["class"] = "form-control"
+
+
+class ProfileForm(forms.ModelForm):
+    """
+    Lets a logged-in user update their own account details: username,
+    email, phone number, and profile picture.
+    """
+
+    class Meta:
+        model = User
+        fields = ("profile_picture", "username", "email", "phone_number")
+        widgets = {
+            "profile_picture": forms.ClearableFileInput(attrs={"class": "form-control"}),
+            "username": forms.TextInput(attrs={"class": "form-control"}),
+            "email": forms.EmailInput(attrs={"class": "form-control"}),
+            "phone_number": forms.TextInput(attrs={"class": "form-control", "placeholder": "e.g., 0700 000000"}),
+        }
+
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if email and User.objects.exclude(pk=self.instance.pk).filter(email__iexact=email).exists():
+            raise forms.ValidationError("That email is already in use by another account.")
+        return email
+
+    def clean_profile_picture(self):
+        picture = self.cleaned_data.get("profile_picture")
+        if picture and hasattr(picture, "size") and picture.size > 5 * 1024 * 1024:
+            raise forms.ValidationError("Please choose an image under 5MB.")
+        return picture

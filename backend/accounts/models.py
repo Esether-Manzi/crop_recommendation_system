@@ -24,6 +24,13 @@ class User(AbstractUser):
         null=True,
     )
 
+    profile_picture = models.ImageField(
+        upload_to="profile_pictures/",
+        blank=True,
+        null=True,
+        help_text="Shown on your profile and in the navbar.",
+    )
+
     def save(self, *args, **kwargs):
         # createsuperuser doesn't know about this custom field, so it
         # would otherwise silently leave superusers at the default

@@ -76,6 +76,16 @@
             AI Chat Assistant
         </a>
 
+        <a href="{% url 'notes:list' %}" class="more-sheet-link">
+            <i class="fa-solid fa-note-sticky"></i>
+            My Notes
+        </a>
+
+        <a href="{% url 'accounts:profile' %}" class="more-sheet-link">
+            <i class="fa-solid fa-user"></i>
+            My Profile
+        </a>
+
         <hr>
 
         <form method="post" action="{% url 'accounts:logout' %}">

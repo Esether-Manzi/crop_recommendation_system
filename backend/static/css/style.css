@@ -581,6 +581,7 @@ main {
 .qa-teal  { --qa-color: #10796b; --qa-tint: rgba(16, 121, 107, 0.12); --qa-line: rgba(16, 121, 107, 0.30); }
 .qa-clay  { --qa-color: #c0562f; --qa-tint: rgba(192, 86, 47, 0.12);  --qa-line: rgba(192, 86, 47, 0.30); }
 .qa-moss  { --qa-color: #6d8b1f; --qa-tint: rgba(109, 139, 31, 0.14); --qa-line: rgba(109, 139, 31, 0.34); }
+.qa-blue  { --qa-color: #2563a8; --qa-tint: rgba(37, 99, 168, 0.12);  --qa-line: rgba(37, 99, 168, 0.30); }
 
 /* ── Panels ────────────────────────────────────────────── */
 .dash-panel {

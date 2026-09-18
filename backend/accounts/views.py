@@ -8,6 +8,7 @@ registration, login, and logout.
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
@@ -16,7 +17,7 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.views.decorators.http import require_POST
 
-from .forms import PasswordResetRequestForm, SetNewPasswordForm, UserRegistrationForm
+from .forms import PasswordResetRequestForm, ProfileForm, SetNewPasswordForm, UserRegistrationForm
 from .models import User
 
 
@@ -159,6 +160,33 @@ def password_reset_confirm_view(request, uidb64, token):
         form = SetNewPasswordForm(user)
 
     return render(request, "accounts/password_reset_confirm.html", {"form": form})
+
+
+@login_required
+def profile_view(request):
+    """
+    Show and update the logged-in user's own profile: username, email,
+    phone number, and profile picture.
+    """
+
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your profile has been updated.")
+            return redirect("accounts:profile")
+
+        # Validating a ModelForm mutates its bound instance in place even
+        # when invalid, and that instance is the same request.user object
+        # the navbar/header read from — refresh it so a rejected value
+        # (e.g. a username that's already taken) doesn't briefly display
+        # as if it had actually been saved.
+        request.user.refresh_from_db()
+    else:
+        form = ProfileForm(instance=request.user)
+
+    return render(request, "accounts/profile.html", {"form": form})
 
 
 @require_POST

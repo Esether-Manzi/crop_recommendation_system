@@ -1,0 +1,68 @@
+{% extends "base/base.html" %}
+
+{% block title %}Edit Note - Crop Advisor{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <a href="{% url 'notes:list' %}" class="btn btn-outline-secondary rounded-pill fw-semibold">
+        <i class="fa-solid fa-arrow-left me-2"></i>Back to Notes
+    </a>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="card card-bold rounded-4 p-4">
+            <h3 class="fw-bold text-success mb-2"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Note</h3>
+            <p class="text-muted fs-7 mb-4">
+                Last updated {{ note.updated_at|date:"M j, Y · H:i" }}.
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+                {% if form.errors %}
+                <div class="alert alert-danger py-2" role="alert">Please correct the highlighted fields below.</div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-muted fs-7">Title</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="text-danger fs-8 mt-1">{{ form.title.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-muted fs-7">Farm (optional)</label>
+                    {{ form.farm }}
+                    {% if form.farm.errors %}
+                        <div class="text-danger fs-8 mt-1">{{ form.farm.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold text-muted fs-7">Note</label>
+                    {{ form.content }}
+                    {% if form.content.errors %}
+                        <div class="text-danger fs-8 mt-1">{{ form.content.errors }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-accent btn-lg rounded-pill fw-bold">
+                        <i class="fa-solid fa-floppy-disk me-2"></i>Save Changes
+                    </button>
+                </div>
+            </form>
+
+            <form method="post" action="{% url 'notes:delete' note.id %}" class="mt-2" onsubmit="return confirm('Delete this note? This cannot be undone.');">
+                {% csrf_token %}
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-outline-danger rounded-pill fw-semibold">
+                        <i class="fa-solid fa-trash-can me-2"></i>Delete Note
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'ai',
     'advisory',
     'rotation',
+    'notes',
 ]
 
 MIDDLEWARE = [

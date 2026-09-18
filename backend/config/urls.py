@@ -48,6 +48,9 @@ urlpatterns = [
 
     # AI Assistant Module
     path("ai/", include("ai.urls")),
+
+    # Farming Notes Module
+    path("notes/", include("notes.urls")),
 ]
 
 if settings.DEBUG:

@@ -135,10 +135,16 @@
             <li class="nav-item dropdown">
 
                 <a
-                    class="nav-link dropdown-toggle"
+                    class="nav-link dropdown-toggle d-flex align-items-center gap-2"
                     href="#"
                     role="button"
                     data-bs-toggle="dropdown">
+
+                    {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" alt="" class="rounded-circle" style="width:26px;height:26px;object-fit:cover;">
+                    {% else %}
+                    <i class="fa-solid fa-circle-user"></i>
+                    {% endif %}
 
                     {{ user.username }}
 
@@ -155,6 +161,30 @@
                             href="{% url 'dashboard:home' %}">
 
                             Dashboard
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a
+                            class="dropdown-item"
+                            href="{% url 'accounts:profile' %}">
+
+                            My Profile
+
+                        </a>
+
+                    </li>
+
+                    <li>
+
+                        <a
+                            class="dropdown-item"
+                            href="{% url 'notes:list' %}">
+
+                            My Notes
 
                         </a>
 
