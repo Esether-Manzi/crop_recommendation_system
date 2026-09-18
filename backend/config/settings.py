@@ -158,6 +158,13 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / "staticfiles"
 if find_spec("whitenoise"):
     STORAGES = {
+        # Reassigning STORAGES replaces Django's whole default dict, not just
+        # "staticfiles" — without this, user-uploaded files (e.g. profile
+        # pictures) have no "default" storage backend and every save() 500s
+        # with "Could not find config for 'default' in settings.STORAGES.".
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
         "staticfiles": {
             "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
         },
