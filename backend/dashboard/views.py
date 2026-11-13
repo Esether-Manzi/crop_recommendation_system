@@ -64,31 +64,31 @@ def dashboard_home(request):
     # Calculate soil alerts
     alerts = []
     for farm in farms:
-        latest_soil = farm.soil_records.first()
-        if latest_soil:
-            if latest_soil.nitrogen < 30:
+        farm_soil = farm.soil_records.first()
+        if farm_soil:
+            if farm_soil.nitrogen < 30:
                 alerts.append({
                     "farm": farm,
                     "type": "danger",
-                    "message": f"Nitrogen is very low ({latest_soil.nitrogen} mg/kg) on '{farm.farm_name}'. Planting legumes like beans or groundnuts next can help build it back up."
+                    "message": f"Nitrogen is very low ({farm_soil.nitrogen} mg/kg) on '{farm.farm_name}'. Planting legumes like beans or groundnuts next can help build it back up."
                 })
-            if latest_soil.phosphorus < 20:
+            if farm_soil.phosphorus < 20:
                 alerts.append({
                     "farm": farm,
                     "type": "danger",
-                    "message": f"Phosphorus is very low ({latest_soil.phosphorus} mg/kg) on '{farm.farm_name}'. A phosphorus-rich fertilizer like DAP before your next planting can help roots grow stronger."
+                    "message": f"Phosphorus is very low ({farm_soil.phosphorus} mg/kg) on '{farm.farm_name}'. A phosphorus-rich fertilizer like DAP before your next planting can help roots grow stronger."
                 })
-            if latest_soil.potassium < 30:
+            if farm_soil.potassium < 30:
                 alerts.append({
                     "farm": farm,
                     "type": "danger",
-                    "message": f"Potassium is very low ({latest_soil.potassium} mg/kg) on '{farm.farm_name}'. A potassium-rich fertilizer like Muriate of Potash, or leaving crop residues in the field, can help build it back up."
+                    "message": f"Potassium is very low ({farm_soil.potassium} mg/kg) on '{farm.farm_name}'. A potassium-rich fertilizer like Muriate of Potash, or leaving crop residues in the field, can help build it back up."
                 })
-            if latest_soil.ph < 5.0 or latest_soil.ph > 8.0:
+            if farm_soil.ph < 5.0 or farm_soil.ph > 8.0:
                 alerts.append({
                     "farm": farm,
                     "type": "warning",
-                    "message": f"Soil pH on '{farm.farm_name}' is out of the ideal range ({latest_soil.ph}), which can make it harder for most crops to grow well. Adding lime can help balance it."
+                    "message": f"Soil pH on '{farm.farm_name}' is out of the ideal range ({farm_soil.ph}), which can make it harder for most crops to grow well. Adding lime can help balance it."
                 })
 
     return render(
