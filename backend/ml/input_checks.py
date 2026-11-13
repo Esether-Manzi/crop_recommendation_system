@@ -155,7 +155,8 @@ def check_inputs(values):
                 "field": field,
                 "message": (
                     f"{label} is {values[field]:g}. Values below 1 usually mean the lab report uses a "
-                    f"different unit (for example % or cmol/kg). This field needs mg/kg."
+                    f"different unit (for example % or cmol/kg). This field needs mg/kg; see "
+                    f"'How do I fill this in?' above the form."
                 ),
             })
 

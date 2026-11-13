@@ -1,0 +1,113 @@
+{% comment %}
+"How do I fill this in?" guide + unit converter, shared by the soil forms on
+recommendations/predict.html and farms/farm_detail.html. The converter fills
+the form field whose id is id_<field> (Django's default widget ids).
+Conversion factors: K 1 cmol/kg = 391 mg/kg; kg/ha -> mg/kg uses the same
+2.6 factor as the soil-change maths (top 20 cm, bulk density 1.3 t/m3).
+{% endcomment %}
+<div class="mb-3">
+    <a class="fs-7 fw-semibold text-success text-decoration-none" data-bs-toggle="collapse" href="#soilTestHelp"
+       role="button" aria-expanded="false" aria-controls="soilTestHelp">
+        <i class="fa-solid fa-circle-question me-1"></i>How do I fill this in?
+    </a>
+    <div class="collapse" id="soilTestHelp">
+        <div class="border rounded-3 p-3 mt-2 bg-light fs-7">
+            <p class="mb-2">
+                We don't measure your soil ourselves. Enter the results of a <strong>soil test</strong> you already
+                have from a soil testing laboratory (your district agricultural or extension officer can tell you where).
+                Weather values are averages for your area.
+            </p>
+
+            <ul class="list-unstyled mb-2">
+                <li class="mb-2">
+                    <strong>Nitrogen (N), mg/kg:</strong> the <em>available</em> (mineral) nitrogen on your report.
+                    If your report only shows <em>Total N in %</em>, that is a different measurement and can't be
+                    converted. Ask the lab or your extension officer for available N.
+                </li>
+                <li class="mb-2">
+                    <strong>Phosphorus (P), mg/kg:</strong> the <em>available P</em> (often called Bray or Mehlich P).
+                    <em>ppm</em> is the same as mg/kg.
+                </li>
+                <li class="mb-2">
+                    <strong>Potassium (K), mg/kg:</strong> if your report gives <em>cmol/kg</em> or <em>meq/100 g</em>,
+                    use the converter below.
+                </li>
+                <li class="mb-2">
+                    <strong>Soil pH:</strong> copy it as shown. If there are two, use <em>pH (water)</em>.
+                </li>
+                <li class="mb-2">
+                    <strong>Temperature (°C) and humidity (%):</strong> the yearly average for your area, from district
+                    weather records, the Uganda National Meteorological Authority, or your extension officer.
+                </li>
+                <li>
+                    <strong>Rainfall, mm per year:</strong> the total rain in a normal year. If you only know the monthly
+                    average, multiply it by 12.
+                </li>
+            </ul>
+
+            <div class="border-top pt-2">
+                <div class="fw-semibold mb-1"><i class="fa-solid fa-calculator me-1"></i>Unit converter</div>
+                <div class="row g-2 align-items-end">
+                    <div class="col-12">
+                        <label for="sthConversion" class="form-label fs-8 mb-1 text-muted">My report shows</label>
+                        <select id="sthConversion" class="form-select form-select-sm">
+                            <option value="potassium|391">K in cmol/kg or meq/100 g</option>
+                            <option value="nitrogen|0.384615">N in kg/ha (approx.)</option>
+                            <option value="phosphorus|0.384615">P in kg/ha (approx.)</option>
+                            <option value="potassium|0.384615">K in kg/ha (approx.)</option>
+                            <option value="rainfall|12">Monthly rainfall (mm)</option>
+                        </select>
+                    </div>
+                    <div class="col-5">
+                        <label for="sthValue" class="form-label fs-8 mb-1 text-muted">Value</label>
+                        <input id="sthValue" type="number" step="any" min="0" class="form-control form-control-sm" inputmode="decimal">
+                    </div>
+                    <div class="col-7">
+                        <div class="fs-8 text-muted mb-1">Enter this</div>
+                        <div id="sthResult" class="fw-bold" aria-live="polite">–</div>
+                    </div>
+                    <div class="col-12">
+                        <button type="button" id="sthApply" class="btn btn-sm btn-outline-success rounded-pill" disabled>
+                            <i class="fa-solid fa-arrow-down me-1"></i>Use this value
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+(function () {
+    const select = document.getElementById("sthConversion");
+    const input = document.getElementById("sthValue");
+    const result = document.getElementById("sthResult");
+    const apply = document.getElementById("sthApply");
+    const units = { nitrogen: "mg/kg", phosphorus: "mg/kg", potassium: "mg/kg", rainfall: "mm per year" };
+    let converted = null;
+
+    function update() {
+        const [field, factor] = select.value.split("|");
+        const value = parseFloat(input.value);
+        if (isNaN(value) || value < 0) {
+            converted = null;
+            result.textContent = "–";
+        } else {
+            converted = Math.round(value * parseFloat(factor) * 10) / 10;
+            result.textContent = `${converted} ${units[field]}`;
+        }
+        apply.disabled = converted === null || !document.getElementById(`id_${field}`);
+    }
+
+    select.addEventListener("change", update);
+    input.addEventListener("input", update);
+    apply.addEventListener("click", function () {
+        const field = select.value.split("|")[0];
+        const target = document.getElementById(`id_${field}`);
+        if (target && converted !== null) {
+            target.value = converted;
+            target.dispatchEvent(new Event("input", { bubbles: true }));
+            target.focus();
+        }
+    });
+})();
+</script>

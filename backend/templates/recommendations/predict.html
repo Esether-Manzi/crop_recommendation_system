@@ -54,7 +54,8 @@
                 <h5 class="fw-bold text-success mb-1">
                     <i class="fa-solid fa-flask-vial me-2"></i>Your Soil Values
                 </h5>
-                <p class="text-muted fs-8 mb-3">These come from a soil test or your farm record.</p>
+                <p class="text-muted fs-8 mb-2">These come from a soil test or your farm record.</p>
+                {% include "farms/_soil_test_help.html" %}
 
                 <form method="post" action="?{% if selected_farm %}farm_id={{ selected_farm.id }}{% endif %}">
                     {% csrf_token %}

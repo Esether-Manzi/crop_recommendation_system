@@ -115,11 +115,12 @@
 
     <!-- Soil Logging Sidebar -->
     <div class="col-lg-4">
-        <div class="card card-bold rounded-4 p-4 sticky-top" style="top: 2rem; z-index: 100;">
+        <div class="card card-bold rounded-4 p-4 sticky-lg-top soil-log-card" style="top: 2rem; z-index: 100;">
             <h3 class="fw-bold text-success mb-2"><i class="fa-solid fa-flask-vial me-2"></i>Log Soil Test</h3>
-            <p class="text-muted fs-7 mb-4">
+            <p class="text-muted fs-7 mb-2">
                 Add a new soil test for this farm so we can give you fresh crop advice.
             </p>
+            {% include "farms/_soil_test_help.html" %}
             
             <form method="post">
                 {% csrf_token %}

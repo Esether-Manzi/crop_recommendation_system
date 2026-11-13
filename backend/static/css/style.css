@@ -698,3 +698,13 @@ main {
         text-align: left !important;
     }
 }
+
+/* Soil log sidebar on the farm page: pinned on large screens only, and
+   scrolls internally when the "How do I fill this in?" help makes it taller
+   than the screen, so the Save button is never pushed out of reach. */
+@media (min-width: 992px) {
+    .soil-log-card {
+        max-height: calc(100vh - 4rem);
+        overflow-y: auto;
+    }
+}
