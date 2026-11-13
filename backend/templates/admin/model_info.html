@@ -1,0 +1,225 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a> &rsaquo; Model Information
+</div>
+{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block content %}
+<div id="content-main" class="cropai-model-info">
+
+<div class="cropai-welcome">
+    <div>
+        <h1>Model Information</h1>
+        <p>The data track behind the crop model the app is serving right now: where the data came from,
+           how it was prepared, which models were compared, and how the deployed one performed.</p>
+    </div>
+    <div class="cropai-welcome-badge"><i class="fa-solid fa-diagram-project"></i></div>
+</div>
+
+{% if not card %}
+<div class="cropai-module">
+    <div class="cropai-module-head"><h2><i class="fa-solid fa-circle-exclamation"></i> No model card</h2></div>
+    <div class="cropai-mi-body">
+        <p>The deployed model (<code>{{ model_version }}</code>) was trained before the pipeline existed, so there is no
+           record of its data, settings or scores. Run <code>python manage.py train_model</code> and restart the server.</p>
+    </div>
+</div>
+{% else %}
+
+<div class="cropai-stats-grid">
+    <div class="cropai-stat-card cropai-stat-card--activity">
+        <div class="cropai-stat-icon"><i class="fa-solid fa-code-branch"></i></div>
+        <div class="cropai-stat-body">
+            <div class="cropai-stat-value cropai-mi-small">{{ card.version }}</div>
+            <div class="cropai-stat-label">Model version</div>
+            <div class="cropai-stat-trend flat">{{ card.algorithm }} · trained {{ card.trained_at }}</div>
+        </div>
+    </div>
+    <div class="cropai-stat-card cropai-stat-card--land">
+        <div class="cropai-stat-icon"><i class="fa-solid fa-bullseye"></i></div>
+        <div class="cropai-stat-body">
+            <div class="cropai-stat-value">{{ card.test_metrics.accuracy|floatformat:3 }}</div>
+            <div class="cropai-stat-label">Test accuracy</div>
+            <div class="cropai-stat-trend flat">Macro F1 {{ card.test_metrics.f1_macro|floatformat:3 }}</div>
+        </div>
+    </div>
+    <div class="cropai-stat-card cropai-stat-card--people">
+        <div class="cropai-stat-icon"><i class="fa-solid fa-table"></i></div>
+        <div class="cropai-stat-body">
+            <div class="cropai-stat-value">{{ card.data.rows }}</div>
+            <div class="cropai-stat-label">Training rows</div>
+            <div class="cropai-stat-trend flat">{{ card.data.crops }} crops · {{ card.features|length }} features</div>
+        </div>
+    </div>
+</div>
+
+<div class="cropai-module">
+    <div class="cropai-module-head"><h2><i class="fa-solid fa-database"></i> 1. Data sources</h2></div>
+    <div class="cropai-mi-body">
+        <table>
+            <thead><tr><th>File</th><th>Origin</th><th>Rows</th><th>Crops</th><th>SHA-256 (first 12)</th></tr></thead>
+            <tbody>
+            {% for source in card.data.sources %}
+                <tr><td>{{ source.file }}</td><td>{{ source.origin }}</td><td>{{ source.rows }}</td><td>{{ source.crops }}</td><td><code>{{ source.sha256|slice:":12" }}</code></td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="cropai-module">
+    <div class="cropai-module-head"><h2><i class="fa-solid fa-broom"></i> 2. Validation</h2></div>
+    <div class="cropai-mi-body">
+        <ul>
+            <li>{{ card.data.rows }} rows across {{ card.data.crops }} crops, {{ card.data.rows_per_crop.min }}–{{ card.data.rows_per_crop.max }} rows per crop (balanced).</li>
+            <li>Missing values: {{ card.data.missing_values }}. Duplicate rows dropped: {{ card.data.duplicates_dropped }}. No negative values; no crop appears in both sources.</li>
+        </ul>
+    </div>
+</div>
+
+{% with h=card.preprocessing.rainfall_harmonisation %}
+<div class="cropai-module">
+    <div class="cropai-module-head"><h2><i class="fa-solid fa-cloud-rain"></i> 3. Preprocessing: rainfall harmonisation</h2></div>
+    <div class="cropai-mi-body">
+        <p>{{ h.rule }} {{ h.app_input }}</p>
+        <table>
+            <thead><tr><th>Source</th><th>Rainfall range before</th><th>Rainfall range after</th></tr></thead>
+            <tbody>
+            {% for origin, before in h.rainfall_range_by_origin_before.items %}
+                <tr><td>{{ origin }}</td><td>{{ before.0 }}–{{ before.1 }} mm</td><td>{% for o, after in h.rainfall_range_by_origin_after.items %}{% if o == origin %}{{ after.0 }}–{{ after.1 }} mm{% endif %}{% endfor %}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <p class="cropai-mi-note">How well rainfall <em>alone</em> can tell Kaggle rows from synthetic rows:
+           <strong>{{ h.origin_separability_by_rainfall_before|floatformat:3 }}</strong> before →
+           <strong>{{ h.origin_separability_by_rainfall_after|floatformat:3 }}</strong> after
+           (chance level {{ h.origin_separability_chance_level|floatformat:3 }}).</p>
+        <p class="cropai-mi-note">Scaling: {{ card.preprocessing.scaling }} Labels: {{ card.preprocessing.label_encoding }}.</p>
+    </div>
+</div>
+{% endwith %}
+
+<div class="cropai-module">
+    <div class="cropai-module-head"><h2><i class="fa-solid fa-scissors"></i> 4. Train / test split</h2></div>
+    <div class="cropai-mi-body">
+        <ul>
+            <li>{{ card.split.method }}: {{ card.split.train_rows }} training rows, {{ card.split.test_rows }} test rows (seed {{ card.split.seed }}).</li>
+            <li>Cross-validation: {{ card.split.cv_folds }}-fold stratified, on the training rows only.</li>
+            <li>Tuning: {{ card.split.tuning }}.</li>
+            <li>Deployed model fit on: {{ card.split.deployed_model_fit_on }}.</li>
+        </ul>
+    </div>
+</div>
+
+<div class="cropai-module">
+    <div class="cropai-module-head"><h2><i class="fa-solid fa-ranking-star"></i> 5. Model comparison</h2><span class="cropai-module-note">Ranked by CV macro F1</span></div>
+    <div class="cropai-mi-body cropai-mi-scroll">
+        <table>
+            <thead><tr>
+                <th>#</th><th>Model</th><th>CV accuracy</th><th>CV F1</th><th>Test accuracy</th><th>Test F1</th>
+                <th>Kaggle rows</th><th>Synthetic rows</th><th>ms / prediction</th><th>How the app can explain it</th>
+            </tr></thead>
+            <tbody>
+            {% for row in card.comparison %}
+                <tr{% if row.model == card.algorithm %} class="cropai-mi-deployed"{% endif %}>
+                    <td>{{ row.rank }}</td>
+                    <td>{{ row.model }}{% if row.model == card.algorithm %} <span class="cropai-mi-tag">deployed</span>{% endif %}</td>
+                    <td>{{ row.cv_accuracy_mean|floatformat:4 }} ± {{ row.cv_accuracy_std|floatformat:4 }}</td>
+                    <td>{{ row.cv_f1_macro_mean|floatformat:4 }}</td>
+                    <td>{{ row.test_accuracy|floatformat:4 }}</td>
+                    <td>{{ row.test_f1_macro|floatformat:4 }}</td>
+                    <td>{{ row.test_accuracy_kaggle|floatformat:3 }}</td>
+                    <td>{{ row.test_accuracy_synthetic|floatformat:3 }}</td>
+                    <td>{{ row.inference_ms_per_sample|floatformat:3 }}</td>
+                    <td>{{ row.explanation_method }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <p class="cropai-mi-note"><strong>Selection rule:</strong> {{ card.selection_rule }}. Deployed: <strong>{{ card.algorithm }}</strong>.</p>
+        <p class="cropai-mi-note">Significance of the deployed model vs each alternative (corrected resampled t-test on CV folds, α = 0.05):</p>
+        <table>
+            <thead><tr><th>Compared with</th><th>Mean CV accuracy difference</th><th>p-value</th><th>Verdict</th></tr></thead>
+            <tbody>
+            {% for test in card.significance_tests %}
+                <tr><td>{{ test.compared_with }}</td><td>{{ test.mean_cv_accuracy_diff|floatformat:4 }}</td><td>{{ test.p_value|floatformat:4 }}</td><td>{{ test.verdict }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="cropai-module">
+    <div class="cropai-module-head"><h2><i class="fa-solid fa-clipboard-check"></i> 6. Deployed model evaluation ({{ card.algorithm }})</h2></div>
+    <div class="cropai-mi-body cropai-mi-cols">
+        <div>
+            <h3>Held-out test set</h3>
+            <table>
+                <tbody>
+                    <tr><td>Accuracy</td><td>{{ card.test_metrics.accuracy|floatformat:4 }}</td></tr>
+                    <tr><td>Precision (macro)</td><td>{{ card.test_metrics.precision_macro|floatformat:4 }}</td></tr>
+                    <tr><td>Recall (macro)</td><td>{{ card.test_metrics.recall_macro|floatformat:4 }}</td></tr>
+                    <tr><td>F1 (macro)</td><td>{{ card.test_metrics.f1_macro|floatformat:4 }}</td></tr>
+                    <tr><td>Accuracy on Kaggle rows</td><td>{{ card.test_metrics.accuracy_kaggle_rows|floatformat:4 }}</td></tr>
+                    <tr><td>Accuracy on synthetic rows</td><td>{{ card.test_metrics.accuracy_synthetic_rows|floatformat:4 }}</td></tr>
+                </tbody>
+            </table>
+            <h3>Weakest crops (F1)</h3>
+            <table><tbody>
+            {% for crop, score in card.weakest_crops_f1.items %}<tr><td>{{ crop }}</td><td>{{ score|floatformat:3 }}</td></tr>{% endfor %}
+            </tbody></table>
+        </div>
+        <div>
+            <h3>Feature importance</h3>
+            <p class="cropai-mi-note">{{ card.feature_importance_method }}.</p>
+            {% for row in importance_rows %}
+            <div class="cropai-mi-bar-row">
+                <span>{{ row.feature }}</span>
+                <div class="cropai-mi-bar"><div style="width: {{ row.width }}%"></div></div>
+                <span>{{ row.value|floatformat:3 }}</span>
+            </div>
+            {% endfor %}
+            <h3>Explanations shown to farmers</h3>
+            <p>{{ card.explanation_method }}</p>
+            <h3>Hyperparameters</h3>
+            {% if card.hyperparameters.items %}
+            <table><tbody>{% for k, v in card.hyperparameters.items %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table>
+            {% else %}<p>{{ card.hyperparameters }}</p>{% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="cropai-module">
+    <div class="cropai-module-head"><h2><i class="fa-solid fa-box-archive"></i> 7. Deployment &amp; usage</h2></div>
+    <div class="cropai-mi-body cropai-mi-cols">
+        <div>
+            <h3>Predictions served, by model version</h3>
+            <table>
+                <thead><tr><th>Model version</th><th>Predictions</th></tr></thead>
+                <tbody>
+                {% for row in predictions_by_version %}
+                    <tr{% if row.model_version == card.version %} class="cropai-mi-deployed"{% endif %}><td>{{ row.model_version|default:"(before versioning)" }}</td><td>{{ row.count }}</td></tr>
+                {% empty %}
+                    <tr><td colspan="2">No predictions yet.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <h3>Saved artifacts</h3>
+            <ul>{% for artifact in card.artifacts %}<li><code>{{ artifact }}</code></li>{% endfor %}</ul>
+        </div>
+        <div>
+            <h3>Environment</h3>
+            <table><tbody>{% for lib, version in card.environment.items %}<tr><td>{{ lib }}</td><td>{{ version }}</td></tr>{% endfor %}</tbody></table>
+            <p class="cropai-mi-note">Retrain with <code>python manage.py train_model</code>, then restart the server.</p>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+</div>
+{% endblock %}

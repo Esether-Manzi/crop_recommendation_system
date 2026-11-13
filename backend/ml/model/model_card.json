@@ -1,0 +1,375 @@
+{
+  "version": "20261113-154103",
+  "trained_at": "2026-11-13T15:41:03",
+  "algorithm": "Naive Bayes",
+  "selection_rule": "Highest 10-fold CV macro F1 on the training split (ties broken by test macro F1)",
+  "explanation_method": "Exact per-feature log-likelihood contributions",
+  "hyperparameters": {
+    "var_smoothing": 1e-06
+  },
+  "features": [
+    "Nitrogen",
+    "Phosphorus",
+    "Potassium",
+    "Temperature",
+    "Humidity",
+    "pH_Value",
+    "Rainfall"
+  ],
+  "classes": [
+    "Apple",
+    "Banana",
+    "Blackgram",
+    "Cassava",
+    "ChickPea",
+    "Cocoa",
+    "Coconut",
+    "Coffee",
+    "Cotton",
+    "GardenBean",
+    "Grapes",
+    "Groundnut",
+    "Jute",
+    "KidneyBeans",
+    "Lentil",
+    "Maize",
+    "Mango",
+    "Millet",
+    "MothBeans",
+    "MungBean",
+    "Muskmelon",
+    "Onion",
+    "Orange",
+    "Papaya",
+    "PigeonPeas",
+    "Plantain",
+    "Pomegranate",
+    "Rice",
+    "SesameSeed",
+    "Sorghum",
+    "Soyabean",
+    "Sugarcane",
+    "SunflowerSeed",
+    "SweetPotato",
+    "Tea",
+    "Tobacco",
+    "Vanilla",
+    "Watermelon"
+  ],
+  "data": {
+    "sources": [
+      {
+        "file": "Crop_Recommendation_kaggle_dataset.csv",
+        "origin": "Kaggle",
+        "rows": 2200,
+        "crops": 22,
+        "sha256": "4ef961bfefb7654a0797e8fce7b0d36b04bb08da050715ed9525173e725b2547"
+      },
+      {
+        "file": "Uganda_New_Crops_Synthetic_Only.csv",
+        "origin": "Synthetic (Uganda-added)",
+        "rows": 1600,
+        "crops": 16,
+        "sha256": "54489beb6220f4340ec896ba7d449c835e9a54bb5d79f3535c47049164125cfc"
+      }
+    ],
+    "rows": 3800,
+    "crops": 38,
+    "rows_per_crop": {
+      "min": 100,
+      "max": 100
+    },
+    "duplicates_dropped": 0,
+    "missing_values": 0
+  },
+  "preprocessing": {
+    "rainfall_harmonisation": {
+      "rule": "Synthetic rows' annual rainfall (mm/year) divided by 12 to match the Kaggle monthly scale (mm/month).",
+      "app_input": "Farmers enter annual rainfall; ml/features.py divides by 12 before prediction.",
+      "rainfall_range_by_origin_before": {
+        "Kaggle": [
+          20.2,
+          298.6
+        ],
+        "Synthetic (Uganda-added)": [
+          200.0,
+          2600.0
+        ]
+      },
+      "rainfall_range_by_origin_after": {
+        "Kaggle": [
+          20.2,
+          298.6
+        ],
+        "Synthetic (Uganda-added)": [
+          16.7,
+          216.7
+        ]
+      },
+      "origin_separability_by_rainfall_before": 0.9976,
+      "origin_separability_by_rainfall_after": 0.6011,
+      "origin_separability_chance_level": 0.5789
+    },
+    "scaling": "None for the deployed tree model (scale-invariant); StandardScaler inside the KNN, SVM and Logistic Regression pipelines only.",
+    "label_encoding": "sklearn LabelEncoder (alphabetical crop order)"
+  },
+  "split": {
+    "method": "Stratified train/test split by crop",
+    "test_size": 0.2,
+    "train_rows": 3040,
+    "test_rows": 760,
+    "seed": 42,
+    "cv_folds": 10,
+    "tuned": true,
+    "tuning": "GridSearchCV, 5-fold, scoring = macro F1, on the training split only",
+    "deployed_model_fit_on": "training split (so the test scores below describe exactly the deployed model)"
+  },
+  "test_metrics": {
+    "accuracy": 0.975,
+    "precision_macro": 0.9761,
+    "recall_macro": 0.975,
+    "f1_macro": 0.9751,
+    "accuracy_kaggle_rows": 0.9932,
+    "accuracy_synthetic_rows": 0.95
+  },
+  "cv_metrics": {
+    "accuracy_mean": 0.9668,
+    "accuracy_std": 0.0081,
+    "f1_macro_mean": 0.9664
+  },
+  "weakest_crops_f1": {
+    "SesameSeed": 0.8571,
+    "Millet": 0.8718,
+    "Tobacco": 0.8947,
+    "Jute": 0.9048,
+    "SweetPotato": 0.9048
+  },
+  "feature_importance": {
+    "Potassium": 0.4367,
+    "Humidity": 0.4132,
+    "Rainfall": 0.3786,
+    "Phosphorus": 0.2859,
+    "Nitrogen": 0.2254,
+    "Temperature": 0.1512,
+    "pH_Value": 0.1129
+  },
+  "feature_importance_method": "Permutation importance on the test set (mean drop in accuracy over 10 shuffles)",
+  "comparison": [
+    {
+      "rank": 1,
+      "model": "Naive Bayes",
+      "cv_accuracy_mean": 0.9668,
+      "cv_accuracy_std": 0.0081,
+      "cv_f1_macro_mean": 0.9664,
+      "test_accuracy": 0.975,
+      "test_precision_macro": 0.9761,
+      "test_recall_macro": 0.975,
+      "test_f1_macro": 0.9751,
+      "test_accuracy_kaggle": 0.9932,
+      "test_accuracy_synthetic": 0.95,
+      "train_seconds": 0.005,
+      "inference_ms_per_sample": 0.0038,
+      "model_size_kb": 6.1,
+      "explanation_method": "Exact per-feature log-likelihood contributions",
+      "best_params": "{\"var_smoothing\": 1e-06}"
+    },
+    {
+      "rank": 2,
+      "model": "SVM (RBF)",
+      "cv_accuracy_mean": 0.9559,
+      "cv_accuracy_std": 0.0113,
+      "cv_f1_macro_mean": 0.9553,
+      "test_accuracy": 0.9605,
+      "test_precision_macro": 0.9619,
+      "test_recall_macro": 0.9605,
+      "test_f1_macro": 0.9605,
+      "test_accuracy_kaggle": 0.9795,
+      "test_accuracy_synthetic": 0.9344,
+      "train_seconds": 0.579,
+      "inference_ms_per_sample": 0.1247,
+      "model_size_kb": 905.5,
+      "explanation_method": "None in the app",
+      "best_params": "{\"clf__C\": 10, \"clf__gamma\": 0.1}"
+    },
+    {
+      "rank": 3,
+      "model": "Random Forest",
+      "cv_accuracy_mean": 0.952,
+      "cv_accuracy_std": 0.0086,
+      "cv_f1_macro_mean": 0.9514,
+      "test_accuracy": 0.9618,
+      "test_precision_macro": 0.9632,
+      "test_recall_macro": 0.9618,
+      "test_f1_macro": 0.9619,
+      "test_accuracy_kaggle": 0.9909,
+      "test_accuracy_synthetic": 0.9219,
+      "train_seconds": 0.796,
+      "inference_ms_per_sample": 0.0875,
+      "model_size_kb": 40759.4,
+      "explanation_method": "Exact SHAP (TreeExplainer)",
+      "best_params": "{\"max_depth\": 20, \"n_estimators\": 200}"
+    },
+    {
+      "rank": 4,
+      "model": "Logistic Regression",
+      "cv_accuracy_mean": 0.9457,
+      "cv_accuracy_std": 0.0092,
+      "cv_f1_macro_mean": 0.9453,
+      "test_accuracy": 0.9566,
+      "test_precision_macro": 0.9587,
+      "test_recall_macro": 0.9566,
+      "test_f1_macro": 0.9565,
+      "test_accuracy_kaggle": 0.9727,
+      "test_accuracy_synthetic": 0.9344,
+      "train_seconds": 1.262,
+      "inference_ms_per_sample": 0.0029,
+      "model_size_kb": 4.4,
+      "explanation_method": "None in the app",
+      "best_params": "{\"clf__C\": 10}"
+    },
+    {
+      "rank": 5,
+      "model": "XGBoost",
+      "cv_accuracy_mean": 0.9428,
+      "cv_accuracy_std": 0.0104,
+      "cv_f1_macro_mean": 0.9426,
+      "test_accuracy": 0.9553,
+      "test_precision_macro": 0.9555,
+      "test_recall_macro": 0.9553,
+      "test_f1_macro": 0.9548,
+      "test_accuracy_kaggle": 0.9932,
+      "test_accuracy_synthetic": 0.9031,
+      "train_seconds": 4.472,
+      "inference_ms_per_sample": 0.0942,
+      "model_size_kb": 12195.4,
+      "explanation_method": "Exact SHAP (TreeExplainer)",
+      "best_params": "{\"learning_rate\": 0.1, \"max_depth\": 4, \"n_estimators\": 400}"
+    },
+    {
+      "rank": 6,
+      "model": "KNN",
+      "cv_accuracy_mean": 0.9375,
+      "cv_accuracy_std": 0.0085,
+      "cv_f1_macro_mean": 0.9368,
+      "test_accuracy": 0.9355,
+      "test_precision_macro": 0.9381,
+      "test_recall_macro": 0.9355,
+      "test_f1_macro": 0.9348,
+      "test_accuracy_kaggle": 0.9591,
+      "test_accuracy_synthetic": 0.9031,
+      "train_seconds": 0.007,
+      "inference_ms_per_sample": 0.0194,
+      "model_size_kb": 400.5,
+      "explanation_method": "None in the app",
+      "best_params": "{\"clf__n_neighbors\": 7, \"clf__weights\": \"distance\"}"
+    },
+    {
+      "rank": 7,
+      "model": "Gradient Boosting",
+      "cv_accuracy_mean": 0.9319,
+      "cv_accuracy_std": 0.0074,
+      "cv_f1_macro_mean": 0.9317,
+      "test_accuracy": 0.9368,
+      "test_precision_macro": 0.9384,
+      "test_recall_macro": 0.9368,
+      "test_f1_macro": 0.9364,
+      "test_accuracy_kaggle": 0.9841,
+      "test_accuracy_synthetic": 0.8719,
+      "train_seconds": 45.555,
+      "inference_ms_per_sample": 0.1266,
+      "model_size_kb": 8941.2,
+      "explanation_method": "Exact SHAP (TreeExplainer)",
+      "best_params": "{\"learning_rate\": 0.1, \"max_depth\": 3, \"n_estimators\": 200}"
+    },
+    {
+      "rank": 8,
+      "model": "Decision Tree",
+      "cv_accuracy_mean": 0.8984,
+      "cv_accuracy_std": 0.0134,
+      "cv_f1_macro_mean": 0.8973,
+      "test_accuracy": 0.9197,
+      "test_precision_macro": 0.9225,
+      "test_recall_macro": 0.9197,
+      "test_f1_macro": 0.9193,
+      "test_accuracy_kaggle": 0.9705,
+      "test_accuracy_synthetic": 0.85,
+      "train_seconds": 0.028,
+      "inference_ms_per_sample": 0.0016,
+      "model_size_kb": 129.5,
+      "explanation_method": "Exact SHAP (TreeExplainer)",
+      "best_params": "{\"max_depth\": 20, \"min_samples_leaf\": 3}"
+    }
+  ],
+  "significance_tests": [
+    {
+      "deployed": "Naive Bayes",
+      "compared_with": "XGBoost",
+      "mean_cv_accuracy_diff": 0.024,
+      "p_value": 0.004,
+      "verdict": "Naive Bayes better"
+    },
+    {
+      "deployed": "Naive Bayes",
+      "compared_with": "Random Forest",
+      "mean_cv_accuracy_diff": 0.0148,
+      "p_value": 0.02,
+      "verdict": "Naive Bayes better"
+    },
+    {
+      "deployed": "Naive Bayes",
+      "compared_with": "Gradient Boosting",
+      "mean_cv_accuracy_diff": 0.0349,
+      "p_value": 0.0001,
+      "verdict": "Naive Bayes better"
+    },
+    {
+      "deployed": "Naive Bayes",
+      "compared_with": "Decision Tree",
+      "mean_cv_accuracy_diff": 0.0684,
+      "p_value": 0.0,
+      "verdict": "Naive Bayes better"
+    },
+    {
+      "deployed": "Naive Bayes",
+      "compared_with": "KNN",
+      "mean_cv_accuracy_diff": 0.0293,
+      "p_value": 0.0,
+      "verdict": "Naive Bayes better"
+    },
+    {
+      "deployed": "Naive Bayes",
+      "compared_with": "SVM (RBF)",
+      "mean_cv_accuracy_diff": 0.0109,
+      "p_value": 0.1146,
+      "verdict": "No significant difference"
+    },
+    {
+      "deployed": "Naive Bayes",
+      "compared_with": "Logistic Regression",
+      "mean_cv_accuracy_diff": 0.0211,
+      "p_value": 0.0023,
+      "verdict": "Naive Bayes better"
+    }
+  ],
+  "significantly_better_than_deployed": [],
+  "environment": {
+    "python": "3.14.4",
+    "scikit_learn": "1.9.0",
+    "xgboost": "3.3.0",
+    "shap": "0.52.0",
+    "pandas": "3.0.3",
+    "numpy": "2.4.6"
+  },
+  "artifacts": [
+    "crop_model.pkl",
+    "crop_encoder.pkl",
+    "feature_names.pkl",
+    "model_comparison.csv",
+    "significance_tests.csv",
+    "classification_report.csv",
+    "confusion_matrix.csv",
+    "training_dataset_harmonised.csv",
+    "Uganda_Crop_Suitability_Ranges.csv (datasets/)"
+  ],
+  "duration_seconds": 685.5
+}

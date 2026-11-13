@@ -34,5 +34,5 @@ class PredictionForm(forms.Form):
 
     rainfall = forms.FloatField(
         min_value=0, max_value=10000,
-        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 10000})
+        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 10000, "placeholder": "e.g., 1200"})
     )

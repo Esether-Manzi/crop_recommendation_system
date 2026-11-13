@@ -24,6 +24,10 @@
       <a class="cropai-nav-link{% if request.path == cropai_index_url %} active{% endif %}" href="{{ cropai_index_url }}">
         <i class="fa-solid fa-gauge-high"></i><span>{% translate 'Dashboard' %}</span>
       </a>
+      {% url 'admin:model_info' as cropai_model_info_url %}
+      <a class="cropai-nav-link{% if request.path == cropai_model_info_url %} active{% endif %}" href="{{ cropai_model_info_url }}">
+        <i class="fa-solid fa-diagram-project"></i><span>Model Information</span>
+      </a>
     </div>
 
     {% if available_apps %}

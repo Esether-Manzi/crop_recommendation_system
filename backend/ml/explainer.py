@@ -1,13 +1,20 @@
 """
 XAI Explainer Module
 =====================
-Uses SHAP TreeExplainer to produce per-feature contribution scores for each
-individual crop prediction made by the XGBoost model.
+Produces per-feature contribution scores for each individual crop prediction.
+The method depends on which model `manage.py train_model` deployed:
 
-Why TreeExplainer?
-- XGBoost is a gradient-boosted tree ensemble — TreeExplainer computes
-  exact Shapley values in O(TLD) time (T=trees, L=leaves, D=depth).
-- Much faster than KernelExplainer, and mathematically exact.
+Gaussian Naive Bayes (exact, closed form)
+- NB scores a crop as log P(crop) + sum over features of log p(value | crop),
+  so each feature's influence is directly separable. A feature's contribution
+  is its log-likelihood ratio against the average crop:
+      log p(x_i | crop) - log sum_k P(k) p(x_i | k)
+  Positive = this value is more typical of this crop than of crops in general.
+
+Tree ensembles (XGBoost, Random Forest, ...) via SHAP TreeExplainer
+- Computes exact Shapley values in O(TLD) time (T=trees, L=leaves, D=depth).
+
+Any other model type returns an empty list, which the UI already handles.
 
 Output per feature:
     {
@@ -15,16 +22,18 @@ Output per feature:
         "display_name":     "Nitrogen (N)",
         "unit":             "mg/kg",
         "value":            80.0,       # what the user entered
-        "contribution":     0.42,       # raw SHAP value (positive = pushes toward this crop)
+        "contribution":     0.42,       # positive = pushes toward this crop
         "direction":        "positive", # "positive" | "negative"
         "abs_contribution": 0.42,
-        "pct_of_total":     34.1,       # % share of the total |SHAP| mass for this prediction
+        "pct_of_total":     34.1,       # % share of the total |contribution| mass for this prediction
     }
 """
 
 import shap
 import pandas as pd
 import numpy as np
+from scipy.special import logsumexp
+from sklearn.naive_bayes import GaussianNB
 
 from .loader import model, encoder, feature_names
 
@@ -36,7 +45,7 @@ FEATURE_META = {
     "Temperature": {"display": "Temperature",     "unit": "°C"},
     "Humidity":    {"display": "Humidity",        "unit": "%"},
     "pH_Value":    {"display": "Soil pH",         "unit": ""},
-    "Rainfall":    {"display": "Rainfall",        "unit": "mm"},
+    "Rainfall":    {"display": "Rainfall",        "unit": "mm/year"},
 }
 
 # ── Fertilizer boost constants (mirrored from sequential_pipeline.py) ───────────
@@ -47,7 +56,7 @@ FERTILIZER_BOOST = {
     "Potassium":  round(15 / 2.6, 2),   # ≈ +5.77 mg/kg
 }
 
-# ── Cached explainer (expensive to build, reused across requests) ────────────
+# ── Cached SHAP explainer (expensive to build, reused across requests) ───────
 _explainer = None
 
 
@@ -58,9 +67,27 @@ def _get_explainer():
     return _explainer
 
 
-def explain_prediction(data: dict, crop_name: str) -> list[dict]:
+def _naive_bayes_contributions(input_df, crop_idx):
+    x = input_df.to_numpy(dtype=float)[0]
+    log_likelihood = -0.5 * (np.log(2 * np.pi * model.var_) + (x - model.theta_) ** 2 / model.var_)
+    log_average = logsumexp(log_likelihood, axis=0, b=model.class_prior_[:, None])
+    return log_likelihood[crop_idx] - log_average
+
+
+def _shap_contributions(input_df, crop_idx):
+    # shap_values shape for multi-class: (n_samples, n_features, n_classes)
+    # or list of arrays — handle both formats tree models may return
+    raw_shap = _get_explainer().shap_values(input_df)
+    if isinstance(raw_shap, np.ndarray) and raw_shap.ndim == 3:
+        return raw_shap[0, :, crop_idx]
+    if isinstance(raw_shap, list):
+        return raw_shap[crop_idx][0]
+    return raw_shap[0]
+
+
+def explain_prediction(data: dict, crop_name: str, display_values: dict | None = None) -> list[dict]:
     """
-    Compute SHAP feature contributions for a specific crop prediction.
+    Compute per-feature contributions for a specific crop prediction.
 
     Parameters
     ----------
@@ -68,22 +95,18 @@ def explain_prediction(data: dict, crop_name: str) -> list[dict]:
         Feature dict with keys matching `feature_names`
         e.g. {"Nitrogen": 80, "Phosphorus": 40, ...}
     crop_name : str
-        The crop whose SHAP values we want
-        (must match a class in the encoder)
+        The crop to explain (must match a class in the encoder)
+    display_values : dict, optional
+        Values to show the user instead of the model-scale ones, e.g.
+        {"Rainfall": <annual mm>} since the model sees monthly rainfall.
 
     Returns
     -------
     list[dict]
         Sorted by absolute contribution (most influential first).
-        Empty list if crop not found in encoder.
+        Empty list if crop not found in encoder or the model type isn't supported.
     """
-    explainer = _get_explainer()
-
     input_df = pd.DataFrame([data])[feature_names]
-
-    # shap_values shape for multi-class: (n_samples, n_features, n_classes)
-    # or list of arrays — handle both formats XGBoost may return
-    raw_shap = explainer.shap_values(input_df)
 
     crop_classes = list(encoder.classes_)
     try:
@@ -91,20 +114,17 @@ def explain_prediction(data: dict, crop_name: str) -> list[dict]:
     except ValueError:
         return []
 
-    # Normalise to (n_features,) for this single sample and this crop class
-    if isinstance(raw_shap, np.ndarray) and raw_shap.ndim == 3:
-        # shape (n_samples, n_features, n_classes)
-        feature_shap = raw_shap[0, :, crop_idx]
-    elif isinstance(raw_shap, list):
-        # list of arrays, one per class, each (n_samples, n_features)
-        feature_shap = raw_shap[crop_idx][0]
+    if isinstance(model, GaussianNB):
+        feature_shap = _naive_bayes_contributions(input_df, crop_idx)
+    elif hasattr(model, "feature_importances_"):
+        feature_shap = _shap_contributions(input_df, crop_idx)
     else:
-        # 2-D fallback (binary or single output)
-        feature_shap = raw_shap[0]
+        return []
 
     # Total absolute mass — used to compute percentage shares
     total_abs = float(np.sum(np.abs(feature_shap))) or 1.0
 
+    display_values = display_values or {}
     results = []
     for i, fname in enumerate(feature_names):
         contribution = float(feature_shap[i])
@@ -114,7 +134,7 @@ def explain_prediction(data: dict, crop_name: str) -> list[dict]:
             "feature":          fname,
             "display_name":     meta["display"],
             "unit":             meta["unit"],
-            "value":            data[fname],
+            "value":            display_values.get(fname, data[fname]),
             "contribution":     round(contribution, 4),
             "direction":        "positive" if contribution >= 0 else "negative",
             "abs_contribution": round(abs_c, 4),

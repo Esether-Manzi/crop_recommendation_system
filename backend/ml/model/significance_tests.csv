@@ -1,0 +1,8 @@
+deployed,compared_with,mean_cv_accuracy_diff,p_value,verdict
+Naive Bayes,XGBoost,0.024,0.004,Naive Bayes better
+Naive Bayes,Random Forest,0.0148,0.02,Naive Bayes better
+Naive Bayes,Gradient Boosting,0.0349,0.0001,Naive Bayes better
+Naive Bayes,Decision Tree,0.0684,0.0,Naive Bayes better
+Naive Bayes,KNN,0.0293,0.0,Naive Bayes better
+Naive Bayes,SVM (RBF),0.0109,0.1146,No significant difference
+Naive Bayes,Logistic Regression,0.0211,0.0023,Naive Bayes better

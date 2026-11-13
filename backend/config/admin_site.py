@@ -11,12 +11,16 @@ from datetime import timedelta
 
 from django.contrib import admin
 from django.contrib.admin import AdminSite
+from django.db.models import Count
+from django.template.response import TemplateResponse
+from django.urls import path
 from django.utils import timezone
 
 from accounts.models import User
 from advisory.models import SeasonTracker
 from farms.models import Farm
 from feedback.models import HarvestFeedback
+from ml.loader import model_card, model_version
 from recommendations.models import Prediction
 
 # Font Awesome icon per crop, for the "Latest predictions" feed — falls
@@ -177,6 +181,35 @@ class CropAIAdminSite(AdminSite):
         extra_context["recent_predictions"] = recent_predictions
 
         return super().index(request, extra_context)
+
+    def get_urls(self):
+        return [
+            path("model-info/", self.admin_view(self.model_info_view), name="model_info"),
+        ] + super().get_urls()
+
+    def model_info_view(self, request):
+        """The ML pipeline's data track for the model currently being served,
+        read from the model card that `manage.py train_model` writes."""
+        predictions_by_version = (
+            Prediction.objects.values("model_version")
+            .annotate(count=Count("id"))
+            .order_by("-count")
+        )
+        importance = model_card.get("feature_importance", {})
+        top = max([v for v in importance.values() if v > 0], default=1)
+        importance_rows = [
+            {"feature": feature, "value": value, "width": max(0, round(value / top * 100))}
+            for feature, value in importance.items()
+        ]
+        context = {
+            **self.each_context(request),
+            "title": "Model Information",
+            "importance_rows": importance_rows,
+            "card": model_card,
+            "model_version": model_version,
+            "predictions_by_version": predictions_by_version,
+        }
+        return TemplateResponse(request, "admin/model_info.html", context)
 
 
 admin.site.__class__ = CropAIAdminSite

@@ -253,7 +253,7 @@ def chat(request):
                         context += (
                             f" The latest soil analysis: Nitrogen: {latest_soil.nitrogen} mg/kg, "
                             f"Phosphorus: {latest_soil.phosphorus} mg/kg, Potassium: {latest_soil.potassium} mg/kg, "
-                            f"pH: {latest_soil.ph}, Temperature: {latest_soil.temperature}°C, Rainfall: {latest_soil.rainfall} mm."
+                            f"pH: {latest_soil.ph}, Temperature: {latest_soil.temperature}°C, Rainfall: {latest_soil.rainfall} mm per year."
                         )
                 except Farm.DoesNotExist:
                     pass

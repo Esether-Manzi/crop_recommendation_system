@@ -976,3 +976,20 @@ ul.messagelist li {
     border-radius: 10px;
     box-shadow: var(--cropai-card-shadow);
 }
+
+/* ── Model Information page (admin/model_info.html) ─────── */
+.cropai-mi-body { padding: 14px 18px 18px; }
+.cropai-mi-body table { width: 100%; border-collapse: collapse; margin: 6px 0 12px; }
+.cropai-mi-body th, .cropai-mi-body td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--cropai-border); }
+.cropai-mi-body h3 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; margin: 10px 0 4px; color: var(--body-quiet-color); }
+.cropai-mi-body ul { margin: 0; padding-left: 18px; }
+.cropai-mi-body li { list-style: disc; padding: 2px 0; }
+.cropai-mi-scroll { overflow-x: auto; }
+.cropai-mi-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+.cropai-mi-note { color: var(--body-quiet-color); font-size: 0.85rem; margin: 6px 0; }
+.cropai-mi-deployed td { background: var(--selected-row); font-weight: 600; }
+.cropai-mi-tag { display: inline-block; background: var(--accent); color: #fff; border-radius: 999px; padding: 1px 8px; font-size: 0.7rem; margin-left: 4px; }
+.cropai-mi-small { font-size: 1.1rem; }
+.cropai-mi-bar-row { display: grid; grid-template-columns: 90px 1fr 48px; align-items: center; gap: 8px; padding: 4px 0; font-size: 0.85rem; }
+.cropai-mi-bar { background: var(--cropai-border); border-radius: 999px; height: 8px; overflow: hidden; }
+.cropai-mi-bar > div { background: var(--primary); height: 100%; }

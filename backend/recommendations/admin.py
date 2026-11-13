@@ -12,11 +12,13 @@ class PredictionAdmin(admin.ModelAdmin):
         "phosphorus",
         "potassium",
         "ph",
+        "model_version",
         "created_at",
     )
 
     list_filter = (
         "predicted_crop",
+        "model_version",
         "created_at",
     )
 

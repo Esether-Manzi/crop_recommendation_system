@@ -7,6 +7,7 @@ from django.conf import settings
 from farms.models import Farm, SoilRecord
 from .models import RotationPlan, RotationStep
 from ml.datasets.sequential_pipeline import recommend_sequence
+from ml.features import build_model_input
 
 @login_required
 def planner(request):
@@ -38,15 +39,15 @@ def planner(request):
         encoder_path = os.path.join(base_ml_dir, "model", "crop_encoder.pkl")
         nutrient_table_path = os.path.join(base_ml_dir, "datasets", "Crop_Nutrient_Depletion_Table_All38.csv")
 
-        initial_features = {
-            "Nitrogen": latest_soil.nitrogen,
-            "Phosphorus": latest_soil.phosphorus,
-            "Potassium": latest_soil.potassium,
-            "Temperature": latest_soil.temperature,
-            "Humidity": latest_soil.humidity,
-            "pH_Value": latest_soil.ph,
-            "Rainfall": latest_soil.rainfall,
-        }
+        initial_features = build_model_input(
+            nitrogen=latest_soil.nitrogen,
+            phosphorus=latest_soil.phosphorus,
+            potassium=latest_soil.potassium,
+            temperature=latest_soil.temperature,
+            humidity=latest_soil.humidity,
+            ph=latest_soil.ph,
+            annual_rainfall=latest_soil.rainfall,
+        )
 
         # Check if user configured fertilizer schedule
         fertilizer_applied = request.POST.get("fertilizer") == "yes"

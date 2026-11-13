@@ -45,7 +45,7 @@ class SoilRecord(models.Model):
     ph = models.FloatField(help_text="Soil pH level (3.5 - 8.5)")
     temperature = models.FloatField(help_text="Average temperature in °C")
     humidity = models.FloatField(help_text="Average relative humidity in %")
-    rainfall = models.FloatField(help_text="Average seasonal rainfall in mm")
+    rainfall = models.FloatField(help_text="Average annual rainfall in mm")
 
     class Meta:
         ordering = ["-recorded_at"]

@@ -1,5 +1,7 @@
 from ml.predictor import CropPredictor
 from ml.explainer import explain_prediction, get_fertilizer_boosted_inputs
+from ml.features import build_model_input
+from ml.loader import model_version
 from ..models import Prediction
 from .suitability_service import SuitabilityService
 
@@ -9,15 +11,16 @@ class RecommendationService:
     @staticmethod
     def create_prediction(user, data, farm=None):
 
-        model_input = {
-            "Nitrogen": data["nitrogen"],
-            "Phosphorus": data["phosphorus"],
-            "Potassium": data["potassium"],
-            "Temperature": data["temperature"],
-            "Humidity": data["humidity"],
-            "pH_Value": data["ph"],
-            "Rainfall": data["rainfall"],
-        }
+        # data["rainfall"] is annual mm; the model works on monthly rainfall.
+        model_input = build_model_input(
+            nitrogen=data["nitrogen"],
+            phosphorus=data["phosphorus"],
+            potassium=data["potassium"],
+            temperature=data["temperature"],
+            humidity=data["humidity"],
+            ph=data["ph"],
+            annual_rainfall=data["rainfall"],
+        )
 
         # Predict top 5 crops with confidence
         top_crops = CropPredictor.predict_top_n(model_input, n=5)
@@ -34,6 +37,7 @@ class RecommendationService:
             ph=data["ph"],
             rainfall=data["rainfall"],
             predicted_crop=top_crop,
+            model_version=model_version,
         )
 
         # Pre-compute fertilizer-boosted inputs once (shared across all crops)
@@ -74,8 +78,8 @@ class RecommendationService:
                 inputs=suitability_boosted_inputs,
             )
 
-            # ── SHAP explanation — why did the model choose this crop? ──────
-            explanation = explain_prediction(model_input, crop_name)
+            # ── Explanation — why did the model choose this crop? ───────────
+            explanation = explain_prediction(model_input, crop_name, display_values={"Rainfall": data["rainfall"]})
 
             # ── Natural-language justification sentence ──────────────────────
             reasons = []

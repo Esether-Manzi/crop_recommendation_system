@@ -145,7 +145,7 @@ class SuitabilityService:
 
             "Rainfall": {
                 "current": inputs["rainfall"],
-                "ideal": f"{crop['Rain_min']} - {crop['Rain_max']} mm",
+                "ideal": f"{crop['Rain_min']} - {crop['Rain_max']} mm/year",
                 "status": cls._evaluate(
                     inputs["rainfall"],
                     crop["Rain_min"],

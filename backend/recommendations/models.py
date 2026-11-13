@@ -22,9 +22,14 @@ class Prediction(models.Model):
     temperature = models.FloatField()
     humidity = models.FloatField()
     ph = models.FloatField()
-    rainfall = models.FloatField()
+    rainfall = models.FloatField(help_text="Annual rainfall in mm, as entered by the user")
 
     predicted_crop = models.CharField(max_length=100)
+    model_version = models.CharField(
+        max_length=40,
+        blank=True,
+        help_text="Version of the trained model that made this prediction (see ml/model/model_card.json).",
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
 
