@@ -47,6 +47,24 @@ class SoilRecord(models.Model):
     humidity = models.FloatField(help_text="Average relative humidity in %")
     rainfall = models.FloatField(help_text="Average annual rainfall in mm")
 
+    class Source(models.TextChoices):
+        LAB = "lab", "Laboratory soil test"
+        KIT = "kit", "Home test kit"
+        ESTIMATE = "estimate", "Estimate (no test)"
+        SIMULATED = "simulated", "Calculated by the app after a harvest"
+
+    source = models.CharField(
+        max_length=20,
+        choices=Source.choices,
+        default=Source.LAB,
+        help_text="Where these soil values came from",
+    )
+    tested_on = models.DateField(
+        blank=True,
+        null=True,
+        help_text="Date the soil sample was tested (optional)",
+    )
+
     class Meta:
         ordering = ["-recorded_at"]
 

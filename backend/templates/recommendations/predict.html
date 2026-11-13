@@ -59,7 +59,12 @@
                 <form method="post" action="?{% if selected_farm %}farm_id={{ selected_farm.id }}{% endif %}">
                     {% csrf_token %}
                     {% if form.errors %}
-                    <div class="alert alert-danger py-2" role="alert">Please correct the highlighted input values.</div>
+                    <div class="alert alert-danger py-2" role="alert">
+                        Please correct these values:
+                        <ul class="mb-0 mt-1 ps-3">
+                            {% for field in form %}{% for error in field.errors %}<li>{{ field.label }}: {{ error }}</li>{% endfor %}{% endfor %}
+                        </ul>
+                    </div>
                     {% endif %}
                     {% if selected_farm %}
                     <input type="hidden" name="farm_id" value="{{ selected_farm.id }}">
@@ -120,6 +125,17 @@
 
             {% if prediction and recommendations %}
             {% with top=recommendations.0 %}
+
+            {% if warnings %}
+            <div class="alert alert-warning rounded-4 border-0 shadow-sm mb-3" role="alert" id="inputWarnings">
+                <div class="fw-bold mb-1"><i class="fa-solid fa-triangle-exclamation me-2"></i>Please check your soil values</div>
+                <ul class="mb-0 ps-3 fs-7">
+                    {% for warning in warnings %}
+                    <li class="{% if warning.level == 'info' %}text-muted{% endif %}">{{ warning.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
 
             <!-- ─── TOP CROP HERO CARD ─────────────────────────── -->
             <div id="recommendationResults" class="card border-0 shadow-lg rounded-4 mb-3 overflow-hidden">

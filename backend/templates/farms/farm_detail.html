@@ -83,7 +83,10 @@
                     <tbody>
                         {% for record in soil_records %}
                         <tr>
-                            <td class="fw-semibold">{{ record.recorded_at|date:"Y-m-d H:i" }}</td>
+                            <td class="fw-semibold">
+                                {{ record.recorded_at|date:"Y-m-d H:i" }}
+                                <div class="fw-normal text-muted fs-8">{{ record.get_source_display }}{% if record.tested_on %} · tested {{ record.tested_on|date:"Y-m-d" }}{% endif %}</div>
+                            </td>
                             <td class="text-center text-center-keep text-primary fw-bold">{{ record.nitrogen }}</td>
                             <td class="text-center text-center-keep text-success fw-bold">{{ record.phosphorus }}</td>
                             <td class="text-center text-center-keep text-danger fw-bold">{{ record.potassium }}</td>
@@ -120,6 +123,24 @@
             
             <form method="post">
                 {% csrf_token %}
+                {% if form.errors %}
+                <div class="alert alert-danger py-2 fs-7" role="alert">
+                    Please correct these values:
+                    <ul class="mb-0 mt-1 ps-3">
+                        {% for field in form %}{% for error in field.errors %}<li>{{ field.label }}: {{ error }}</li>{% endfor %}{% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="row g-2 mb-3">
+                    <div class="col-7">
+                        <label class="form-label fw-semibold text-muted fs-7">Where are these values from?</label>
+                        {{ form.source }}
+                    </div>
+                    <div class="col-5">
+                        <label class="form-label fw-semibold text-muted fs-7">Test date</label>
+                        {{ form.tested_on }}
+                    </div>
+                </div>
                 <div class="row g-2 mb-3">
                     <div class="col-4">
                         <label class="form-label fw-semibold text-muted fs-7">Nitrogen (N)</label>

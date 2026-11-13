@@ -7,6 +7,7 @@ already-instantiated default `admin.site` in place, so every app's
 existing `@admin.register(...)` calls keep working unchanged.
 """
 
+from collections import Counter
 from datetime import timedelta
 
 from django.contrib import admin
@@ -195,6 +196,13 @@ class CropAIAdminSite(AdminSite):
             .annotate(count=Count("id"))
             .order_by("-count")
         )
+        warning_counts = Counter()
+        predictions_with_warnings = 0
+        for warnings in Prediction.objects.values_list("input_warnings", flat=True):
+            if warnings:
+                predictions_with_warnings += 1
+                warning_counts.update({w["code"] for w in warnings})
+
         importance = model_card.get("feature_importance", {})
         top = max([v for v in importance.values() if v > 0], default=1)
         importance_rows = [
@@ -208,6 +216,9 @@ class CropAIAdminSite(AdminSite):
             "card": model_card,
             "model_version": model_version,
             "predictions_by_version": predictions_by_version,
+            "predictions_total": Prediction.objects.count(),
+            "predictions_with_warnings": predictions_with_warnings,
+            "warning_counts": warning_counts.most_common(),
         }
         return TemplateResponse(request, "admin/model_info.html", context)
 

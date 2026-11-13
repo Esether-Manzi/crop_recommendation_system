@@ -97,7 +97,9 @@ def feedback_submit(request):
                         ph=new_ph,
                         temperature=latest_soil.temperature,
                         humidity=latest_soil.humidity,
-                        rainfall=latest_soil.rainfall
+                        rainfall=latest_soil.rainfall,
+                        source=SoilRecord.Source.SIMULATED,
+                        tested_on=latest_soil.tested_on,
                     )
                     messages.success(request, "Harvest feedback saved! We've updated your farm's soil record.")
                 else:

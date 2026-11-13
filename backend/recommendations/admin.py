@@ -13,6 +13,7 @@ class PredictionAdmin(admin.ModelAdmin):
         "potassium",
         "ph",
         "model_version",
+        "warning_count",
         "created_at",
     )
 
@@ -27,3 +28,7 @@ class PredictionAdmin(admin.ModelAdmin):
         "farm__farm_name",
         "predicted_crop",
     )
+
+    @admin.display(description="Input warnings")
+    def warning_count(self, obj):
+        return len(obj.input_warnings or [])

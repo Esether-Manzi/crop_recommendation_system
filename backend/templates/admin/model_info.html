@@ -209,6 +209,14 @@
                 {% endfor %}
                 </tbody>
             </table>
+            <h3>Input validation warnings</h3>
+            <p class="cropai-mi-note">{{ predictions_with_warnings }} of {{ predictions_total }} predictions had at least one warning about the entered values (checks in <code>ml/input_checks.py</code>).</p>
+            {% if warning_counts %}
+            <table>
+                <thead><tr><th>Warning</th><th>Predictions</th></tr></thead>
+                <tbody>{% for code, count in warning_counts %}<tr><td>{{ code }}</td><td>{{ count }}</td></tr>{% endfor %}</tbody>
+            </table>
+            {% endif %}
             <h3>Saved artifacts</h3>
             <ul>{% for artifact in card.artifacts %}<li><code>{{ artifact }}</code></li>{% endfor %}</ul>
         </div>

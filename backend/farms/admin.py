@@ -39,8 +39,11 @@ class SoilRecordAdmin(admin.ModelAdmin):
         "temperature",
         "humidity",
         "rainfall",
+        "source",
+        "tested_on",
     )
     list_filter = (
+        "source",
         "recorded_at",
         "farm__district",
         "farm__soil_type",

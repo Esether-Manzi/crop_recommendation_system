@@ -1,4 +1,8 @@
+from datetime import date
+
 from django import forms
+
+from ml.input_checks import HARD_LIMITS
 from .models import Farm, SoilRecord
 
 class FarmForm(forms.ModelForm):
@@ -19,25 +23,36 @@ class FarmForm(forms.ModelForm):
 class SoilRecordForm(forms.ModelForm):
     class Meta:
         model = SoilRecord
-        fields = ["nitrogen", "phosphorus", "potassium", "ph", "temperature", "humidity", "rainfall"]
+        fields = ["nitrogen", "phosphorus", "potassium", "ph", "temperature", "humidity", "rainfall", "source", "tested_on"]
         widgets = {
-            "nitrogen": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 50.0"}),
-            "phosphorus": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 25.0"}),
-            "potassium": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 35.0"}),
+            "nitrogen": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 50.0", "step": "any"}),
+            "phosphorus": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 25.0", "step": "any"}),
+            "potassium": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 35.0", "step": "any"}),
             "ph": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 6.5", "step": "any"}),
             "temperature": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 22.0", "step": "any"}),
             "humidity": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 75.0", "step": "any"}),
-            "rainfall": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 1000.0", "step": "1.0"}),
+            "rainfall": forms.NumberInput(attrs={"class": "form-control", "placeholder": "e.g., 1000", "step": "any"}),
+            "source": forms.Select(attrs={"class": "form-select"}),
+            "tested_on": forms.DateInput(attrs={"class": "form-control", "type": "date"}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # "Calculated after a harvest" records are only created by the feedback flow.
+        self.fields["source"].choices = [
+            choice for choice in self.fields["source"].choices
+            if choice[0] != SoilRecord.Source.SIMULATED
+        ]
+
+    def clean_tested_on(self):
+        tested_on = self.cleaned_data.get("tested_on")
+        if tested_on and tested_on > date.today():
+            raise forms.ValidationError("The test date can't be in the future.")
+        return tested_on
 
     def clean(self):
         cleaned_data = super().clean()
-        limits = {
-            "nitrogen": (0, 1000), "phosphorus": (0, 1000), "potassium": (0, 1000),
-            "ph": (3.5, 8.5), "temperature": (-10, 60), "humidity": (0, 100),
-            "rainfall": (0, 10000),
-        }
-        for field, (minimum, maximum) in limits.items():
+        for field, (minimum, maximum) in HARD_LIMITS.items():
             value = cleaned_data.get(field)
             if value is not None and not minimum <= value <= maximum:
                 self.add_error(field, f"Enter a value between {minimum} and {maximum}.")

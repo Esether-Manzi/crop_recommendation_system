@@ -1,12 +1,26 @@
 from ml.predictor import CropPredictor
 from ml.explainer import explain_prediction, get_fertilizer_boosted_inputs
 from ml.features import build_model_input
+from ml.input_checks import check_inputs, check_soil_test
 from ml.loader import model_version
 from ..models import Prediction
 from .suitability_service import SuitabilityService
 
 
+SOIL_FIELDS = ("nitrogen", "phosphorus", "potassium", "temperature", "humidity", "ph", "rainfall")
+
+
 class RecommendationService:
+
+    @staticmethod
+    def input_warnings(data, farm=None):
+        warnings = check_inputs(data)
+        # Only describe the soil test's source when the values actually came
+        # from it, not when the farmer typed different numbers.
+        latest = farm.soil_records.first() if farm else None
+        if latest and all(getattr(latest, f) == data[f] for f in SOIL_FIELDS):
+            warnings += check_soil_test(latest.source, latest.tested_on)
+        return warnings
 
     @staticmethod
     def create_prediction(user, data, farm=None):
@@ -21,6 +35,8 @@ class RecommendationService:
             ph=data["ph"],
             annual_rainfall=data["rainfall"],
         )
+
+        warnings = RecommendationService.input_warnings(data, farm)
 
         # Predict top 5 crops with confidence
         top_crops = CropPredictor.predict_top_n(model_input, n=5)
@@ -38,6 +54,7 @@ class RecommendationService:
             rainfall=data["rainfall"],
             predicted_crop=top_crop,
             model_version=model_version,
+            input_warnings=warnings,
         )
 
         # Pre-compute fertilizer-boosted inputs once (shared across all crops)
@@ -118,4 +135,5 @@ class RecommendationService:
         return {
             "prediction": prediction,
             "recommendations": recommendations,
+            "warnings": warnings,
         }

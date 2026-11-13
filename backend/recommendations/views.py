@@ -11,6 +11,7 @@ def predict_crop(request):
 
     prediction = None
     recommendations = None
+    warnings = []
     selected_farm = None
 
     # Load all farms belonging to this user
@@ -35,6 +36,7 @@ def predict_crop(request):
 
             prediction = result["prediction"]
             recommendations = result["recommendations"]
+            warnings = result["warnings"]
 
     else:
         # Prepopulate with the latest soil record values if farm is selected
@@ -62,6 +64,7 @@ def predict_crop(request):
             "form": form,
             "prediction": prediction,
             "recommendations": recommendations,
+            "warnings": warnings,
             "farms": farms,
             "selected_farm": selected_farm,
         },

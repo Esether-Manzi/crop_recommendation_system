@@ -1,38 +1,28 @@
 from django import forms
 
+from ml.input_checks import HARD_LIMITS
+
+
+def _number_field(name, placeholder=None):
+    minimum, maximum = HARD_LIMITS[name]
+    attrs = {"class": "form-control", "min": minimum, "max": maximum, "step": "any"}
+    if placeholder:
+        attrs["placeholder"] = placeholder
+    return forms.FloatField(min_value=minimum, max_value=maximum, widget=forms.NumberInput(attrs=attrs))
+
+
 class PredictionForm(forms.Form):
 
-    nitrogen = forms.FloatField(
-        min_value=0, max_value=1000,
-        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 1000})
-    )
+    nitrogen = _number_field("nitrogen")
 
-    phosphorus = forms.FloatField(
-        min_value=0, max_value=1000,
-        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 1000})
-    )
+    phosphorus = _number_field("phosphorus")
 
-    potassium = forms.FloatField(
-        min_value=0, max_value=1000,
-        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 1000})
-    )
+    potassium = _number_field("potassium")
 
-    temperature = forms.FloatField(
-        min_value=-10, max_value=60,
-        widget=forms.NumberInput(attrs={"class": "form-control", "min": -10, "max": 60, "step": "any"})
-    )
+    temperature = _number_field("temperature")
 
-    humidity = forms.FloatField(
-        min_value=0, max_value=100,
-        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 100, "step": "any"})
-    )
+    humidity = _number_field("humidity")
 
-    ph = forms.FloatField(
-        min_value=3.5, max_value=8.5,
-        widget=forms.NumberInput(attrs={"class": "form-control", "min": 3.5, "max": 8.5, "step": "any"})
-    )
+    ph = _number_field("ph")
 
-    rainfall = forms.FloatField(
-        min_value=0, max_value=10000,
-        widget=forms.NumberInput(attrs={"class": "form-control", "min": 0, "max": 10000, "placeholder": "e.g., 1200"})
-    )
+    rainfall = _number_field("rainfall", placeholder="e.g., 1200")

@@ -30,6 +30,11 @@ class Prediction(models.Model):
         blank=True,
         help_text="Version of the trained model that made this prediction (see ml/model/model_card.json).",
     )
+    input_warnings = models.JSONField(
+        default=list,
+        blank=True,
+        help_text="Warnings raised by ml/input_checks.py about the entered values.",
+    )
 
     created_at = models.DateTimeField(auto_now_add=True)
 
