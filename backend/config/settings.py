@@ -14,6 +14,7 @@ from pathlib import Path
 from decouple import config
 from importlib.util import find_spec
 import os
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -169,6 +170,13 @@ if find_spec("whitenoise"):
             "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
         },
     }
+    # The test runner turns DEBUG off, and the manifest storage then needs
+    # collectstatic to have run, so every test that renders a page failed with
+    # "Missing staticfiles manifest entry". Tests use plain storage instead.
+    if sys.argv[1:2] == ["test"]:
+        STORAGES["staticfiles"] = {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        }
 
 
 MEDIA_URL = "/media/"
@@ -191,6 +199,18 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
 EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=True, cast=bool)
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default="no-reply@cropadvisor.local")
+
+
+# ── AI chat assistant (Gemini) ───────────────────────────────────────────────
+# Without GEMINI_API_KEY the chat answers from the offline crop guide only.
+# Web search (Google Search grounding) needs a key with billing enabled: the
+# first 5,000 searches a month are free, then Google charges per search. A
+# free-tier key still works; the chat just answers without searching.
+# GEMINI_DAILY_LIMIT caps AI replies per farmer per day to protect the bill.
+GEMINI_API_KEY = config("GEMINI_API_KEY", default="")
+GEMINI_MODEL = config("GEMINI_MODEL", default="gemini-3.5-flash-lite")
+GEMINI_WEB_SEARCH = config("GEMINI_WEB_SEARCH", default=True, cast=bool)
+GEMINI_DAILY_LIMIT = config("GEMINI_DAILY_LIMIT", default=50, cast=int)
 
 
 # ── Production security (only active when DEBUG=False) ──────────────────────

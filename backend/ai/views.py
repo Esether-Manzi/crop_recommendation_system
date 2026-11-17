@@ -1,50 +1,13 @@
-import json
 import re
-import urllib.request
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.core.cache import cache
+from django.utils import timezone
 from django.views.decorators.http import require_POST
 from advisory.models import CropAdvisory
 from farms.models import Farm
-
-# Retrieve Gemini API Key
-GEMINI_API_KEY = getattr(settings, "GEMINI_API_KEY", None)
-if not GEMINI_API_KEY:
-    try:
-        from decouple import config
-        GEMINI_API_KEY = config("GEMINI_API_KEY", default=None)
-    except Exception:
-        GEMINI_API_KEY = None
-
-def call_gemini_api(prompt):
-    if not GEMINI_API_KEY:
-        return None
-
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
-    headers = {"Content-Type": "application/json"}
-    data = {
-        "contents": [{
-            "parts": [{"text": prompt}]
-        }],
-        "generationConfig": {
-            "maxOutputTokens": 800,
-            "temperature": 0.3,
-        }
-    }
-
-    try:
-        req = urllib.request.Request(
-            url,
-            data=json.dumps(data).encode("utf-8"),
-            headers=headers,
-            method="POST"
-        )
-        with urllib.request.urlopen(req, timeout=10) as response:
-            res_data = json.loads(response.read().decode("utf-8"))
-            return res_data["candidates"][0]["content"]["parts"][0]["text"]
-    except Exception:
-        return None
+from .services import ask_gemini
 
 GENERIC_STAGE_ADVICE = {
     "Diseases": (
@@ -223,6 +186,42 @@ def get_keyword_fallback(message, farm=None):
         "You can also check the **Knowledge Base** tab for the complete stage-by-stage guide for any of our 38 crops."
     )
 
+
+# Messages kept in the session. Older ones drop off so the session (and the
+# history sent to Gemini) doesn't grow without limit.
+MAX_HISTORY = 20
+MAX_MESSAGE_LENGTH = 1000
+
+
+def _farm_context(farm):
+    context = (
+        f"The farmer's farm '{farm.farm_name}' is in {farm.subcounty}, {farm.district} District, "
+        f"Uganda. Soil type: {farm.get_soil_type_display()}. Size: {farm.size_acres} acres."
+    )
+    latest_soil = farm.soil_records.first()
+    if latest_soil:
+        context += (
+            f" Latest soil test: Nitrogen {latest_soil.nitrogen} mg/kg, "
+            f"Phosphorus {latest_soil.phosphorus} mg/kg, Potassium {latest_soil.potassium} mg/kg, "
+            f"pH {latest_soil.ph}, temperature {latest_soil.temperature}°C, "
+            f"humidity {latest_soil.humidity}%, rainfall {latest_soil.rainfall} mm per year."
+        )
+    return context
+
+
+def _use_daily_ai_allowance(user):
+    """Count one AI reply against the farmer's daily limit. Returns False once
+    the limit is reached, so the reply comes from the offline guide instead."""
+    key = f"ai-chat-count:{user.id}:{timezone.localdate().isoformat()}"
+    cache.add(key, 0, timeout=60 * 60 * 24)
+    try:
+        count = cache.incr(key)
+    except ValueError:
+        cache.set(key, 1, timeout=60 * 60 * 24)
+        count = 1
+    return count <= settings.GEMINI_DAILY_LIMIT
+
+
 @login_required
 @require_POST
 def clear_chat(request):
@@ -234,56 +233,50 @@ def clear_chat(request):
 def chat(request):
     chat_history = request.session.get("chat_history", [])
     farms = Farm.objects.filter(user=request.user)
-
-    selected_farm = None
+    selected_farm_id = request.session.get("chat_farm_id")
 
     if request.method == "POST":
-        user_message = request.POST.get("message", "").strip()
-        selected_farm_id = request.POST.get("farm_id")
+        user_message = request.POST.get("message", "").strip()[:MAX_MESSAGE_LENGTH]
+        posted_farm_id = request.POST.get("farm_id", "")
+
+        farm = None
+        if posted_farm_id.isdigit():
+            farm = farms.filter(id=posted_farm_id).first()
+        # Remember the farm so the dropdown keeps it for the next question.
+        request.session["chat_farm_id"] = farm.id if farm else None
 
         if user_message:
-            context = ""
-            farm = None
-            if selected_farm_id:
-                try:
-                    farm = Farm.objects.get(id=selected_farm_id, user=request.user)
-                    latest_soil = farm.soil_records.first()
-                    context = f"The farmer is asking about their farm '{farm.farm_name}' located in {farm.district}, Uganda. Soil type: {farm.soil_type}."
-                    if latest_soil:
-                        context += (
-                            f" The latest soil analysis: Nitrogen: {latest_soil.nitrogen} mg/kg, "
-                            f"Phosphorus: {latest_soil.phosphorus} mg/kg, Potassium: {latest_soil.potassium} mg/kg, "
-                            f"pH: {latest_soil.ph}, Temperature: {latest_soil.temperature}°C, Rainfall: {latest_soil.rainfall} mm per year."
-                        )
-                except Farm.DoesNotExist:
-                    pass
+            bot_message = {"sender": "bot", "source": "guide", "sources": [], "search_html": ""}
 
-            # Grounding prompt structure
-            prompt = (
-                "You are the CropAI Assistant, a friendly and knowledgeable crop advisor "
-                "for smallholder farmers in Uganda. Give short, clear, practical advice in plain language, "
-                "avoiding technical jargon a farmer without formal agricultural training wouldn't know. "
-                "Only give planting distances or fertilizer rates that reflect widely accepted, publicly known farming practice, "
-                "and don't invent numbers you're not confident about. "
-                "If the question involves specific soil values, refer back to the context provided. "
-                "Format your response in Markdown.\n\n"
-            )
-            if context:
-                prompt += f"Context:\n{context}\n\n"
-            prompt += f"Farmer Question:\n{user_message}"
+            reply = None
+            if settings.GEMINI_API_KEY:
+                if _use_daily_ai_allowance(request.user):
+                    reply = ask_gemini(
+                        user_message,
+                        history=chat_history,
+                        farm_context=_farm_context(farm) if farm else "",
+                    )
+                else:
+                    bot_message["source"] = "limit"
 
-            bot_response = call_gemini_api(prompt)
-
-            if not bot_response:
-                bot_response = get_keyword_fallback(user_message, farm=farm)
+            if reply:
+                bot_message.update(
+                    text=reply["text"],
+                    source="web" if reply["web"] else "ai",
+                    sources=reply["sources"],
+                    search_html=reply["search_html"],
+                )
+            else:
+                bot_message["text"] = get_keyword_fallback(user_message, farm=farm)
 
             chat_history.append({"sender": "user", "text": user_message})
-            chat_history.append({"sender": "bot", "text": bot_response})
-            request.session["chat_history"] = chat_history
+            chat_history.append(bot_message)
+            request.session["chat_history"] = chat_history[-MAX_HISTORY:]
 
-            return redirect("ai:chat")
+        return redirect("ai:chat")
 
     return render(request, "ai/chat.html", {
         "chat_history": chat_history,
         "farms": farms,
+        "selected_farm_id": selected_farm_id,
     })

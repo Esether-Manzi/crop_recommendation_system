@@ -10,7 +10,7 @@ A Django web app that helps smallholder farmers in Uganda decide what to plant. 
 - **Crop rotation planner**: simulates 4 seasons and tracks how each crop drains or rebuilds soil nutrients.
 - **Crop advisory library and season tracker**: stage-by-stage growing guides for 38 crops. The tracker shows the advice for the current week of growth.
 - **Harvest feedback**: records the harvest outcome and writes a new, calculated soil record, so the soil state changes over time without a new test.
-- **AI farming assistant**: a chat assistant powered by Google Gemini. It falls back to answers from the advisory library when no API key is set or the API can't be reached.
+- **AI farming assistant**: a chat assistant powered by Google Gemini. It can search the web for current information, preferring Ugandan sources such as MAAIF, NARO, UNMA and local farming news, and shows the sources it used. It remembers the conversation and the selected farm. Without an API key, or if Gemini can't be reached, it answers from the advisory library.
 - **Farming notes, profile with photo, and self-service password reset.**
 - **Farmer dashboard**: counts, active seasons, recent predictions, a 6-month chart, and alerts for low nutrients or out-of-range pH.
 - **Branded admin dashboard**: system-wide stats, plus a **Model Information** page showing how the deployed model was trained and how well it scores.
@@ -77,6 +77,9 @@ DB_PORT=3306
 # Optional
 # ALLOWED_HOSTS=127.0.0.1,localhost
 # GEMINI_API_KEY=...            # live AI chat; without it the offline fallback answers
+# GEMINI_MODEL=gemini-3.5-flash-lite
+# GEMINI_WEB_SEARCH=True        # web search needs a key with billing on (5,000 free searches/month)
+# GEMINI_DAILY_LIMIT=50         # AI replies per farmer per day
 # USE_HTTPS=False               # set True only once the site is served over https://
 # EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
 # EMAIL_HOST=  EMAIL_PORT=587  EMAIL_HOST_USER=  EMAIL_HOST_PASSWORD=  EMAIL_USE_TLS=True
@@ -84,6 +87,8 @@ DB_PORT=3306
 ```
 
 Without SMTP settings, password-reset emails are printed to the server console.
+
+Get a Gemini API key at https://aistudio.google.com/. Web search only works on a key with billing turned on: Google gives 5,000 free searches a month, then charges per search. With a free-tier key the assistant still answers, just without searching.
 
 ### 5. Set up and run
 

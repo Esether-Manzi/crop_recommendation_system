@@ -13,6 +13,12 @@
     .chat-card {
         height: 700px;
     }
+    .search-suggestions {
+        display: block;
+        width: 100%;
+        height: 64px;
+        border: 0;
+    }
     @media (max-width: 991.98px) {
         .chat-card {
             height: calc(100vh - 209px);
@@ -64,9 +70,35 @@
                                 <div class="bg-white text-success rounded-circle p-2 me-2 fs-6 shadow-sm border" style="width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;">
                                     <i class="fa-solid fa-seedling"></i>
                                 </div>
-                                <div class="message-bubble bg-white text-dark p-3 rounded-4 shadow-sm border" style="max-width: 75%; border-top-left-radius: 4px !important;">
-                                    <div class="mb-0 fs-7 chat-markdown"></div>
-                                    {{ msg.text|json_script }}
+                                <div style="max-width: 75%; min-width: 0;">
+                                    <div class="message-bubble bg-white text-dark p-3 rounded-4 shadow-sm border" style="border-top-left-radius: 4px !important;">
+                                        <div class="mb-0 fs-7 chat-markdown"></div>
+                                        {{ msg.text|json_script }}
+                                        {% if msg.sources %}
+                                        <div class="border-top mt-2 pt-2 fs-8">
+                                            <div class="fw-semibold text-muted mb-1">Sources</div>
+                                            <ol class="mb-0 ps-3">
+                                                {% for source in msg.sources %}
+                                                <li><a href="{{ source.uri }}" target="_blank" rel="noopener noreferrer" class="text-success">{{ source.title }}</a></li>
+                                                {% endfor %}
+                                            </ol>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% if msg.search_html %}
+                                    <iframe class="search-suggestions mt-2" title="Related Google searches"
+                                            sandbox="allow-popups allow-popups-to-escape-sandbox"
+                                            srcdoc="&lt;base target=&quot;_blank&quot;&gt;{{ msg.search_html }}"></iframe>
+                                    {% endif %}
+                                    {% if msg.source == 'web' %}
+                                    <div class="fs-9 text-muted mt-1 ms-1"><i class="fa-solid fa-globe me-1"></i>AI answer using a web search</div>
+                                    {% elif msg.source == 'ai' %}
+                                    <div class="fs-9 text-muted mt-1 ms-1"><i class="fa-solid fa-robot me-1"></i>AI answer</div>
+                                    {% elif msg.source == 'guide' %}
+                                    <div class="fs-9 text-muted mt-1 ms-1"><i class="fa-solid fa-book me-1"></i>From the CropAI crop guide</div>
+                                    {% elif msg.source == 'limit' %}
+                                    <div class="fs-9 text-muted mt-1 ms-1"><i class="fa-solid fa-book me-1"></i>You've used today's AI answers, so this one is from the CropAI crop guide. AI answers come back tomorrow.</div>
+                                    {% endif %}
                                 </div>
                             </div>
                             {% endif %}
@@ -95,21 +127,22 @@
                                 <select name="farm_id" class="form-select form-select-sm rounded-pill border-success-subtle fs-8">
                                     <option value="">-- No Farm Selected --</option>
                                     {% for farm in farms %}
-                                    <option value="{{ farm.id }}">{{ farm.farm_name }}</option>
+                                    <option value="{{ farm.id }}" {% if farm.id == selected_farm_id %}selected{% endif %}>{{ farm.farm_name }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                             <!-- Input message -->
                             <div class="col-md-8 col-9">
-                                <input type="text" name="message" id="messageInput" class="form-control rounded-pill border-success-subtle fs-7 py-2" placeholder="Ask a question (e.g. 'How do I prevent bean rust?')..." required autocomplete="off">
+                                <input type="text" name="message" id="messageInput" class="form-control rounded-pill border-success-subtle fs-7 py-2" placeholder="Ask a question (e.g. 'How do I prevent bean rust?')..." required maxlength="1000" autocomplete="off">
                             </div>
                             <!-- Send button -->
                             <div class="col-md-1 col-3 d-grid">
-                                <button type="submit" class="btn btn-success rounded-circle p-2" style="width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center;">
+                                <button type="submit" id="sendButton" class="btn btn-success rounded-circle p-2" style="width:40px; height:40px; display:inline-flex; align-items:center; justify-content:center;" aria-label="Send">
                                     <i class="fa-solid fa-paper-plane fs-8"></i>
                                 </button>
                             </div>
                         </div>
+                        <p class="fs-9 text-muted mb-0 mt-2 text-center">AI answers can be wrong. Check important decisions, especially about sprays and chemicals, with your local extension officer.</p>
                     </form>
                 </div>
 
@@ -220,6 +253,44 @@
         const chatContainer = document.getElementById("chatContainer");
         // Auto scroll to bottom
         chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        /* A reply can take several seconds, longer when the assistant searches
+           the web, so show the question and a "thinking" bubble straight away
+           and stop the form being sent twice. */
+        const chatForm = document.getElementById("chatForm");
+        chatForm.addEventListener("submit", function (event) {
+            const input = document.getElementById("messageInput");
+            const button = document.getElementById("sendButton");
+            if (chatForm.dataset.sending) { event.preventDefault(); return; }
+            if (!input.value.trim()) return;
+            chatForm.dataset.sending = "1";
+
+            const placeholder = chatContainer.querySelector(".h-100.d-flex");
+            if (placeholder) placeholder.remove();
+
+            const userRow = document.createElement("div");
+            userRow.className = "d-flex justify-content-end mb-4";
+            const userBubble = document.createElement("div");
+            userBubble.className = "message-bubble bg-success text-white p-3 rounded-4 shadow-sm";
+            userBubble.style.maxWidth = "75%";
+            const userText = document.createElement("p");
+            userText.className = "mb-0 fs-7";
+            userText.textContent = input.value.trim();
+            userBubble.appendChild(userText);
+            userRow.appendChild(userBubble);
+            chatContainer.appendChild(userRow);
+
+            const thinkingRow = document.createElement("div");
+            thinkingRow.className = "d-flex justify-content-start mb-4";
+            thinkingRow.innerHTML =
+                '<div class="bg-white text-success rounded-circle p-2 me-2 fs-6 shadow-sm border" style="width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;"><i class="fa-solid fa-seedling"></i></div>' +
+                '<div class="message-bubble bg-white text-muted p-3 rounded-4 shadow-sm border fs-7" role="status"><span class="spinner-border spinner-border-sm text-success me-2" aria-hidden="true"></span>Thinking… this can take a few seconds.</div>';
+            chatContainer.appendChild(thinkingRow);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            button.disabled = true;
+            input.readOnly = true;
+        });
     });
 </script>
 {% endblock %}
